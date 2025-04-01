@@ -15,12 +15,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.138"
+        app:layout_constraintVertical_bias="0.098"
         app:srcCompat="@drawable/logointro" />
 
     <LinearLayout
-        android:layout_width="345dp"
-        android:layout_height="498dp"
+        android:layout_width="357dp"
+        android:layout_height="528dp"
         android:layout_centerInParent="true"
         android:background="@drawable/card_background"
         android:elevation="8dp"
@@ -28,19 +28,32 @@
         android:padding="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.303">
+        app:layout_constraintVertical_bias="0.41">
+
+        <TextView
+            android:id="@+id/tvRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:gravity="center"
+            android:text="Register"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="45dp" />
+            android:layout_height="24dp" />
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
-            android:layout_width="287dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/email"
+            android:drawableLeft="@drawable/user"
             android:drawablePadding="15dp"
             android:ems="10"
             android:hint="Full Name"
@@ -58,14 +71,16 @@
             android:layout_height="24dp" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress2"
+            android:id="@+id/etBirthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/email"
+            android:clickable="true"
+            android:drawableLeft="@drawable/calendar"
             android:drawablePadding="15dp"
             android:ems="10"
-            android:hint="Date born"
-            android:inputType="datetime"
+            android:focusable="false"
+            android:hint="Birthday(DD/MM/YYYY)"
+            android:inputType="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.397"
@@ -78,9 +93,20 @@
             android:layout_width="match_parent"
             android:layout_height="24dp" />
 
+        <TextView
+            android:id="@+id/tvGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:drawableLeft="@drawable/gender"
+            android:drawablePadding="15dp"
+            android:text="Gender"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
         <RadioGroup
-            android:layout_width="296dp"
-            android:layout_height="53dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RadioButton
@@ -95,6 +121,16 @@
                 android:layout_height="25dp"
                 android:text="Woman" />
         </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/darker_gray" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <EditText
             android:id="@+id/editTextTextEmailAddress3"
@@ -119,7 +155,7 @@
 
         <EditText
             android:id="@+id/editTextTextPassword"
-            android:layout_width="287dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/password"
             android:drawablePadding="15dp"
@@ -135,11 +171,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="11dp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="32dp" />
+            android:layout_height="19dp" />
 
         <ImageButton
             android:id="@+id/imageButton2"
@@ -153,16 +185,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.943"
             app:srcCompat="@drawable/btn_arrow2" />
-
-        <Button
-            android:id="@+id/btnSignIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_background"
-            android:backgroundTint="#03A9F4"
-            android:text="Sign Up"
-            android:textColor="@android:color/white" />
 
         <Space
             android:layout_width="match_parent"
