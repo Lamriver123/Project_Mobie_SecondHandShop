@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Màu cơ bản -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Các sắc thái màu xanh -->
+    <color name="blue_light">#ADD8E6</color> <!-- Xanh nhạt -->
+    <color name="blue_sky">#87CEEB</color> <!-- Xanh da trời -->
+    <color name="blue_royal">#4169E1</color> <!-- Xanh hoàng gia -->
+    <color name="blue_navy">#000080</color> <!-- Xanh navy -->
+    <color name="blue_cyan">#00FFFF</color> <!-- Xanh cyan -->
+    <color name="blue_teal">#008080</color> <!-- Xanh teal -->
+    <color name="blue_turquoise">#40E0D0</color> <!-- Xanh ngọc lam -->
+    <color name="blue_azure">#007FFF</color> <!-- Xanh azure -->
+    <color name="blue_dark">#00008B</color> <!-- Xanh đậm -->
+    <color name="blue_medium">#0000CD</color> <!-- Xanh trung bình -->
+    <color name="blue_dodger">#1E90FF</color> <!-- Xanh dodger -->
+    <color name="blue_deep">#00BFFF</color> <!-- Xanh biển sâu -->
+    <color name="blue_slate">#6A5ACD</color> <!-- Xanh slate -->
+    <color name="blue_powder">#B0E0E6</color> <!-- Xanh powder -->
+    <color name="blue_steel">#4682B4</color> <!-- Xanh steel -->
+    <color name="red">#FF0000</color>
 </resources>

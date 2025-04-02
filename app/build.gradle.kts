@@ -38,6 +38,11 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation("com.google.android.material:material:1.6.0")
+    implementation ("io.github.chaosleung:pinview:1.4.4")
+    implementation ("com.github.smarteist:Android-Image-Slider:1.4.0")
+    implementation("com.github.bumptech.glide:glide:4.14.2")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
