@@ -48,14 +48,14 @@
             android:layout_height="18dp" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/editTextTextUsername"
             android:layout_width="287dp"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/email"
             android:drawablePadding="15dp"
             android:ems="10"
-            android:hint="Nhập Email"
-            android:inputType="textEmailAddress"
+            android:hint="Username"
+            android:inputType="text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.397"
@@ -75,7 +75,7 @@
             android:drawableLeft="@drawable/password"
             android:drawablePadding="15dp"
             android:ems="10"
-            android:hint="Nhập Password"
+            android:hint="Password"
             android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,6 +107,7 @@
                 android:layout_weight="1" />
 
             <TextView
+                android:id="@+id/tvForgotPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"

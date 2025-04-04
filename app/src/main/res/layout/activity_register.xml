@@ -20,7 +20,7 @@
 
     <LinearLayout
         android:layout_width="357dp"
-        android:layout_height="528dp"
+        android:layout_height="670dp"
         android:layout_centerInParent="true"
         android:background="@drawable/card_background"
         android:elevation="8dp"
@@ -50,7 +50,7 @@
             android:layout_height="24dp" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/editTextFullName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/user"
@@ -79,7 +79,7 @@
             android:drawablePadding="15dp"
             android:ems="10"
             android:focusable="false"
-            android:hint="Birthday(DD/MM/YYYY)"
+            android:hint="Birthday(YYYY/MM/DD)"
             android:inputType="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,13 +113,13 @@
                 android:id="@+id/radioButton"
                 android:layout_width="145dp"
                 android:layout_height="25dp"
-                android:text="Man" />
+                android:text="Male" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:text="Woman" />
+                android:text="Female" />
         </RadioGroup>
 
         <View
@@ -133,7 +133,27 @@
             android:layout_height="20dp" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress3"
+            android:id="@+id/editTextPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/call"
+            android:drawablePadding="15dp"
+            android:ems="10"
+            android:hint="Phone Number"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.402"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView6"
+            app:layout_constraintVertical_bias="0.657" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <EditText
+            android:id="@+id/editTextEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/email"
@@ -148,6 +168,26 @@
             app:layout_constraintTop_toTopOf="@+id/imageView6"
 
             app:layout_constraintVertical_bias="0.551" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="24dp" />
+
+        <EditText
+            android:id="@+id/editTextUname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/user"
+            android:drawablePadding="15dp"
+            android:ems="10"
+            android:hint="Username"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.402"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView6"
+            app:layout_constraintVertical_bias="0.657" />
 
         <Space
             android:layout_width="match_parent"
