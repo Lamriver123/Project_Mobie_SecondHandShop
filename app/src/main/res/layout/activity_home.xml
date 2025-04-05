@@ -10,7 +10,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/blue_sky"
+        android:background="@color/yellow"
         android:orientation="horizontal"
 
         android:paddingTop="65dp"
@@ -29,10 +29,9 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:background="@drawable/search_background"
-            android:drawableEnd="@drawable/ic_search"
+            android:background="@drawable/search"
             android:hint="Search..."
-            android:paddingStart="20dp"
+            android:paddingStart="50dp"
             android:paddingEnd="10dp"
             android:textSize="14sp" />
 
@@ -40,22 +39,23 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_cart" />
+            android:src="@drawable/icon_heart" />
 
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_chat" />
-
+            android:src="@drawable/icon_cart" />
     </LinearLayout>
 
 
     <com.smarteist.autoimageslider.SliderView
         android:id="@+id/imageSlider"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="180dp"
+        android:scaleType="centerCrop"
         android:layout_margin="5dp"
+        android:background="@drawable/radius_item"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
@@ -67,7 +67,6 @@
         app:sliderIndicatorMargin="20dp"
         app:sliderIndicatorOrientation="horizontal"
         app:sliderIndicatorPadding="2dp"
-        app:sliderIndicatorRadius="1dp"
         app:sliderScrollTimeInSec="3"
         app:sliderStartAutoCycle="true" />
 
@@ -113,7 +112,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/bottom_navigation_menu"
-        app:itemIconTint="@color/black"
-        android:background="@color/blue_sky"
+        android:background="@color/yellow"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

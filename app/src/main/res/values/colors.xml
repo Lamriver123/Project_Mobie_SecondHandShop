@@ -4,6 +4,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="yellow">#fac63d</color>
+
     <!-- Các sắc thái màu xanh -->
     <color name="blue_light">#ADD8E6</color> <!-- Xanh nhạt -->
     <color name="blue_sky">#87CEEB</color> <!-- Xanh da trời -->
