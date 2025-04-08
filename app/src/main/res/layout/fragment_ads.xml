@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="180dp"
     android:layout_margin="5dp"
+    android:background="@drawable/radius_item"
+    android:scaleType="centerCrop"
     app:sliderAnimationDuration="600"
     app:sliderAutoCycleDirection="back_and_forth"
     app:sliderAutoCycleEnabled="true"
@@ -13,6 +15,5 @@
     app:sliderIndicatorMargin="20dp"
     app:sliderIndicatorOrientation="horizontal"
     app:sliderIndicatorPadding="2dp"
-    app:sliderIndicatorRadius="1dp"
     app:sliderScrollTimeInSec="3"
     app:sliderStartAutoCycle="true" />

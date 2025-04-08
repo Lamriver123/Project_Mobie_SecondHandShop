@@ -3,31 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:orientation="horizontal"
-    android:background="@color/blue_sky"
     android:paddingTop="65dp"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+    android:background="@color/yellow">
 
-<!--    <EditText-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:layout_weight="1"-->
-<!--        android:background="@drawable/search_background"-->
-<!--        android:drawableEnd="@drawable/ic_search"-->
-<!--        android:hint="Search..."-->
-<!--        android:paddingStart="20dp"-->
-<!--        android:paddingEnd="10dp"-->
-<!--        android:textSize="14sp" />-->
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:background="@drawable/search"
+        android:hint="Search..."
+        android:paddingStart="50dp"
+        android:paddingEnd="10dp"
+        android:textSize="14sp" />
 
-<!--    <ImageView-->
-<!--        android:layout_width="32dp"-->
-<!--        android:layout_height="32dp"-->
-<!--        android:layout_marginStart="10dp"-->
-<!--        android:src="@drawable/ic_cart" />-->
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/icon_heart" />
 
-<!--    <ImageView-->
-<!--        android:layout_width="32dp"-->
-<!--        android:layout_height="32dp"-->
-<!--        android:layout_marginStart="10dp"-->
-<!--        android:src="@drawable/ic_chat" />-->
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/icon_cart" />
 </LinearLayout>
