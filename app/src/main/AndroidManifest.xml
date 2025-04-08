@@ -16,7 +16,7 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".IntroActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,9 +28,10 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".OtpActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".HomeActivity" />
+<!--        <activity android:name=".HomeActivity" />-->
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".ResetPasswordActivity" />
+
 
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
