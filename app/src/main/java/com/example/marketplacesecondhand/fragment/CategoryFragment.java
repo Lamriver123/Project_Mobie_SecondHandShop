@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.R;
@@ -67,7 +68,10 @@ public class CategoryFragment extends Fragment {
                     List<Category> categories = response.body().getData();
                     CategoryAdapter adapter = new CategoryAdapter(getContext(), categories);
 
-                    binding.categoryRecycler.setLayoutManager(new GridLayoutManager(getContext(), 4)); // 4 cột
+                    binding.categoryRecycler.setLayoutManager(
+                            new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false)
+                    );
+
                     binding.categoryRecycler.setAdapter(adapter);
                     // TODO: Hiển thị categories lên UI (ví dụ RecyclerView)
                     Log.d("API", "Số lượng category: " + categories.size());
