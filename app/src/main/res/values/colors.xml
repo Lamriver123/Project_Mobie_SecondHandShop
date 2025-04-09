@@ -5,6 +5,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="yellow">#fac63d</color>
+    <color name="transparent">#00FFFFFF</color>
 
     <!-- Các sắc thái màu xanh -->
     <color name="blue_light">#ADD8E6</color> <!-- Xanh nhạt -->

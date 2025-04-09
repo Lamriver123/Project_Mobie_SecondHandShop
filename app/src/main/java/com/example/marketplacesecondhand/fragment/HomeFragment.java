@@ -26,11 +26,11 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
         // Gắn từng fragment con vào layout
-        requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.banner_fragment, new AdsFragment())
-                .replace(R.id.category_fragment, new CategoryFragment())
-                .replace(R.id.new_product_fragment, new NewProductFragment())
-                .commit();
+//        requireActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.banner_fragment, new AdsFragment())
+//                .replace(R.id.category_fragment, new CategoryFragment())
+//                .replace(R.id.new_product_fragment, new NewProductFragment())
+//                .commit();
 
         return binding.getRoot();
     }

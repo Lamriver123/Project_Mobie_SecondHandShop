@@ -7,10 +7,14 @@ import com.example.marketplacesecondhand.dto.request.ResetPasswordRequest;
 import com.example.marketplacesecondhand.dto.request.VerifyAccountRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.AuthResponse;
+import com.example.marketplacesecondhand.models.Category;
 import com.example.marketplacesecondhand.models.User;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
@@ -31,4 +35,7 @@ public interface APIService {
 
     @PUT("auth/reset-password")
     Call<ApiResponse<Void>> resetPassword(@Body ResetPasswordRequest request);
+
+    @GET("categories")
+    Call<ApiResponse<List<Category>>> getCategories();
 }
