@@ -42,8 +42,8 @@
             android:layout_alignBottom="@id/imageProduct"
             android:layout_alignParentEnd="true"
             android:layout_margin="6dp"
-            android:src="@drawable/icon_heart"
-            android:tint="@android:color/holo_red_dark" />
+            android:src="@drawable/ic_heart_border_red"/>
+<!--            android:tint="@android:color/holo_red_dark" -->
 
         <!-- Title -->
         <TextView

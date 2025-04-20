@@ -6,27 +6,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.R;
+import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.Product;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
     private final Context context;
-    private final List<Product> productList;
+    private final List<ProductResponse> productList;
     private final OnItemClickListener listener;
-
+    private final Set<Integer> favoritePositions = new HashSet<>();
     public interface OnItemClickListener {
-        void onItemClick(Product product);
+        void onItemClick(ProductResponse product);
     }
 
 
-    public ProductAdapter(Context context, List<Product> productList, OnItemClickListener listener) {
+    public ProductAdapter(Context context, List<ProductResponse> productList, OnItemClickListener listener) {
         this.context = context;
         this.productList = productList;
         this.listener = listener;
@@ -42,7 +46,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = productList.get(position);
+        ProductResponse product = productList.get(position);
 
         holder.tvTitle.setText(product.getProductName());
         holder.tvPrice.setText(product.getCurrentPrice() );
@@ -56,6 +60,39 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 //                .load(product.getImageUrl()) // đảm bảo Product có hàm getImageUrl()
 //                .placeholder(R.drawable.img)
 //                .into(holder.imageProduct);
+
+// Load ảnh từ currentImages (dùng ảnh đầu tiên làm đại diện)
+        List<String> imageUrls = product.getCurrentImages();
+        if (imageUrls != null && !imageUrls.isEmpty()) {
+            Glide.with(context)
+                    .load(imageUrls.get(0)) // load ảnh đầu tiên
+                    .placeholder(R.drawable.img) // ảnh mặc định khi đang load
+                    .error(R.drawable.img) // ảnh hiển thị nếu lỗi
+                    .into(holder.imageProduct);
+        } else {
+            // Nếu không có ảnh, hiển thị ảnh mặc định
+            holder.imageProduct.setImageResource(R.drawable.img);
+        }
+
+        // Set iconFavorite ban đầu
+        if (favoritePositions.contains(position)) {
+            holder.iconFavorite.setImageResource(R.drawable.ic_heart_selected);
+        } else {
+            holder.iconFavorite.setImageResource(R.drawable.ic_heart_border_red);
+        }
+
+        // Xử lý sự kiện nhấn vào iconFavorite
+        holder.iconFavorite.setOnClickListener(v -> {
+            if (favoritePositions.contains(position)) {
+                favoritePositions.remove(position);
+                holder.iconFavorite.setImageResource(R.drawable.ic_heart_border_red);
+                Toast.makeText(context, "Đã hủy yêu thích sản phầm này", Toast.LENGTH_SHORT).show();
+            } else {
+                favoritePositions.add(position);
+                holder.iconFavorite.setImageResource(R.drawable.ic_heart_selected);
+                Toast.makeText(context, "Đã thêm vào yêu thích", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         holder.itemView.setOnClickListener(v -> listener.onItemClick(product));
     }

@@ -19,6 +19,7 @@ import com.example.marketplacesecondhand.adapter.ProductAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentCategoryBinding;
 import com.example.marketplacesecondhand.databinding.FragmentNewProductBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
+import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.Category;
 import com.example.marketplacesecondhand.models.Product;
 
@@ -55,13 +56,13 @@ public class NewProductFragment extends Fragment {
             Log.e("BINDING", "categoryRecycler is null - check fragment_category.xml");
         }
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        Call<ApiResponse<List<Product>>> call = apiService.getProductLast7Days();
+        Call<ApiResponse<List<ProductResponse>>> call = apiService.getNewestProducts();
 
-        call.enqueue(new Callback<ApiResponse<List<Product>>>() {
+        call.enqueue(new Callback<ApiResponse<List<ProductResponse>>>() {
             @Override
-            public void onResponse(Call<ApiResponse<List<Product>>> call, Response<ApiResponse<List<Product>>> response) {
+            public void onResponse(Call<ApiResponse<List<ProductResponse>>> call, Response<ApiResponse<List<ProductResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Product> products = response.body().getData();
+                    List<ProductResponse> products = response.body().getData();
                     ProductAdapter adapter = new ProductAdapter(getContext(), products, product -> {
                         // Xử lý khi người dùng click vào product
                         Toast.makeText(getContext(),"Sản phẩm được chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
@@ -77,7 +78,7 @@ public class NewProductFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<List<Product>>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<ProductResponse>>> call, Throwable t) {
                 Log.e("API", "Lỗi kết nối: " + t.getMessage());
             }
         });

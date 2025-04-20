@@ -7,6 +7,7 @@ import com.example.marketplacesecondhand.dto.request.ResetPasswordRequest;
 import com.example.marketplacesecondhand.dto.request.VerifyAccountRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.AuthResponse;
+import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.Category;
 import com.example.marketplacesecondhand.models.Product;
 import com.example.marketplacesecondhand.models.User;
@@ -39,6 +40,12 @@ public interface APIService {
 
     @GET("categories")
     Call<ApiResponse<List<Category>>> getCategories();
+
+    @GET("products")
+    Call<ApiResponse<List<ProductResponse>>> getAllProducts();
+
+    @GET("products/newest")
+    Call<ApiResponse<List<ProductResponse>>> getNewestProducts();
 
     @GET("products/last-7-days")
     Call<ApiResponse<List<Product>>> getProductLast7Days();
