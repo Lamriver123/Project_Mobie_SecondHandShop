@@ -19,6 +19,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface APIService {
     @POST("auth/register")
@@ -49,4 +50,7 @@ public interface APIService {
 
     @GET("products/last-7-days")
     Call<ApiResponse<List<Product>>> getProductLast7Days();
+
+    @GET("category/{categoryId}")
+    Call<ApiResponse<List<ProductResponse>>> getProductsByCategory(@Path("categoryId") int categoryId);
 }

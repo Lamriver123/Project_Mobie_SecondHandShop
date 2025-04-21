@@ -13,6 +13,8 @@
         android:padding="8dp">
 
         <!-- Image -->
+
+        <!-- Badge on top-left -->
         <ImageView
             android:id="@+id/imageProduct"
             android:layout_width="match_parent"
@@ -20,7 +22,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/img" />
 
-        <!-- Badge on top-left -->
         <TextView
             android:id="@+id/tvBadge"
             android:layout_width="24dp"
