@@ -24,4 +24,6 @@
     <color name="blue_powder">#B0E0E6</color> <!-- Xanh powder -->
     <color name="blue_steel">#4682B4</color> <!-- Xanh steel -->
     <color name="red">#FF0000</color>
+    <color name="white_gray">#f6f9ff</color>
+    <color name="gray">#b9b9b9</color>
 </resources>

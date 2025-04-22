@@ -1,17 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@android:color/white">
+    android:background="#F5F7FA">
 
-    <TextView
-        android:id="@+id/search_title"
-        android:text="This is the Profile Fragment"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+    <!-- Header Section -->
+    <RelativeLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:background="@color/yellow">
+
+        <!-- Top bar with title and icons -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="24dp" />
+        <LinearLayout
+            android:id="@+id/profileSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/title"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center_vertical">
+
+            <RelativeLayout
+                android:layout_width="64dp"
+                android:layout_height="64dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/img"
+                    android:background="@drawable/circle_white"
+                    android:padding="8dp" />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/circle_white_dot" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Tradly Team"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:text="+1 9998887776"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:text="info@tradly.co"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Options Menu -->
+    <LinearLayout
+        android:id="@+id/optionsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="220dp"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:elevation="4dp"
+        android:padding="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="#FFFFFF">
+
+        <!-- Menu Items -->
+        <TextView style="@style/OptionItem" android:text="Edit Profile" />
+        <TextView style="@style/OptionItem" android:text="Language and Currency" />
+        <TextView style="@style/OptionItem" android:text="Feedback" />
+        <TextView style="@style/OptionItem" android:text="Refer a Friend" />
+        <TextView style="@style/OptionItem" android:text="Terms and Conditions" />
+        <TextView
+            style="@style/OptionItem"
+            android:text="Logout"
+            android:textColor="#2E8C6F"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</RelativeLayout>
