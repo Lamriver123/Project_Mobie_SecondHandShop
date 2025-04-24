@@ -38,12 +38,16 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgAvt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/img"
                     android:background="@drawable/circle_white"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/img"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    />
 
                 <View
                     android:layout_width="10dp"
@@ -91,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="220dp"
-        android:background="@android:color/white"
+        android:background="@drawable/card_background"
         android:orientation="vertical"
         android:elevation="4dp"
         android:padding="16dp"
@@ -101,9 +105,9 @@
 
         <!-- Menu Items -->
         <TextView style="@style/OptionItem" android:text="Edit Profile" />
-        <TextView style="@style/OptionItem" android:text="Language and Currency" />
-        <TextView style="@style/OptionItem" android:text="Feedback" />
-        <TextView style="@style/OptionItem" android:text="Refer a Friend" />
+
+
+
         <TextView style="@style/OptionItem" android:text="Terms and Conditions" />
         <TextView
             style="@style/OptionItem"
