@@ -29,25 +29,33 @@
         app:layout_constraintTop_toBottomOf="@+id/header_fragment"
         tools:ignore="MissingConstraints"/>
 
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_fragment"
+        android:visibility="gone"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-
         app:menu="@menu/bottom_navigation_menu"
         app:itemRippleColor="@android:color/transparent"
         app:itemBackground="@android:color/transparent"
         app:itemIconTint="@color/bottom_nav_item_color"
         app:itemTextColor="@color/bottom_nav_item_color"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:id="@+id/bottom_nav_fragment"-->
-<!--        android:name="com.example.marketplacesecondhand.fragment.FooterFragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content" />-->
+    <!--        android:id="@+id/bottom_nav_fragment"-->
+    <!--        android:name="com.example.marketplacesecondhand.fragment.FooterFragment"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content" />-->
 </androidx.constraintlayout.widget.ConstraintLayout >

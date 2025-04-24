@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.marketplacesecondhand.adapter.ViewPagerAdapter;
@@ -71,25 +72,40 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                // Hiện lại ViewPager và ẩn container fragment
+                findViewById(R.id.content_frame).setVisibility(View.VISIBLE);
+                findViewById(R.id.fragment_container).setVisibility(View.GONE);
+                
+                // Xóa tất cả fragment trong back stack
+                getSupportFragmentManager().popBackStack(null, getSupportFragmentManager().POP_BACK_STACK_INCLUSIVE);
+
+                // Reset fragment trong container
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                if (fragment != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .remove(fragment)
+                            .commit();
+                }
+
                 if (position == 0) {
                     bottomNav.setSelectedItemId(R.id.nav_home);
-                  //  fragmentHeader.setVisibility(View.VISIBLE);
+                    findViewById(R.id.header_fragment).setVisibility(View.VISIBLE);
                 }
                 else if (position == 1) {
                     bottomNav.setSelectedItemId(R.id.nav_search);
-                  //  fragmentHeader.setVisibility(View.VISIBLE);
+                    findViewById(R.id.header_fragment).setVisibility(View.VISIBLE);
                 }
                 else if (position == 2) {
                     bottomNav.setSelectedItemId(R.id.nav_store);
-                  //  fragmentHeader.setVisibility(View.GONE);
+                    findViewById(R.id.header_fragment).setVisibility(View.GONE);
                 }
                 else if (position == 3) {
                     bottomNav.setSelectedItemId(R.id.nav_order);
-                  //  fragmentHeader.setVisibility(View.GONE);
+                    findViewById(R.id.header_fragment).setVisibility(View.GONE);
                 }
                 else if (position == 4) {
                     bottomNav.setSelectedItemId(R.id.nav_profile);
-                  //  fragmentHeader.setVisibility(View.GONE);
+                    findViewById(R.id.header_fragment).setVisibility(View.GONE);
                 }
             }
 
@@ -98,6 +114,28 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Kiểm tra nếu đang ở trong fragment container
+        if (findViewById(R.id.fragment_container).getVisibility() == View.VISIBLE) {
+            // Ẩn header
+            findViewById(R.id.header_fragment).setVisibility(View.GONE);
+            // Hiện lại ViewPager
+            findViewById(R.id.content_frame).setVisibility(View.VISIBLE);
+            // Ẩn container fragment
+            findViewById(R.id.fragment_container).setVisibility(View.GONE);
+            // Xóa fragment trong container
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            if (fragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .remove(fragment)
+                        .commit();
+            }
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void onNavigationItemSelectedCustom(@NonNull MenuItem item) {

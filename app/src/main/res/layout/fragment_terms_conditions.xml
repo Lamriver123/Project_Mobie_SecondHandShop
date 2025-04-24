@@ -7,9 +7,11 @@
 
     <!-- Header -->
     <RelativeLayout
+        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@color/yellow">
+        android:background="@color/yellow"
+        android:layout_alignParentTop="true">
 
         <!-- Back Arrow -->
         <ImageView
@@ -17,7 +19,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="48dp"
             android:src="@drawable/ic_arrow_back_white"
             app:tint="@android:color/white" />
 
@@ -30,17 +32,16 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp" />
+            android:layout_marginTop="48dp" />
     </RelativeLayout>
 
     <!-- Main Content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/btnBack"
-        android:layout_marginTop="100dp"
-        android:padding="24dp"
-        tools:ignore="NotSibling">
+        android:layout_below="@id/headerLayout"
+        android:layout_marginTop="17dp"
+        android:padding="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"

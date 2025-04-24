@@ -104,11 +104,15 @@
         android:backgroundTint="#FFFFFF">
 
         <!-- Menu Items -->
-        <TextView style="@style/OptionItem" android:text="Edit Profile" />
+        <TextView 
+            android:id="@+id/editProfileOption"
+            style="@style/OptionItem" 
+            android:text="Edit Profile" />
 
-
-
-        <TextView style="@style/OptionItem" android:text="Terms and Conditions" />
+        <TextView
+            style="@style/OptionItem"
+            android:id="@+id/termConditionsOption"
+            android:text="Terms and Conditions" />
         <TextView
             style="@style/OptionItem"
             android:text="Logout"

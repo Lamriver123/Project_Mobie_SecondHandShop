@@ -10,7 +10,8 @@
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@color/yellow">
+        android:background="@color/yellow"
+        android:layout_alignParentTop="true">
 
         <!-- Back Arrow -->
         <ImageView
@@ -18,7 +19,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="48dp"
             android:src="@drawable/ic_arrow_back_white"
             app:tint="@android:color/white" />
 
@@ -31,7 +32,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp" />
+            android:layout_marginTop="48dp" />
     </RelativeLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
