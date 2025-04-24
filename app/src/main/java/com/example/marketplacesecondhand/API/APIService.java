@@ -53,4 +53,7 @@ public interface APIService {
 
     @GET("category/{categoryId}")
     Call<ApiResponse<List<ProductResponse>>> getProductsByCategory(@Path("categoryId") int categoryId);
+
+    @GET("products/{productId}")
+    Call<ApiResponse<ProductResponse>> getProductDetail(@Path("productId") int productId);
 }

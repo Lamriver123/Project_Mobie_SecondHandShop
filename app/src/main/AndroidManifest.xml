@@ -32,6 +32,8 @@
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".ActivityCategory" />
+        <activity android:name=".ProductDetailActivity" />
+
 
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

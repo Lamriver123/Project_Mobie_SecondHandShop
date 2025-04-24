@@ -1,5 +1,6 @@
 package com.example.marketplacesecondhand.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.marketplacesecondhand.API.APIService;
+import com.example.marketplacesecondhand.ProductDetailActivity;
 import com.example.marketplacesecondhand.RetrofitClient;
 import com.example.marketplacesecondhand.adapter.CategoryAdapter;
 import com.example.marketplacesecondhand.adapter.ProductAdapter;
@@ -63,10 +65,7 @@ public class NewProductFragment extends Fragment {
             public void onResponse(Call<ApiResponse<List<ProductResponse>>> call, Response<ApiResponse<List<ProductResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<ProductResponse> products = response.body().getData();
-                    ProductAdapter adapter = new ProductAdapter(getContext(), products, product -> {
-                        // Xử lý khi người dùng click vào product
-                        Toast.makeText(getContext(),"Sản phẩm được chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
-                    });
+                    ProductAdapter adapter = new ProductAdapter(getContext(), products);
 
                     binding.newProductRecycler.setAdapter(adapter);
                     binding.newProductRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));

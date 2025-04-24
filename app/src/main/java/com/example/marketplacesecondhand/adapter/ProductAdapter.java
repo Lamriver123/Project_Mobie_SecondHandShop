@@ -1,6 +1,7 @@
 package com.example.marketplacesecondhand.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.marketplacesecondhand.ActivityCategory;
+import com.example.marketplacesecondhand.ProductDetailActivity;
 import com.example.marketplacesecondhand.R;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.Product;
@@ -23,17 +26,15 @@ import java.util.Set;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
     private final Context context;
     private final List<ProductResponse> productList;
-    private final OnItemClickListener listener;
     private final Set<Integer> favoritePositions = new HashSet<>();
     public interface OnItemClickListener {
         void onItemClick(ProductResponse product);
     }
 
 
-    public ProductAdapter(Context context, List<ProductResponse> productList, OnItemClickListener listener) {
+    public ProductAdapter(Context context, List<ProductResponse> productList) {
         this.context = context;
         this.productList = productList;
-        this.listener = listener;
     }
 
 
@@ -94,7 +95,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             }
         });
 
-        holder.itemView.setOnClickListener(v -> listener.onItemClick(product));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("product_id", product.getProductId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
