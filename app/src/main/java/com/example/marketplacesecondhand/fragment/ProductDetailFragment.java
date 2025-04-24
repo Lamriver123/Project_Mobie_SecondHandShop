@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.R;
 import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.adapter.ImageSliderAdapter;
+import com.example.marketplacesecondhand.adapter.SliderAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentProductDetailBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
@@ -68,15 +70,19 @@ public class ProductDetailFragment extends Fragment {
                     binding.textProductName.setText(product.getProductName());
                     binding.textProductPrice.setText(product.getCurrentPrice());
 
-                    // Load ảnh đầu tiên từ danh sách ảnh
-                    if (product.getCurrentImages() != null && !product.getCurrentImages().isEmpty()) {
-                        Glide.with(requireContext())
-                                .load(product.getCurrentImages().get(0))
-                                .placeholder(R.drawable.img)
-                                .into(binding.imageProduct);
-                    } else {
-                        binding.imageProduct.setImageResource(R.drawable.img);
-                    }
+                    ImageSliderAdapter sliderAdapter = new ImageSliderAdapter(requireContext(), product.getCurrentImages());
+                    binding.viewPagerImages.setAdapter(sliderAdapter);
+
+                    binding.radioCurrent.setOnClickListener(v -> {
+                        binding.viewPagerImages.setAdapter(new ImageSliderAdapter(requireContext(), product.getCurrentImages()));
+                    });
+
+                    binding.radioOriginal.setOnClickListener(v -> {
+                        binding.viewPagerImages.setAdapter(new ImageSliderAdapter(requireContext(), product.getInitialImages()));
+                    });
+
+
+
 
                 } else {
                     Log.e("API", "Lỗi khi load chi tiết sản phẩm");

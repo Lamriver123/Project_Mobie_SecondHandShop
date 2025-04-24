@@ -18,12 +18,38 @@
             android:orientation="vertical">
 
             <!-- Hình ảnh sản phẩm -->
-            <ImageView
-                android:id="@+id/imageProduct"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerImages"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img" />
+                android:layout_marginBottom="8dp" />
+
+
+            <RadioGroup
+                android:id="@+id/imageTypeSelector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <RadioButton
+                    android:id="@+id/radioCurrent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ảnh hiện tại"
+                    android:layout_margin="8dp"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/radioOriginal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Ảnh lúc mới mua" />
+            </RadioGroup>
+
 
             <!-- Tên và giá sản phẩm -->
             <TextView
