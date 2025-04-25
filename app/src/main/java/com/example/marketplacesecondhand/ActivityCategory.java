@@ -1,5 +1,7 @@
 package com.example.marketplacesecondhand;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -9,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.marketplacesecondhand.fragment.FilterFragment;
 import com.example.marketplacesecondhand.fragment.HeaderWithBackFragment;
+import com.example.marketplacesecondhand.fragment.PriceFilterBottomSheetFragment;
 import com.example.marketplacesecondhand.fragment.ProductCategoryFragment;
 import com.example.marketplacesecondhand.models.Category;
 
@@ -85,5 +88,16 @@ public class ActivityCategory extends AppCompatActivity implements FilterFragmen
                     .replace(R.id.category_content, productFragment)
                     .commit();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Xóa giá trị lọc theo giá trong SharedPreferences khi Activity kết thúc
+        SharedPreferences prefs = getSharedPreferences(PriceFilterBottomSheetFragment.PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(PriceFilterBottomSheetFragment.KEY_MIN_PRICE);
+        editor.remove(PriceFilterBottomSheetFragment.KEY_MAX_PRICE);
+        editor.apply(); // Lưu lại thay đổi
     }
 }

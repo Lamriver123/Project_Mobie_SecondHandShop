@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.marketplacesecondhand.R;
 import com.example.marketplacesecondhand.databinding.FragmentFilterBinding;
 import com.example.marketplacesecondhand.models.Category;
 
@@ -21,6 +22,7 @@ public class FilterFragment extends Fragment {
 
     public interface OnFilterChangeListener {
         void onCategoryChanged(Category category);
+       // void onPriceChanged(Category category);
     }
 
     @Override
@@ -51,8 +53,22 @@ public class FilterFragment extends Fragment {
 
     private void setupClickListeners() {
         binding.btnPrice.setOnClickListener(v -> {
-            // Xử lý chọn khoảng giá ở đây
-            Toast.makeText(getContext(), "Chọn khoảng giá", Toast.LENGTH_SHORT).show();
+            PriceFilterBottomSheetFragment bottomSheet = new PriceFilterBottomSheetFragment();
+            bottomSheet.setSelectedCategoryId(currentCategoryId);
+            bottomSheet.setOnPriceFilterListener(new PriceFilterBottomSheetFragment.OnPriceFilterListener() {
+                @Override
+                public void onPriceFilterApplied(int minPrice, int maxPrice) {
+                    binding.btnPrice.setText(minPrice + " - " + maxPrice);
+                    binding.btnPrice.setBackgroundResource(R.drawable.bg_category_chip_selected);
+                    binding.btnPrice.setTextColor(getResources().getColor(R.color.yellow));
+                    // Lưu giá trị minPrice và maxPrice vào SharedPreferences
+//                    if (filterChangeListener != null) {
+//                        filterChangeListener.onPriceChanged(currentCategoryId);
+//                    }
+
+                }
+            });
+            bottomSheet.show(getParentFragmentManager(), "PriceFilterBottomSheet");
         });
 
         binding.btnCategory.setOnClickListener(v -> {

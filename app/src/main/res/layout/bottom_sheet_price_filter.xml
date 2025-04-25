@@ -15,15 +15,41 @@
         android:background="#E0E0E0"
         android:layout_marginBottom="16dp"/>
 
-    <TextView
+    <!-- Header -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Khoảng giá"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:textColor="#333333"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="24dp"/>
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="#666666" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Giá"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btnClearFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="Xoá lọc"
+            android:textColor="#2196F3"
+            android:textSize="14sp" />
+    </RelativeLayout>
 
     <!-- Price Range Inputs -->
     <LinearLayout
@@ -79,12 +105,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="24dp"/>
-<!--        app:values="@array/initial_slider_values"-->
-<!--        app:valueFrom="0"-->
-<!--        app:valueTo="50000000"-->
-<!--        app:stepSize="1000000"-->
-<!--        app:labelBehavior="withinBounds" />-->
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        app:trackColor="#E0E0E0"
+        app:trackColorActive="@color/yellow"
+        app:thumbColor="@color/yellow"
+        app:labelBehavior="gone"
+        app:tickVisible="false" />
+
 
     <!-- Quick Select Buttons -->
     <HorizontalScrollView
@@ -154,6 +182,8 @@
         android:text="Áp dụng"
         android:textColor="@color/white"
         android:backgroundTint="@color/yellow"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:enabled="false" />
+
 
 </LinearLayout>

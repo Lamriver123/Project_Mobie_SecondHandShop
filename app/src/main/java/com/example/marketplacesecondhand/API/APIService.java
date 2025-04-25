@@ -10,7 +10,6 @@ import com.example.marketplacesecondhand.dto.response.AuthResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.Category;
 import com.example.marketplacesecondhand.models.Product;
-import com.example.marketplacesecondhand.models.User;
 
 import java.util.List;
 
@@ -56,4 +55,7 @@ public interface APIService {
 
     @GET("products/{productId}")
     Call<ApiResponse<ProductResponse>> getProductDetail(@Path("productId") int productId);
+
+    @GET("category/{categoryId}/max-price")
+    Call<ApiResponse<Integer>> getMaxPrice(@Path("categoryId") int categoryId);
 }
