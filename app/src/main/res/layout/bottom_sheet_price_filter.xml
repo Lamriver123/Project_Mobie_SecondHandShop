@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_sheet_background"
+    android:orientation="vertical">
+
+    <!-- Handle bar -->
+    <View
+        android:layout_width="32dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:background="#E0E0E0"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Khoảng giá"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#333333"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Price Range Inputs -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:layout_marginBottom="24dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Giá tối thiểu">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtMinPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="24sp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_gravity="center_vertical"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Giá tối đa">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtMaxPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <!-- Price Range Slider -->
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/priceRangeSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="24dp"/>
+<!--        app:values="@array/initial_slider_values"-->
+<!--        app:valueFrom="0"-->
+<!--        app:valueTo="50000000"-->
+<!--        app:stepSize="1000000"-->
+<!--        app:labelBehavior="withinBounds" />-->
+
+    <!-- Quick Select Buttons -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:id="@+id/btnUnder2M"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dưới 2 triệu"
+                android:background="@drawable/bg_category_chip"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="#666666"/>
+
+            <TextView
+                android:id="@+id/btn2To5M"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2 - 5 triệu"
+                android:background="@drawable/bg_category_chip"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="#666666"/>
+
+            <TextView
+                android:id="@+id/btn5To10M"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 - 10 triệu"
+                android:background="@drawable/bg_category_chip"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="#666666"/>
+
+            <TextView
+                android:id="@+id/btn10To20M"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 - 20 triệu"
+                android:background="@drawable/bg_category_chip"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:textColor="#666666"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- Apply Button -->
+    <Button
+        android:id="@+id/btnApply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Áp dụng"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/yellow"
+        android:layout_margin="16dp"/>
+
+</LinearLayout>

@@ -10,8 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.marketplacesecondhand.fragment.FilterFragment;
 import com.example.marketplacesecondhand.fragment.HeaderWithBackFragment;
 import com.example.marketplacesecondhand.fragment.ProductCategoryFragment;
+import com.example.marketplacesecondhand.models.Category;
 
-public class ActivityCategory extends AppCompatActivity {
+public class ActivityCategory extends AppCompatActivity implements FilterFragment.OnFilterChangeListener {
+    private ProductCategoryFragment productFragment;
+    private HeaderWithBackFragment headerFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +25,7 @@ public class ActivityCategory extends AppCompatActivity {
         int categoryId = getIntent().getIntExtra("category_id", -1);
 
         // Setup header fragment
-        HeaderWithBackFragment headerFragment = new HeaderWithBackFragment();
+        headerFragment = new HeaderWithBackFragment();
         Bundle headerBundle = new Bundle();
         headerBundle.putString("category_name", categoryName);
         headerFragment.setArguments(headerBundle);
@@ -34,6 +37,9 @@ public class ActivityCategory extends AppCompatActivity {
 
         // Setup filter fragment
         FilterFragment filterFragment = new FilterFragment();
+        Bundle filterBundle = new Bundle();
+        filterBundle.putInt("category_id", categoryId);
+        filterFragment.setArguments(filterBundle);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -41,7 +47,7 @@ public class ActivityCategory extends AppCompatActivity {
                 .commit();
 
         // Setup product fragment
-        ProductCategoryFragment productFragment = new ProductCategoryFragment();
+        productFragment = new ProductCategoryFragment();
         Bundle productBundle = new Bundle();
         productBundle.putInt("category_id", categoryId);
         productFragment.setArguments(productBundle);
@@ -50,5 +56,34 @@ public class ActivityCategory extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.category_content, productFragment)
                 .commit();
+    }
+
+    @Override
+    public void onCategoryChanged(Category category) {
+        if (productFragment != null) {
+            // Tạo bundle mới với category id mới
+            Bundle args = new Bundle();
+            args.putInt("category_id", category.getCategoryId());
+            args.putString("category_name", category.getCategoryName());
+
+            // Tạo fragment header mới để load search
+            headerFragment = new HeaderWithBackFragment();
+            headerFragment.setArguments(args);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.header_with_back, headerFragment)
+                    .commit();
+
+            // Tạo fragment mới
+            productFragment = new ProductCategoryFragment();
+            productFragment.setArguments(args);
+            
+            // Replace fragment cũ bằng fragment mới
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.category_content, productFragment)
+                    .commit();
+        }
     }
 }
