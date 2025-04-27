@@ -241,7 +241,7 @@
             android:layout_height="wrap_content"
             android:hint="Username"
             android:layout_marginBottom="16dp"
-            app:startIconDrawable="@drawable/email">
+            app:startIconDrawable="@drawable/user">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextUname"

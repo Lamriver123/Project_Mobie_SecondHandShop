@@ -85,20 +85,20 @@ public class PriceFilterBottomSheetFragment extends BottomSheetDialogFragment {
         setupApplyButton();
         setupEditTextListeners();
         setupClearAndClose();
-        loadPreviousValues();
+     //   loadPreviousValues();
 
         return view;
     }
 
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//        //    init(view);
-//        getMinMaxPriceWithCategoryId(selectedCategoryId);
-//    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //    init(view);
+        getMaxPriceWithCategoryId(selectedCategoryId);
+    }
 
     private void getMaxPriceWithCategoryId(int categoryId) {
-       // apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
         Call<ApiResponse<Integer>> call = apiService.getMaxPrice(categoryId);
 
         call.enqueue(new Callback<ApiResponse<Integer>>() {
@@ -107,10 +107,13 @@ public class PriceFilterBottomSheetFragment extends BottomSheetDialogFragment {
                 if (response.isSuccessful() && response.body() != null) {
                     maxPrice = response.body().getData();
 
-                    // Cập nhật UI
-                    edtMaxPrice.setText(String.valueOf((int) maxPrice));
+                    // Cập nhật max cho slider
                     priceRangeSlider.setValueTo((float) maxPrice);
                     priceRangeSlider.setValues(0.0f, (float) maxPrice);
+
+                    edtMaxPrice.setText(String.valueOf(maxPrice));
+
+                    loadPreviousValues();
 
                 } else {
                     Log.e("API", "Lỗi dữ liệu hoặc response body null");
@@ -126,12 +129,20 @@ public class PriceFilterBottomSheetFragment extends BottomSheetDialogFragment {
 
     private void loadPreviousValues() {
         SharedPreferences prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        int minPrice = prefs.getInt(KEY_MIN_PRICE, 0);
-        int maxPrice = prefs.getInt(KEY_MAX_PRICE, 50000000);
+        int savedMinPrice = prefs.getInt(KEY_MIN_PRICE, -1);
+        int savedMaxPrice = prefs.getInt(KEY_MAX_PRICE, -1);
 
-        edtMinPrice.setText(String.valueOf(minPrice));
-        edtMaxPrice.setText(String.valueOf(maxPrice));
-        priceRangeSlider.setValues((float) minPrice, (float) maxPrice);
+        if (savedMinPrice != -1 && savedMaxPrice != -1) {
+            // Nếu có giá trị lưu thì load lại
+            edtMinPrice.setText(String.valueOf(savedMinPrice));
+            edtMaxPrice.setText(String.valueOf(savedMaxPrice));
+            priceRangeSlider.setValues((float) savedMinPrice, (float) savedMaxPrice);
+        } else {
+            // Nếu chưa có thì dùng mặc định
+            edtMinPrice.setText(String.valueOf(0));
+            edtMaxPrice.setText(String.valueOf(maxPrice));
+            priceRangeSlider.setValues(0f, (float) maxPrice);
+        }
         updateApplyButtonState();
     }
 
@@ -145,8 +156,8 @@ public class PriceFilterBottomSheetFragment extends BottomSheetDialogFragment {
 
     private void setupPriceRangeSlider() {
         priceRangeSlider.setValueFrom(0);
-        priceRangeSlider.setValueTo(50000000);
-        priceRangeSlider.setStepSize(100000);
+        priceRangeSlider.setValueTo(maxPrice);
+        priceRangeSlider.setStepSize((int)(maxPrice * 0.01));
 
         priceRangeSlider.addOnChangeListener((slider, value, fromUser) -> {
             List<Float> values = slider.getValues();

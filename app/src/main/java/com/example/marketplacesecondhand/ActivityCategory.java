@@ -18,6 +18,8 @@ import com.example.marketplacesecondhand.models.Category;
 public class ActivityCategory extends AppCompatActivity implements FilterFragment.OnFilterChangeListener {
     private ProductCategoryFragment productFragment;
     private HeaderWithBackFragment headerFragment;
+    private FilterFragment filterFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +41,10 @@ public class ActivityCategory extends AppCompatActivity implements FilterFragmen
                 .commit();
 
         // Setup filter fragment
-        FilterFragment filterFragment = new FilterFragment();
+        filterFragment = new FilterFragment();
         Bundle filterBundle = new Bundle();
         filterBundle.putInt("category_id", categoryId);
+        filterBundle.putString("category_name", categoryName);
         filterFragment.setArguments(filterBundle);
 
         getSupportFragmentManager()

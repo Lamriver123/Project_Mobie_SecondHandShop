@@ -45,6 +45,7 @@ public class FilterFragment extends Fragment {
         // Lấy category id từ arguments nếu có
         if (getArguments() != null) {
             currentCategoryId = getArguments().getInt("category_id", -1);
+            binding.btnCategory.setText(getArguments().getString("category_name", ""));
         }
         
         setupClickListeners();
