@@ -48,7 +48,7 @@ public class PriceFilterBottomSheetFragment extends BottomSheetDialogFragment {
     private int maxPrice = 10000000;
 
     public interface OnPriceFilterListener {
-        void onPriceFilterApplied(int minPrice, int maxPrice);
+        void onPriceFilterApplied(int categoryId, int minPrice, int maxPrice);
     }
 
     public void setOnPriceFilterListener(OnPriceFilterListener listener) {
@@ -77,15 +77,12 @@ public class PriceFilterBottomSheetFragment extends BottomSheetDialogFragment {
         btnClearFilter = view.findViewById(R.id.btnClearFilter);
         btnClose = view.findViewById(R.id.btnClose);
 
-        // Mai sửa API này !!
-       // getMaxPriceWithCategoryId(selectedCategoryId);
-
         setupPriceRangeSlider();
         setupQuickSelectButtons();
         setupApplyButton();
         setupEditTextListeners();
         setupClearAndClose();
-     //   loadPreviousValues();
+
 
         return view;
     }
@@ -93,7 +90,7 @@ public class PriceFilterBottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //    init(view);
+
         getMaxPriceWithCategoryId(selectedCategoryId);
     }
 
@@ -186,14 +183,14 @@ public class PriceFilterBottomSheetFragment extends BottomSheetDialogFragment {
     private void setupApplyButton() {
         btnApply.setOnClickListener(v -> {
             try {
-                int minPrice = edtMinPrice.getText().toString().isEmpty() ? 0 :
+                int min = edtMinPrice.getText().toString().isEmpty() ? 0 :
                         Integer.parseInt(edtMinPrice.getText().toString());
-                int maxPrice = edtMaxPrice.getText().toString().isEmpty() ? 50000000 :
+                int max = edtMaxPrice.getText().toString().isEmpty() ? maxPrice :
                         Integer.parseInt(edtMaxPrice.getText().toString());
 
-                if (minPrice <= maxPrice && listener != null) {
-                    saveValues(minPrice, maxPrice);
-                    listener.onPriceFilterApplied(minPrice, maxPrice);
+                if (min <= max && listener != null) {
+                    saveValues(min, max);
+                    listener.onPriceFilterApplied(selectedCategoryId, min, max);
                     dismiss();
                 }
             } catch (NumberFormatException e) {

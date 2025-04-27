@@ -67,12 +67,45 @@ public class ProductCategoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         int categoryId = getArguments() != null ? getArguments().getInt("category_id", -1) : -1;
+        int minPrice = getArguments() != null ? getArguments().getInt("min_price", -1) : -1;
+        int maxPrice = getArguments() != null ? getArguments().getInt("max_price", -1) : -1;
 
         if (categoryId != -1) {
-            fetchProductByCategory(categoryId);
+            if (minPrice != -1 && maxPrice != -1) {
+                fetchProductByPrice(categoryId, minPrice, maxPrice);
+            } else {
+                fetchProductByCategory(categoryId);
+            }
         } else {
             Log.e("Fragment", "categoryId không tồn tại trong Bundle");
         }
+    }
+
+    private void fetchProductByPrice(int categoryId, int minPrice, int maxPrice) {
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        Call<ApiResponse<List<ProductResponse>>> call = apiService.filterProductsByPrice(categoryId, minPrice, maxPrice);
+
+        call.enqueue(new Callback<ApiResponse<List<ProductResponse>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<ProductResponse>>> call, Response<ApiResponse<List<ProductResponse>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<ProductResponse> products = response.body().getData();
+                    ProductCategoryAdapter adapter = new ProductCategoryAdapter(getContext(), products, product -> {
+                        // Xử lý khi người dùng click vào product
+                        Toast.makeText(getContext(),"Sản phẩm được chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
+                    });
+
+                    binding.rvProductCategory.setAdapter(adapter);
+                } else {
+                    Log.e("API", "Lỗi dữ liệu lọc giá");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<ProductResponse>>> call, Throwable t) {
+                Log.e("API", "Lỗi kết nối lọc giá: " + t.getMessage());
+            }
+        });
     }
 
     private void fetchProductByCategory(int categoryId) {

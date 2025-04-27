@@ -2,6 +2,7 @@ package com.example.marketplacesecondhand.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.R;
+import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.adapter.ProductCategoryAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentFilterBinding;
+import com.example.marketplacesecondhand.dto.response.ApiResponse;
+import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.Category;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FilterFragment extends Fragment {
     private FragmentFilterBinding binding;
@@ -22,7 +34,7 @@ public class FilterFragment extends Fragment {
 
     public interface OnFilterChangeListener {
         void onCategoryChanged(Category category);
-       // void onPriceChanged(Category category);
+        void onPriceChanged(int categoryId, int minPrice, int maxPrice);
     }
 
     @Override
@@ -58,14 +70,14 @@ public class FilterFragment extends Fragment {
             bottomSheet.setSelectedCategoryId(currentCategoryId);
             bottomSheet.setOnPriceFilterListener(new PriceFilterBottomSheetFragment.OnPriceFilterListener() {
                 @Override
-                public void onPriceFilterApplied(int minPrice, int maxPrice) {
+                public void onPriceFilterApplied(int categoryId, int minPrice, int maxPrice) {
                     binding.btnPrice.setText(minPrice + " - " + maxPrice);
                     binding.btnPrice.setBackgroundResource(R.drawable.bg_category_chip_selected);
                     binding.btnPrice.setTextColor(getResources().getColor(R.color.yellow));
-                    // Lưu giá trị minPrice và maxPrice vào SharedPreferences
-//                    if (filterChangeListener != null) {
-//                        filterChangeListener.onPriceChanged(currentCategoryId);
-//                    }
+
+                    if (filterChangeListener != null) {
+                        filterChangeListener.onPriceChanged(categoryId, minPrice, maxPrice);
+                    }
 
                 }
             });
@@ -80,6 +92,12 @@ public class FilterFragment extends Fragment {
                 public void onCategorySelected(Category category) {
                     binding.btnCategory.setText(category.getCategoryName());
                     currentCategoryId = category.getCategoryId();
+
+                    // Reset lọc theo giá về mặc định
+                    binding.btnPrice.setText("Giá");
+                    binding.btnPrice.setBackgroundResource(R.drawable.bg_filter_button); // Background mặc định
+                    binding.btnPrice.setTextColor(getResources().getColor(R.color.text_filter)); // Màu chữ mặc định
+
                     if (filterChangeListener != null) {
                         filterChangeListener.onCategoryChanged(category);
                     }

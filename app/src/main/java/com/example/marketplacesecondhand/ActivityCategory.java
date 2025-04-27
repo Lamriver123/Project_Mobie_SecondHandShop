@@ -94,6 +94,25 @@ public class ActivityCategory extends AppCompatActivity implements FilterFragmen
     }
 
     @Override
+    public void onPriceChanged(int categoryId, int minPrice, int maxPrice) {
+        if (productFragment != null) {
+            Bundle args = new Bundle();
+            args.putInt("category_id", categoryId);
+            args.putInt("min_price", minPrice);
+            args.putInt("max_price", maxPrice);
+
+            productFragment = new ProductCategoryFragment();
+            productFragment.setArguments(args);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.category_content, productFragment)
+                    .commit();
+        }
+    }
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         // Xóa giá trị lọc theo giá trong SharedPreferences khi Activity kết thúc

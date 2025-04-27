@@ -19,6 +19,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService {
     @POST("auth/register")
@@ -58,4 +59,11 @@ public interface APIService {
 
     @GET("category/{categoryId}/max-price")
     Call<ApiResponse<Integer>> getMaxPrice(@Path("categoryId") int categoryId);
+
+    @GET("filter")
+    Call<ApiResponse<List<ProductResponse>>> filterProductsByPrice(
+            @Query("categoryId") int categoryId,
+            @Query("minPrice") int minPrice,
+            @Query("maxPrice") int maxPrice
+    );
 }
