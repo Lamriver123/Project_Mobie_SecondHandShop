@@ -1,10 +1,15 @@
 package com.example.marketplacesecondhand.fragment;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,6 +23,9 @@ import com.example.marketplacesecondhand.adapter.SliderAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentProductDetailBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +65,67 @@ public class ProductDetailFragment extends Fragment {
         return view;
     }
 
+    private void showProductDetails(ProductResponse product) {
+        binding.tableProductDetails.removeAllViews();
+        addTableRow("Danh mục", product.getProductName());
+        addTableRow("Giá gốc", product.getOriginalPrice() + " ₫");
+        addTableRow("Giá hiện tại", product.getCurrentPrice() + " ₫");
+        addTableRow("Số lượng", String.valueOf(product.getQuantity()));
+        addTableRow("Xuất xứ", product.getOrigin());
+        addTableRow("Bảo hành", product.getWarranty());
+        addTableRow("Tình trạng", product.getProductCondition());
+        addTableRow("Mô tả tình trạng", product.getConditionDescription());
+        addTableRow("Đã bán", String.valueOf(product.getSold()));
+        if (product.getCreatedAt() != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            addTableRow("Ngày đăng", sdf.format(product.getCreatedAt()));
+        }
+    }
+    private void addTableRow(String title, String value) {
+        Log.d("DetailActivity", "Thêm dòng: " + title + " - " + value);
+
+        LinearLayout row = new LinearLayout(requireContext());
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        row.setPadding(0, 8, 0, 8);
+
+        TextView titleView = new TextView(requireContext());
+        titleView.setLayoutParams(new LinearLayout.LayoutParams(
+                0, ViewGroup.LayoutParams.WRAP_CONTENT, 1  // Cột trái
+        ));
+        titleView.setText(title);
+        titleView.setTextSize(16);
+        titleView.setTextColor(Color.parseColor("#757575"));
+        titleView.setTypeface(null, Typeface.BOLD);
+
+        TextView valueView = new TextView(requireContext());
+        valueView.setLayoutParams(new LinearLayout.LayoutParams(
+                0, ViewGroup.LayoutParams.WRAP_CONTENT, 2  // Cột phải
+        ));
+        valueView.setText(value != null ? value : "-");
+        valueView.setTextSize(16);
+        valueView.setTextColor(Color.parseColor("#212121"));
+
+        row.addView(titleView);
+        row.addView(valueView);
+
+        binding.tableProductDetails.addView(row);
+
+        // Thêm đường kẻ ngăn cách mỗi dòng
+        View divider = new View(requireContext());
+        divider.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                1
+        ));
+        divider.setBackgroundColor(Color.parseColor("#E0E0E0"));
+
+        binding.tableProductDetails.addView(divider);
+    }
+
+
     private void fetchProductDetail(int productId) {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
         apiService.getProductDetail(productId).enqueue(new Callback<ApiResponse<ProductResponse>>() {
@@ -66,6 +135,7 @@ public class ProductDetailFragment extends Fragment {
                     ProductResponse product = response.body().getData();
                     Log.d("ProductDetailFragment", "Tên sản phẩm: " + product.getProductName());
 
+                    showProductDetails(product);
                     // Binding dữ liệu lên UI
                     binding.textProductName.setText(product.getProductName());
                     binding.textProductPrice.setText(product.getCurrentPrice());
@@ -82,7 +152,11 @@ public class ProductDetailFragment extends Fragment {
                     });
 
 
-
+                    SimilarProductsFragment fragment = SimilarProductsFragment.newInstance(product.getCategoryName());
+                    getParentFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.similar_products, fragment)
+                            .commit();
 
                 } else {
                     Log.e("API", "Lỗi khi load chi tiết sản phẩm");

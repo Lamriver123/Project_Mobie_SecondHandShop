@@ -2,6 +2,8 @@ package com.example.marketplacesecondhand.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +105,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 context.startActivity(intent);
             }
         });
+        int marginInPx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 8, Resources.getSystem().getDisplayMetrics()); // 8dp
+
+        int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        int itemWidth = (screenWidth / 2) - (marginInPx * 2); // Trừ 2 bên
+        ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+        layoutParams.width = itemWidth;
+        holder.itemView.setLayoutParams(layoutParams);
+
+// Đặt margin cho item
+        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) layoutParams;
+            marginLayoutParams.setMargins(marginInPx, marginInPx, marginInPx, marginInPx);
+            holder.itemView.setLayoutParams(marginLayoutParams);
+        }
+
     }
 
     @Override

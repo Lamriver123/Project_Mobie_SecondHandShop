@@ -12,6 +12,7 @@ public class Category {
     @SerializedName("categoryImg")
     private String categoryImg;
 
+
     public Category(int categoryId, String categoryName, String categoryImg) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
