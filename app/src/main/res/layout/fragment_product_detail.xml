@@ -14,9 +14,9 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPagerImages"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="#FFFFFF"
+            android:layout_height="285dp"
             android:layout_marginBottom="12dp"
+            android:background="#FFFFFF"
             android:elevation="2dp" />
 
         <!-- Loại hình ảnh (Hiện tại / Lúc mới mua) -->
@@ -62,46 +62,6 @@
             android:textSize="18sp"
             android:layout_marginTop="4dp" />
 
-        <!-- Nút thêm giỏ / mua -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/buttonAddToCart"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:backgroundTint="#FFA000"
-                android:text="Thêm vào giỏ"
-                android:textColor="#FFFFFF" />
-
-            <Button
-                android:id="@+id/buttonBuyNow"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:backgroundTint="#4CAF50"
-                android:text="Mua ngay"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
-
-        <!-- Nút Lưu tin -->
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_gravity="end"
-            android:background="@android:color/transparent"
-            android:drawableRight="@drawable/ic_heart_border_red"
-            android:text="Lưu tin"
-            android:textColor="#E53935" />
-
 
 
         <!-- Người bán -->
@@ -144,11 +104,17 @@
                     android:textColor="#757575" />
             </LinearLayout>
 
-            <Button
-                android:text="Xem trang"
-                android:textSize="14sp"
+            <TextView
+                android:id="@+id/btnViewShop"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="32dp"
+                android:background="@drawable/bg_filter_button"
+                android:text="Xem trang"
+                android:drawablePadding="4dp"
+                android:textColor="#666666"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:layout_marginEnd="8dp"/>
         </LinearLayout>
 
 

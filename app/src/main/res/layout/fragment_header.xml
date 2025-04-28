@@ -28,6 +28,7 @@
         android:src="@drawable/icon_heart" />
 
     <ImageView
+        android:id="@+id/btnCart"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="10dp"

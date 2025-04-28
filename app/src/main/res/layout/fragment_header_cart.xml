@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:id="@+id/header_with_back"
+    android:paddingTop="40dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@color/yellow">
+
+    <ImageView
+        android:id="@+id/ic_back"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_back"
+        android:layout_marginEnd="10dp" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_marginStart="12dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/textViewCartTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giỏ Hàng (0)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#212121"/>
+
+        <!-- Địa chỉ giao hàng -->
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Địa chỉ giao hàng: Chưa chọn"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            android:layout_marginTop="2dp"/>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="10dp" />
+</LinearLayout>
