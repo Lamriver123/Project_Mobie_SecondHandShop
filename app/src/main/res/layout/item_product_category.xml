@@ -90,15 +90,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Icon yêu thích -->
-            <ImageView
-                android:id="@+id/ivFavorite"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="top|end"
-                android:layout_margin="6dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_heart_border_red" />
         </FrameLayout>
 
         <!-- Thông tin sản phẩm bên phải -->
@@ -169,12 +160,13 @@
                 android:gravity="end">
 
                 <ImageView
-                    android:id="@+id/ivChat"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:id="@+id/ivFavorite"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="6dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_chat" />
+                    android:src="@drawable/ic_heart_border_red" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

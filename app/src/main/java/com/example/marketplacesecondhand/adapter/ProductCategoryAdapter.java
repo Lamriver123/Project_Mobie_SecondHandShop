@@ -12,26 +12,37 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.marketplacesecondhand.API.APIService;
+import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.R;
+import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
+import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
+import com.example.marketplacesecondhand.models.UserLoginInfo;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategoryAdapter.ProductCategoryViewHolder>{
     private Context context;
     private List<ProductResponse> productList;
     private ProductAdapter.OnItemClickListener listener;
-    private final Set<Integer> favoritePositions = new HashSet<>();
+    private final Set<Integer> favoriteProductIds;
     public interface OnItemClickListener {
         void onItemClick(ProductResponse product);
     }
 
-    public ProductCategoryAdapter(Context context, List<ProductResponse> productList, ProductAdapter.OnItemClickListener listener) {
+    public ProductCategoryAdapter(Context context, List<ProductResponse> productList, ProductAdapter.OnItemClickListener listener, List<Integer> favoriteProductIds) {
         this.context = context;
         this.productList = productList;
         this.listener = listener;
+        this.favoriteProductIds = new HashSet<>(favoriteProductIds);;
     }
 
     @NonNull
@@ -65,8 +76,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
             holder.imageProduct.setImageResource(R.drawable.img);
         }
 
-        // Set iconFavorite ban đầu
-        if (favoritePositions.contains(position)) {
+        // Set iconFavorite ban đầu theo danh sách favoriteProductIds
+        if (favoriteProductIds.contains(product.getProductId())) {
             holder.iconFavorite.setImageResource(R.drawable.ic_heart_selected);
         } else {
             holder.iconFavorite.setImageResource(R.drawable.ic_heart_border_red);
@@ -74,18 +85,50 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
 
         // Xử lý sự kiện nhấn vào iconFavorite
         holder.iconFavorite.setOnClickListener(v -> {
-            if (favoritePositions.contains(position)) {
-                favoritePositions.remove(position);
-                holder.iconFavorite.setImageResource(R.drawable.ic_heart_border_red);
-                Toast.makeText(context, "Đã hủy yêu thích sản phầm này", Toast.LENGTH_SHORT).show();
-            } else {
-                favoritePositions.add(position);
-                holder.iconFavorite.setImageResource(R.drawable.ic_heart_selected);
-                Toast.makeText(context, "Đã thêm vào yêu thích", Toast.LENGTH_SHORT).show();
-            }
+            toggleFavorite(product.getProductId(), position, holder);
         });
 
         holder.itemView.setOnClickListener(v -> listener.onItemClick(product));
+    }
+
+    private void toggleFavorite(int productId, int position, ProductCategoryViewHolder holder) {
+        DatabaseHandler db = new DatabaseHandler(context);
+        UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+
+        if (userLoginInfo == null || userLoginInfo.getUserId() == 0) {
+            Toast.makeText(context, "Bạn cần đăng nhập để sử dụng tính năng yêu thích!", Toast.LENGTH_SHORT).show();
+            return; // Không thực hiện gọi API nữa
+        }
+
+        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+
+        FavoriteRequest request = new FavoriteRequest(userLoginInfo.getUserId(), productId);
+
+        Call<ApiResponse<String>> call = apiService.toggleFavorite(request);
+        call.enqueue(new Callback<ApiResponse<String>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<String>> call, Response<ApiResponse<String>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    // Toggle favorite ID trong danh sách
+                    if (favoriteProductIds.contains(productId)) {
+                        favoriteProductIds.remove(productId);
+                        holder.iconFavorite.setImageResource(R.drawable.ic_heart_border_red);
+                    } else {
+                        favoriteProductIds.add(productId);
+                        holder.iconFavorite.setImageResource(R.drawable.ic_heart_selected);
+                    }
+                } else {
+                    Toast.makeText(context, "Có lỗi xảy ra, thử lại sau!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<String>> call, Throwable t) {
+                Toast.makeText(context, "Không thể kết nối server!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

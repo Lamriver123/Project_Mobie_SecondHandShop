@@ -15,12 +15,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.marketplacesecondhand.API.APIService;
+import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.adapter.ProductAdapter;
 import com.example.marketplacesecondhand.adapter.ProductCategoryAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentProductCategoryBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
+import com.example.marketplacesecondhand.models.UserLoginInfo;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import retrofit2.Call;
@@ -90,12 +95,15 @@ public class ProductCategoryFragment extends Fragment {
             public void onResponse(Call<ApiResponse<List<ProductResponse>>> call, Response<ApiResponse<List<ProductResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<ProductResponse> products = response.body().getData();
-                    ProductCategoryAdapter adapter = new ProductCategoryAdapter(getContext(), products, product -> {
-                        // Xử lý khi người dùng click vào product
-                        Toast.makeText(getContext(),"Sản phẩm được chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
-                    });
 
-                    binding.rvProductCategory.setAdapter(adapter);
+                    fetchFavoriteProductIds(products);
+
+//                    ProductCategoryAdapter adapter = new ProductCategoryAdapter(getContext(), products, product -> {
+//                        // Xử lý khi người dùng click vào product
+//                        Toast.makeText(getContext(),"Sản phẩm được chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
+//                    }, new ArrayList<>());
+//
+//                    binding.rvProductCategory.setAdapter(adapter);
                 } else {
                     Log.e("API", "Lỗi dữ liệu lọc giá");
                 }
@@ -122,12 +130,15 @@ public class ProductCategoryFragment extends Fragment {
             public void onResponse(Call<ApiResponse<List<ProductResponse>>> call, Response<ApiResponse<List<ProductResponse>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<ProductResponse> products = response.body().getData();
-                    ProductCategoryAdapter adapter = new ProductCategoryAdapter(getContext(), products, product -> {
-                        // Xử lý khi người dùng click vào product
-                        Toast.makeText(getContext(),"Sản phẩm được chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
-                    });
 
-                    binding.rvProductCategory.setAdapter(adapter);
+                    fetchFavoriteProductIds(products);
+
+//                    ProductCategoryAdapter adapter = new ProductCategoryAdapter(getContext(), products, product -> {
+//                        // Xử lý khi người dùng click vào product
+//                        Toast.makeText(getContext(),"Sản phẩm được chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
+//                    }, new ArrayList<>());
+//
+//                    binding.rvProductCategory.setAdapter(adapter);
                     Log.d("API", "Số lượng sản phẩm: " + products.size());
                 } else {
                     Log.e("API", "Lỗi dữ liệu hoặc response body null");
@@ -140,4 +151,49 @@ public class ProductCategoryFragment extends Fragment {
             }
         });
     }
+
+    private void fetchFavoriteProductIds(List<ProductResponse> products) {
+        if (binding.rvProductCategory == null) {
+            Log.e("BINDING", "categoryRecycler is null - check fragment_category.xml");
+        }
+
+        DatabaseHandler db = new DatabaseHandler(getContext());
+        UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+
+        if (userLoginInfo != null || userLoginInfo.getUserId() != 0) {
+            Call<ApiResponse<List<Integer>>> call = apiService.getFavoriteProductIds(userLoginInfo.getUserId());
+
+            call.enqueue(new Callback<ApiResponse<List<Integer>>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<List<Integer>>> call, Response<ApiResponse<List<Integer>>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        List<Integer> favoriteProductIds = response.body().getData();
+
+                        ProductCategoryAdapter adapter = new ProductCategoryAdapter(getContext(), products, product -> {
+                            // Xử lý khi người dùng click vào product
+                            Toast.makeText(getContext(),"Sản phẩm được chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
+                        }, favoriteProductIds);
+
+                        binding.rvProductCategory.setAdapter(adapter);
+                    } else {
+                        Log.e("API", "Lỗi dữ liệu hoặc response body null");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<List<Integer>>> call, Throwable t) {
+                    Log.e("API", "Lỗi kết nối: " + t.getMessage());
+                }
+            });
+        }
+        else {
+            ProductCategoryAdapter adapter = new ProductCategoryAdapter(getContext(), products, product -> {
+                // Xử lý khi người dùng click vào product
+                Toast.makeText(getContext(),"Sản phẩm được chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
+            }, new ArrayList<>());
+
+            binding.rvProductCategory.setAdapter(adapter);
+        }
+    }
+
 }
