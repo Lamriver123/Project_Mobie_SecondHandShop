@@ -5,23 +5,23 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/header_with_back"
-        android:name="com.example.marketplacesecondhand.fragment.HeaderWithBackFragment"
+        android:id="@+id/header_cart"
+        android:name="com.example.marketplacesecondhand.fragment.HeaderCartFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/product_detail"
+        android:id="@+id/cart_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/footer_product_detail"
-        app:layout_constraintTop_toBottomOf="@id/header_with_back"
+        app:layout_constraintBottom_toTopOf="@+id/footer_cart"
+        app:layout_constraintTop_toBottomOf="@id/header_cart"
         />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/footer_product_detail"
-        android:name="com.example.marketplacesecondhand.fragment.FooterProductDetailFragment"
+        android:id="@+id/footer_cart"
+        android:name="com.example.marketplacesecondhand.fragment.FooterCartFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

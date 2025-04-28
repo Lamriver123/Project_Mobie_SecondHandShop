@@ -33,6 +33,8 @@
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".ActivityCategory" />
         <activity android:name=".ProductDetailActivity" />
+        <activity android:name=".CartActivity" />
+
 
 
     </application>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:padding="12dp">
+
+    <!-- Checkbox chọn sản phẩm -->
+    <CheckBox
+        android:id="@+id/checkboxSelectItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <!-- Ảnh sản phẩm -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageViewProduct"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/img"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Corner4dp"
+        app:layout_constraintStart_toEndOf="@id/checkboxSelectItem"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"/>
+
+
+    <!-- Tên sản phẩm -->
+    <TextView
+        android:id="@+id/textViewProductName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tên sản phẩm mẫu"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:layout_constraintTop_toTopOf="@id/imageViewProduct"
+        app:layout_constraintStart_toEndOf="@id/imageViewProduct"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp"/>
+
+    <!-- Giá gốc (gạch ngang) -->
+    <TextView
+        android:id="@+id/textViewOriginalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21.000đ"
+        android:textSize="12sp"
+        android:textColor="#9E9E9E"
+        app:layout_constraintStart_toStartOf="@id/textViewProductName"
+        app:layout_constraintTop_toBottomOf="@id/textViewProductName"
+        android:layout_marginTop="4dp"/>
+
+    <!-- Giá giảm -->
+    <TextView
+        android:id="@+id/textViewDiscountPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="18.180đ"
+        android:textSize="14sp"
+        android:textColor="#E53935"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/textViewOriginalPrice"
+        app:layout_constraintBaseline_toBaselineOf="@id/textViewOriginalPrice"
+        android:layout_marginStart="8dp"/>
+
+    <!-- Layout cộng trừ số lượng -->
+    <LinearLayout
+        android:id="@+id/layoutQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_quantity_selector"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewProduct"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/buttonDecrease"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_remove"
+            android:contentDescription="Decrease"
+            app:tint="#000000" />
+
+        <TextView
+            android:id="@+id/textViewQuantity"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="1"
+            android:textSize="14sp"
+            android:textColor="#000000"/>
+
+        <ImageButton
+            android:id="@+id/buttonIncrease"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add"
+            android:contentDescription="Increase"
+            app:tint="#000000" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

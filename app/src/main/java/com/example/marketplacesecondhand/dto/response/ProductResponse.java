@@ -21,6 +21,13 @@ public class ProductResponse {
     private List<String> initialImages;
     private List<String> currentImages;
 
+    public ProductResponse(int productId, String productName, String currentPrice, String originalPrice) {
+        this.productId = productId;
+        this.productName = productName;
+        this.currentPrice = currentPrice;
+        this.originalPrice = originalPrice;
+    }
+
     public ProductResponse(int productId, String productName, String currentPrice, String originalPrice, String origin, String warranty, String productCondition, String productDescription, String conditionDescription, Date createdAt, int sold, int quantity, String categoryName, List<String> initialImages, List<String> currentImages) {
         this.productId = productId;
         this.productName = productName;
