@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,10 +16,12 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.marketplacesecondhand.API.APIService;
+import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.dto.request.LoginRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.AuthResponse;
 import com.example.marketplacesecondhand.models.User;
+import com.example.marketplacesecondhand.models.UserLoginInfo;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -91,6 +94,20 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.editTextTextUsername);
         etPassword = findViewById(R.id.editTextTextPassword);
         cbRememberMe = findViewById(R.id.checkBox);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        boolean isRemembered = sharedPreferences.getBoolean("rememberMe", false);
+        DatabaseHandler db = new DatabaseHandler(this);
+        UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+
+        if (isRemembered) {
+            String savedUsername = userLoginInfo.username;
+            String savedPassword = userLoginInfo.password;
+            etUsername.setText(savedUsername);
+            etPassword.setText(savedPassword);
+            cbRememberMe.setChecked(true);
+            loginUser();
+        }
     }
     private void loginUser() {
         APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
@@ -111,20 +128,17 @@ public class LoginActivity extends AppCompatActivity {
                     if (authResponse != null) {
                         String token = authResponse.getToken(); // Lấy token từ AuthResponse
 
-                        // Bạn có thể lưu token vào SharedPreferences nếu cần
-                        // SharedPreferences preferences = getSharedPreferences("MyAppPreferences", Context.MODE_PRIVATE);
-                        // SharedPreferences.Editor editor = preferences.edit();
-                        // editor.putString("TOKEN", token);
-                        // editor.apply();
+                        setRememberMe(cbRememberMe.isChecked());
+                        saveUserInfo(authResponse.getId(), etUsername.getText().toString(), etPassword.getText().toString(), token);
+                        RetrofitClient.currentToken = token;
+                        Log.d("LoginActivity", "Token: " + RetrofitClient.currentToken);
 
                         Toast.makeText(LoginActivity.this, "Login successfull!", Toast.LENGTH_SHORT).show();
 
-                        // Chuyển sang MainActivity
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         intent.putExtra("token", token);
                         startActivity(intent);
                         finish();
-
                     }
                     else {
                         Toast.makeText(LoginActivity.this, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -151,5 +165,26 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void saveUserInfo(int userId, String username, String password, String token) {
+        DatabaseHandler db = new DatabaseHandler(this);
+        db.saveLoginInfoSQLite(userId, username, password, token);
+        // Log thông tin user sau khi lưu vào SQLite
+//        UserLoginInfo savedUserInfo = db.getLoginInfoSQLite();
+//        if (savedUserInfo != null) {
+//            Log.d("SQLiteUserInfo", "UserID: " + savedUserInfo.userId);
+//            Log.d("SQLiteUserInfo", "Username: " + savedUserInfo.username);
+//            Log.d("SQLiteUserInfo", "Password: " + savedUserInfo.password);
+//            Log.d("SQLiteUserInfo", "Token: " + savedUserInfo.token);
+//        } else {
+//            Log.d("SQLiteUserInfo", "No user info saved!");
+//        }
+    }
+    private void setRememberMe(boolean value) {
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("rememberMe", value);
+        editor.apply();
     }
 }
