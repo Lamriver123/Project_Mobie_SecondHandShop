@@ -97,7 +97,7 @@ public class NewProductFragment extends Fragment {
         DatabaseHandler db = new DatabaseHandler(getContext());
         UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
 
-        if (userLoginInfo != null || userLoginInfo.getUserId() != 0) {
+        if (userLoginInfo != null && userLoginInfo.getUserId() != 0) {
             Call<ApiResponse<List<Integer>>> call = apiService.getFavoriteProductIds(userLoginInfo.getUserId());
 
             call.enqueue(new Callback<ApiResponse<List<Integer>>>() {
