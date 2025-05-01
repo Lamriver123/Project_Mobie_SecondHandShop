@@ -73,4 +73,7 @@ public interface APIService {
 
     @GET("favorites/{userId}")
     Call<ApiResponse<List<Integer>>> getFavoriteProductIds(@Path("userId") int userId);
+
+    @POST("products/by-ids")
+    Call<ApiResponse<List<ProductResponse>>> getProductsByProductIds(@Body List<Integer> productIds);
 }
