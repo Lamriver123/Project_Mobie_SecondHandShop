@@ -1,6 +1,8 @@
 package com.example.marketplacesecondhand.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,15 @@ import com.example.marketplacesecondhand.databinding.FragmentHeaderWithBackBindi
 
 public class HeaderWithBackFragment extends Fragment {
     private FragmentHeaderWithBackBinding binding;
+    private OnSearchListener searchListener;
 
+    public interface OnSearchListener {
+        void onSearch(String query);
+    }
+
+    public void setOnSearchListener(OnSearchListener listener) {
+        this.searchListener = listener;
+    }
 
     public HeaderWithBackFragment() {}
 
@@ -33,6 +43,8 @@ public class HeaderWithBackFragment extends Fragment {
             }
         });
 
+        setupSearch();
+
         // Lấy categoryName từ arguments
         if (getArguments() != null) {
             String categoryName = getArguments().getString("category_name", "");
@@ -41,4 +53,26 @@ public class HeaderWithBackFragment extends Fragment {
         return binding.getRoot();
     }
 
+    private void setupSearch() {
+        binding.editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (searchListener != null) {
+                    searchListener.onSearch(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

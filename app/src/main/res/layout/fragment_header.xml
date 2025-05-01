@@ -10,6 +10,7 @@
     android:background="@color/yellow">
 
     <EditText
+        android:id="@+id/editTextSearch"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_weight="1"
@@ -17,9 +18,7 @@
         android:hint="Search..."
         android:paddingStart="50dp"
         android:paddingEnd="10dp"
-        android:textSize="14sp"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
+        android:textSize="14sp" />
 
     <ImageView
         android:layout_width="32dp"
