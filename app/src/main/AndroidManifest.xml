@@ -34,8 +34,7 @@
         <activity android:name=".ActivityCategory" />
         <activity android:name=".ProductDetailActivity" />
         <activity android:name=".CartActivity" />
-
-
+        <activity android:name=".FavoritesActivity" />
 
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
