@@ -5,20 +5,24 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.R;
 import com.example.marketplacesecondhand.databinding.ItemProductCartBinding;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.CartProduct;
-import com.example.marketplacesecondhand.models.Product;
+
 import java.util.List;
 
 public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.CartItemViewHolder> {
 
     private Context context;
     private List<CartProduct> productList;
+    private CartShopAdapter.OnCartItemCheckListener onCartItemCheckListener;
+
+    public void setOnCartItemCheckListener(CartShopAdapter.OnCartItemCheckListener listener) {
+        this.onCartItemCheckListener = listener;
+    }
 
     public CartProductAdapter(Context context, List<CartProduct> productList) {
         this.context = context;
@@ -41,35 +45,42 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         holder.binding.textViewProductName.setText(product.getProductName());
         holder.binding.textViewOriginalPrice.setText(product.getOriginalPrice() + "đ");
         holder.binding.textViewDiscountPrice.setText(product.getCurrentPrice() + "đ");
-        holder.binding.textViewQuantity.setText(String.valueOf(product.getQuantity()));
+        holder.binding.textViewQuantity.setText(String.valueOf(cartProduct.getQuantityCart()));
         holder.binding.checkboxSelectItem.setChecked(cartProduct.isChecked());
 
-
         Glide.with(context)
-                .load(R.drawable.img) // load ảnh đầu tiên
-                .placeholder(R.drawable.img) // ảnh mặc định khi đang load
-                .error(R.drawable.img) // ảnh hiển thị nếu lỗi
+                .load(R.drawable.img)
+                .placeholder(R.drawable.img)
+                .error(R.drawable.img)
                 .into(holder.binding.imageViewProduct);
-
 
         // Checkbox chọn sản phẩm
         holder.binding.checkboxSelectItem.setOnCheckedChangeListener((buttonView, isChecked) -> {
             cartProduct.setChecked(isChecked);
+            if (onCartItemCheckListener != null) {
+                onCartItemCheckListener.onItemChecked();
+            }
         });
 
         // Nút tăng số lượng
         holder.binding.buttonIncrease.setOnClickListener(v -> {
-            int qty = product.getQuantity();
-            product.setQuantity(qty + 1);
+            int qty = cartProduct.getQuantityCart();
+            cartProduct.setQuantityCart(qty + 1);
             notifyItemChanged(position);
+            if (cartProduct.isChecked() && onCartItemCheckListener != null) {
+                onCartItemCheckListener.onItemChecked();
+            }
         });
 
         // Nút giảm số lượng
         holder.binding.buttonDecrease.setOnClickListener(v -> {
-            int qty = product.getQuantity();
+            int qty = cartProduct.getQuantityCart();
             if (qty > 1) {
-                product.setQuantity(qty - 1);
+                cartProduct.setQuantityCart(qty - 1);
                 notifyItemChanged(position);
+                if (cartProduct.isChecked() && onCartItemCheckListener != null) {
+                    onCartItemCheckListener.onItemChecked();
+                }
             } else {
                 Toast.makeText(context, "Không thể giảm thêm", Toast.LENGTH_SHORT).show();
             }
@@ -88,5 +99,9 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public List<CartProduct> getProductList() {
+        return productList;
     }
 }

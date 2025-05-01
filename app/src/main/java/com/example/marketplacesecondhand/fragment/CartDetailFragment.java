@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,15 +28,17 @@ public class CartDetailFragment extends Fragment {
     private FragmentCartDetailBinding binding;
     private CartShopAdapter cartShopAdapter;
     private List<CartShop> cartShopList;
+    private TextView textViewTotalPrice;
 
     public CartDetailFragment() {
         super(R.layout.fragment_cart_detail);
     }
 
     @Override
-    public void onViewCreated(@NonNull android.view.View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentCartDetailBinding.bind(view);
+        textViewTotalPrice = requireActivity().findViewById(R.id.textViewTotalPrice);
 
         setupRecyclerView();
         loadSampleData();
@@ -44,8 +47,23 @@ public class CartDetailFragment extends Fragment {
     private void setupRecyclerView() {
         cartShopList = new ArrayList<>();
         cartShopAdapter = new CartShopAdapter(requireContext(), cartShopList);
+        cartShopAdapter.setOnCartItemCheckListener(this::calculateTotalPrice);
         binding.recyclerViewCart.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerViewCart.setAdapter(cartShopAdapter);
+    }
+
+    private void calculateTotalPrice() {
+        int total = 0;
+        for (CartShop shop : cartShopList) {
+            for (CartProduct product : shop.getProducts()) {
+                if (product.isChecked()) {
+                    total += Integer.parseInt(product.getProductResponse().getCurrentPrice()) * product.getQuantityCart();
+                }
+            }
+        }
+        if (textViewTotalPrice != null) {
+            textViewTotalPrice.setText("Tổng: " + total + "đ");
+        }
     }
 
     private void loadSampleData() {
@@ -55,7 +73,6 @@ public class CartDetailFragment extends Fragment {
         ProductResponse product1 = new ProductResponse(1,"Áo Thun Basic1","230000","160000");
         ProductResponse product2 = new ProductResponse(1,"Áo Thun Basic2","240000","170000");
         ProductResponse product3 = new ProductResponse(1,"Áo Thun Basic3","250000","180000");
-
 
         productList1.add(new CartProduct(product1,  1, false));
         productList1.add(new CartProduct(product2, 2, false));
@@ -72,6 +89,7 @@ public class CartDetailFragment extends Fragment {
         cartShopList.add(new CartShop(user2, false, productList2));
 
         cartShopAdapter.notifyDataSetChanged();
+        calculateTotalPrice();
     }
 
     @Override

@@ -12,13 +12,16 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-
         CartDetailFragment fragment = new CartDetailFragment();
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.cart_detail, fragment)
                 .commit();
+    }
 
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#FFFFFF"
-    android:padding="8dp">
+    android:background="@drawable/card_background"
+    android:padding="12dp"
+    android:layout_marginTop="8dp">
 
-    <!-- Header Shop -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,23 +16,23 @@
         <CheckBox
             android:id="@+id/checkboxShop"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:button="@drawable/custom_checkbox"/>
 
         <TextView
             android:id="@+id/textViewShopName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shop A"
+            android:text="Tên Shop"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:paddingStart="8dp"/>
+            android:textColor="#111111"
+            android:layout_marginStart="8dp"/>
     </LinearLayout>
 
-    <!-- RecyclerView danh sách sản phẩm trong shop -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewProducts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:nestedScrollingEnabled="false"/>
-
 </LinearLayout>

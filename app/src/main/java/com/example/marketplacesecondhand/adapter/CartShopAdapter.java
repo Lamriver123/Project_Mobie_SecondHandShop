@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.marketplacesecondhand.databinding.ItemCartShopBinding;
+import com.example.marketplacesecondhand.models.CartProduct;
 import com.example.marketplacesecondhand.models.CartShop;
 import com.example.marketplacesecondhand.models.User;
 
@@ -16,8 +17,16 @@ import java.util.List;
 public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartShopViewHolder> {
 
     private Context context;
-
     private List<CartShop> shopList;
+    private OnCartItemCheckListener onCartItemCheckListener;
+
+    public interface OnCartItemCheckListener {
+        void onItemChecked();
+    }
+
+    public void setOnCartItemCheckListener(OnCartItemCheckListener listener) {
+        this.onCartItemCheckListener = listener;
+    }
 
     public CartShopAdapter(Context context, List<CartShop> shopList) {
         this.context = context;
@@ -44,15 +53,23 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartSh
 
         // Setup inner RecyclerView
         CartProductAdapter itemAdapter = new CartProductAdapter(context, cartShop.getProducts());
+        itemAdapter.setOnCartItemCheckListener(() -> {
+            if (onCartItemCheckListener != null) {
+                onCartItemCheckListener.onItemChecked();
+            }
+        });
         holder.binding.recyclerViewProducts.setAdapter(itemAdapter);
 
         // Sự kiện click checkbox Shop
         holder.binding.checkboxShop.setOnCheckedChangeListener((buttonView, isChecked) -> {
             cartShop.setChecked(isChecked);
-            for (int i = 0; i < cartShop.getProducts().size(); i++) {
-                cartShop.getProducts().get(i).setChecked(isChecked);
+            for (CartProduct product : cartShop.getProducts()) {
+                product.setChecked(isChecked);
             }
-            notifyItemChanged(position);
+            itemAdapter.notifyDataSetChanged();
+            if (onCartItemCheckListener != null) {
+                onCartItemCheckListener.onItemChecked();
+            }
         });
     }
 
@@ -68,5 +85,9 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartSh
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public List<CartShop> getShopList() {
+        return shopList;
     }
 }
