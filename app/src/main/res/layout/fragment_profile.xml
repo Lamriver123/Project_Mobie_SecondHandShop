@@ -64,6 +64,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/username"
                     android:text="Tradly Team"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -114,6 +115,7 @@
             android:id="@+id/termConditionsOption"
             android:text="Terms and Conditions" />
         <TextView
+            android:id="@+id/logout"
             style="@style/OptionItem"
             android:text="Logout"
             android:textColor="#2E8C6F"

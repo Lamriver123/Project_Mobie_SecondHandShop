@@ -1,6 +1,7 @@
 package com.example.marketplacesecondhand.API;
 
 import com.example.marketplacesecondhand.dto.request.EmailRequest;
+import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
 import com.example.marketplacesecondhand.dto.request.LoginRequest;
 import com.example.marketplacesecondhand.dto.request.RegisterRequest;
 import com.example.marketplacesecondhand.dto.request.ResetPasswordRequest;
@@ -66,4 +67,10 @@ public interface APIService {
             @Query("minPrice") int minPrice,
             @Query("maxPrice") int maxPrice
     );
+
+    @POST("favorites/toggle")
+    Call<ApiResponse<String>> toggleFavorite(@Body FavoriteRequest request);
+
+    @GET("favorites/{userId}")
+    Call<ApiResponse<List<Integer>>> getFavoriteProductIds(@Path("userId") int userId);
 }
