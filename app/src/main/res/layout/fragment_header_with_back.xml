@@ -8,7 +8,9 @@
     android:paddingTop="40dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:background="@color/yellow">
+    android:background="@color/yellow"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ImageView
         android:id="@+id/ic_back"

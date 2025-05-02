@@ -76,4 +76,8 @@ public interface APIService {
 
     @POST("products/by-ids")
     Call<ApiResponse<List<ProductResponse>>> getProductsByProductIds(@Body List<Integer> productIds);
+
+    @POST("products/recommend")
+    Call<ApiResponse<List<ProductResponse>>> getRecommendedProducts(@Body List<Integer> categoryIds);
+
 }
