@@ -17,6 +17,7 @@ public class ProductResponse {
     private Date createdAt;
     private int sold;
     private int quantity;
+    private int categoryId;
     private String categoryName;
     private List<String> initialImages;
     private List<String> currentImages;
@@ -28,7 +29,7 @@ public class ProductResponse {
         this.originalPrice = originalPrice;
     }
 
-    public ProductResponse(int productId, String productName, String currentPrice, String originalPrice, String origin, String warranty, String productCondition, String productDescription, String conditionDescription, Date createdAt, int sold, int quantity, String categoryName, List<String> initialImages, List<String> currentImages) {
+    public ProductResponse(int productId, String productName, String currentPrice, String originalPrice, String origin, String warranty, String productCondition, String productDescription, String conditionDescription, Date createdAt, int sold, int quantity, int categoryId, String categoryName, List<String> initialImages, List<String> currentImages) {
         this.productId = productId;
         this.productName = productName;
         this.currentPrice = currentPrice;
@@ -41,11 +42,19 @@ public class ProductResponse {
         this.createdAt = createdAt;
         this.sold = sold;
         this.quantity = quantity;
+        this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.initialImages = initialImages;
         this.currentImages = currentImages;
     }
 
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
     public int getQuantity() {
         return quantity;
     }

@@ -14,14 +14,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
+import com.example.marketplacesecondhand.R;
 import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.adapter.ProductAdapter;
 import com.example.marketplacesecondhand.adapter.favorite.FavoriteAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentFavoriteContainerBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
+import com.example.marketplacesecondhand.fragment.SimilarProductsFragment;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +34,7 @@ import retrofit2.Response;
 
 public class FavoriteContainerFragment extends Fragment {
     private FragmentFavoriteContainerBinding binding;
-
+    private APIService apiService;
 
     public FavoriteContainerFragment() {}
 
@@ -72,7 +77,7 @@ public class FavoriteContainerFragment extends Fragment {
 
     private void fetchFavoriteByUserId(int userId) {
         Log.d("FavoriteFragment", "Fetching favorites for userId: " + userId);
-        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
 
         Call<ApiResponse<List<Integer>>> call = apiService.getFavoriteProductIds(userId);
         call.enqueue(new Callback<ApiResponse<List<Integer>>>() {
@@ -108,7 +113,6 @@ public class FavoriteContainerFragment extends Fragment {
 
     private void fetchProductDetails(List<Integer> productIds) {
         Log.d("FavoriteFragment", "Fetching product details for " + productIds.size() + " products");
-        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
 
         Call<ApiResponse<List<ProductResponse>>> call = apiService.getProductsByProductIds(productIds);
         call.enqueue(new Callback<ApiResponse<List<ProductResponse>>>() {
@@ -139,6 +143,21 @@ public class FavoriteContainerFragment extends Fragment {
 
                     binding.recyclerViewFavorites.setAdapter(adapter);
                     Log.d("FavoriteFragment", "Adapter set with " + favoriteProducts.size() + " items");
+
+                    // Lấy danh sách categoryId từ danh sách sản phẩm yêu thích
+                    List<Integer> categoryIds = favoriteProducts.stream()
+                            .map(ProductResponse::getCategoryId)
+                            .distinct()
+                            .collect(Collectors.toList());
+
+                    if (isAdded()) {
+                        RecommendedProductsFragment recommendedFragment = RecommendedProductsFragment.newInstance(categoryIds);
+                        getParentFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.recommended_products, recommendedFragment)
+                                .commit();
+                    }
+
                 } else {
                     Log.e("FavoriteFragment", "Error getting product details: " + (response.body() != null ? response.body().getMessage() : "null response"));
                     Toast.makeText(getContext(), "Không thể lấy thông tin sản phẩm", Toast.LENGTH_SHORT).show();
@@ -152,5 +171,4 @@ public class FavoriteContainerFragment extends Fragment {
             }
         });
     }
-
 }
