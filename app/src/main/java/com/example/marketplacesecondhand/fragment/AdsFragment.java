@@ -33,10 +33,10 @@ public class AdsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentAdsBinding.inflate(inflater, container, false);
         arrayList = new ArrayList<>();
-        arrayList.add(R.drawable.b1);
-        arrayList.add(R.drawable.b2);
-        arrayList.add(R.drawable.b3);
-        arrayList.add(R.drawable.b4);
+        arrayList.add(R.drawable.bn1);
+        arrayList.add(R.drawable.bn2);
+        arrayList.add(R.drawable.bn3);
+        arrayList.add(R.drawable.bn4);
 
         sliderAdapter = new SliderAdapter(getContext(), arrayList);
         binding.imageSlider.setSliderAdapter(sliderAdapter);
