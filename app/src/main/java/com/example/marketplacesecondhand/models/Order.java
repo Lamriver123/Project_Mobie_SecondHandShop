@@ -1,85 +1,31 @@
 package com.example.marketplacesecondhand.models;
 
+import com.example.marketplacesecondhand.dto.response.ProductResponse;
+
+import java.util.List;
+
 public class Order {
-    private String shopName, productName, variation, status, imageUrl;
-    private int quantity;
-    private double price, total;
+    private String orderId;
+    private String status;
+    private String shopName;
+    private List<ProductResponse> productList;
+    private boolean isExpanded;
 
-    public Order(String shopName, String productName, String variation, String status, String imageUrl, int quantity, double price, double total) {
-        this.shopName = shopName;
-        this.productName = productName;
-        this.variation = variation;
+    public Order(String orderId, String status, String shopName, List<ProductResponse> productList) {
+        this.orderId = orderId;
         this.status = status;
-        this.imageUrl = imageUrl;
-        this.quantity = quantity;
-        this.price = price;
-        this.total = total;
-    }
-
-    public String getShopName() {
-        return shopName;
-    }
-
-    public void setShopName(String shopName) {
         this.shopName = shopName;
+        this.productList = productList;
+        this.isExpanded = false;
     }
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getVariation() {
-        return variation;
-    }
-
-    public void setVariation(String variation) {
-        this.variation = variation;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
-    // Constructor + Getters + Setters
+    // Getters và setters
+    public String getOrderId() { return orderId; }
+    public String getStatus() { return status; }
+    public String getShopName() { return shopName; }
+    public List<ProductResponse> getProductList() { return productList; }
+    public boolean isExpanded() { return isExpanded; }
+    public void setExpanded(boolean expanded) { isExpanded = expanded; }
 }
+
 
