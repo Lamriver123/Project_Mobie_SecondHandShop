@@ -1,38 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/card_background"
-    android:padding="12dp"
-    android:layout_marginTop="8dp">
-
+    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    android:background="@android:color/white">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:background="@drawable/card_background"
+        android:padding="10dp"
+        android:layout_marginTop="8dp">
 
-        <CheckBox
-            android:id="@+id/checkboxShop"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:button="@drawable/custom_checkbox"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/textViewShopName"
-            android:layout_width="wrap_content"
+            <CheckBox
+                android:id="@+id/checkboxShop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox"/>
+
+            <TextView
+                android:id="@+id/textViewShopName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên Shop"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#111111"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginVertical="8dp"
+            android:background="#CCCCCC" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewProducts"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tên Shop"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="#111111"
-            android:layout_marginStart="8dp"/>
+            android:nestedScrollingEnabled="false"/>
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewProducts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"/>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

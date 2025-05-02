@@ -1,66 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="8dp"
-    android:layout_marginHorizontal="12dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp"
-    android:background="@android:color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-
-        <!-- Shop name & order status -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txtShopName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Henry Shop"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_marginRight="10dp"/>
-
-            <TextView
-                android:id="@+id/txtOrderStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chờ xác nhận"
-                android:textColor="@android:color/holo_red_dark"
-                android:textStyle="bold"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginVertical="8dp"
-            android:background="#CCCCCC" />
-
-        <!-- Product row -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgProduct"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Corner4dp"
-                android:src="@drawable/img"/>
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        android:paddingVertical="4dp"
+        android:paddingHorizontal="0dp">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Corner4dp"
+            android:src="@drawable/img"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -101,63 +59,11 @@
             <TextView
                 android:id="@+id/txtProductPrice"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="₫22.500"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:paddingEnd="4dp" />
-        </LinearLayout>
-
-        <!-- Total -->
-        <TextView
-            android:id="@+id/txtTotalPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tổng cộng: ₫67.500"
-            android:textStyle="bold"
-            android:gravity="end"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:layout_marginTop="12dp" />
-
-        <!-- Actions -->
-        <LinearLayout
-            android:id="@+id/layoutActions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hủy đơn"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/red"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btnConfirmReceived"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đã nhận hàng"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/blue_sky"
-                android:layout_marginStart="8dp"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btnReview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đánh giá"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/yellow"
-                android:layout_marginStart="8dp"
-                android:visibility="gone" />
-        </LinearLayout>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

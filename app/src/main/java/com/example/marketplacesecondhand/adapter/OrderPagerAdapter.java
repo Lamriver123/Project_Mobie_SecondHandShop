@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.marketplacesecondhand.fragment.OrderStatusFragment;
 
 public class OrderPagerAdapter extends FragmentStateAdapter {
+
     public OrderPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -16,11 +17,16 @@ public class OrderPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
-            case 0: return OrderStatusFragment.newInstance("Chờ xác nhận");
-            case 1: return OrderStatusFragment.newInstance("Đang giao");
-            case 2: return OrderStatusFragment.newInstance("Đã giao");
-            case 3: return OrderStatusFragment.newInstance("Đã hủy");
-            default: return OrderStatusFragment.newInstance("Chờ giao hàng");
+            case 0:
+                return OrderStatusFragment.newInstance("CHO_XAC_NHAN");
+            case 1:
+                return OrderStatusFragment.newInstance("DANG_GIAO");
+            case 2:
+                return OrderStatusFragment.newInstance("DA_GIAO");
+            case 3:
+                return OrderStatusFragment.newInstance("DA_HUY");
+            default:
+                return OrderStatusFragment.newInstance("CHO_XAC_NHAN");
         }
     }
 
@@ -29,6 +35,7 @@ public class OrderPagerAdapter extends FragmentStateAdapter {
         return 4;
     }
 }
+
 
 
 
