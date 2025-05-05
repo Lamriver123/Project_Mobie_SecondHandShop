@@ -1,8 +1,17 @@
 package com.example.marketplacesecondhand.dto.response;
 
-public class AuthResponse {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class AuthResponse implements Serializable {
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("token")
     private String token;
+
+    @SerializedName("authenticated")
     private Boolean authenticated;
     public AuthResponse() {}
     public AuthResponse(int id, String token, Boolean authenticated) {

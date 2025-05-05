@@ -28,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@id/title"
             android:layout_marginTop="60dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
@@ -45,9 +44,8 @@
                     android:background="@drawable/circle_white"
                     android:padding="8dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/img"
-                    app:shapeAppearanceOverlay="@style/CircleImageView"
-                    />
+                    app:srcCompat="@drawable/user"
+                    app:shapeAppearanceOverlay="@style/CircleImageView" />
 
                 <View
                     android:layout_width="10dp"
@@ -58,14 +56,16 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/profileInfoContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:orientation="vertical">
 
+                <!-- Tên người dùng -->
                 <TextView
                     android:id="@+id/username"
-                    android:text="Tradly Team"
+                    android:text="Duy Phạm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
@@ -73,6 +73,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvPhoneNumber"
                     android:text="+1 9998887776"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -80,13 +81,92 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tvEmail"
                     android:text="info@tradly.co"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
                     android:textSize="14sp" />
+
+                <!-- Hàng đánh giá + chưa có đánh giá -->
+                <LinearLayout
+                    android:id="@+id/layoutRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Icon sao rỗng -->
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_star_off"
+                        android:layout_marginEnd="2dp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_star_off"
+                        android:layout_marginEnd="2dp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_star_off"
+                        android:layout_marginEnd="2dp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_star_off"
+                        android:layout_marginEnd="2dp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_star_off"
+                        android:layout_marginEnd="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="( Chưa có đánh giá )"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Hàng người theo dõi và đang theo dõi -->
+                <LinearLayout
+                    android:id="@+id/layoutFollowers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 Người theo dõi"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  |  "
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 Người Đang theo dõi"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
     </RelativeLayout>
 
     <!-- Options Menu -->
@@ -109,7 +189,14 @@
             android:id="@+id/editProfileOption"
             style="@style/OptionItem" 
             android:text="Edit Profile" />
-
+        <TextView
+            style="@style/OptionItem"
+            android:id="@+id/reviewFromMe"
+            android:text="Review From me" />
+        <TextView
+            style="@style/OptionItem"
+            android:id="@+id/address"
+            android:text="Shipping address" />
         <TextView
             style="@style/OptionItem"
             android:id="@+id/termConditionsOption"

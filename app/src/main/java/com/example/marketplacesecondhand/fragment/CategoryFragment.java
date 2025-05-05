@@ -44,16 +44,10 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    //    init(view);
+
         fetchCategory();
     }
 
-//    public void init(View view){
-//        rcCategory = view.findViewById(R.id.rcCategory);
-//        rcBook = view.findViewById(R.id.rcBook);
-//        txtGenre = view.findViewById(R.id.tvNameCategory);
-//
-//    }
     private void fetchCategory() {
         if (binding.categoryRecycler == null) {
             Log.e("BINDING", "categoryRecycler is null - check fragment_category.xml");

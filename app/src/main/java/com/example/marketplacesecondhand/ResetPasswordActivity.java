@@ -51,7 +51,14 @@ public class ResetPasswordActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(ResetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    openLoginActivity();
+
+                    String continueActivity = getIntent().getStringExtra("continue");
+                    if (continueActivity != null && continueActivity.equals("editProfile")) {
+                        finish();
+                    }
+                    else {
+                        openLoginActivity();
+                    }
                 }
                 else {
                     try {

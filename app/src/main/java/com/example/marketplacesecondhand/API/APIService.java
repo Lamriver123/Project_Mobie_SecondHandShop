@@ -5,10 +5,12 @@ import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
 import com.example.marketplacesecondhand.dto.request.LoginRequest;
 import com.example.marketplacesecondhand.dto.request.RegisterRequest;
 import com.example.marketplacesecondhand.dto.request.ResetPasswordRequest;
+import com.example.marketplacesecondhand.dto.request.UserUpdateRequest;
 import com.example.marketplacesecondhand.dto.request.VerifyAccountRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.AuthResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
+import com.example.marketplacesecondhand.dto.response.UserResponse;
 import com.example.marketplacesecondhand.models.Category;
 import com.example.marketplacesecondhand.models.Product;
 
@@ -79,5 +81,10 @@ public interface APIService {
 
     @POST("products/recommend")
     Call<ApiResponse<List<ProductResponse>>> getRecommendedProducts(@Body List<Integer> categoryIds);
+
+    @GET("users/myInfo")
+    Call<ApiResponse<UserResponse>> getMyInfo();
+    @PUT("users/{userId}")
+    Call<ApiResponse<UserResponse>> updateUser(@Path("userId") int userId, @Body UserUpdateRequest request);
 
 }

@@ -131,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                         setRememberMe(cbRememberMe.isChecked());
                         saveUserInfo(authResponse.getId(), etUsername.getText().toString(), etPassword.getText().toString(), token);
                         RetrofitClient.currentToken = token;
+
                         Log.d("LoginActivity", "Token: " + RetrofitClient.currentToken);
 
                         Toast.makeText(LoginActivity.this, "Login successfull!", Toast.LENGTH_SHORT).show();
@@ -154,6 +155,8 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Lỗi không xác định!", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
+                        Log.e("LOGIN_BUG", "Exception: " + e);
+
                         Toast.makeText(LoginActivity.this, "Lỗi hệ thống!", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -164,7 +167,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<ApiResponse<AuthResponse>> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Lỗi: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
+
         });
+        RetrofitClient.retrofit = null;
     }
 
     private void saveUserInfo(int userId, String username, String password, String token) {

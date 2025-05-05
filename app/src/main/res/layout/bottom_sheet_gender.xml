@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    android:padding="16dp">
+
+    <!-- Hộp chọn -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_sheet_box"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Gender"
+            android:textSize="14sp"
+            android:textColor="#999999"
+            android:gravity="center"
+            android:padding="8dp" />
+
+        <View style="@style/DividerLine" />
+
+        <TextView
+            android:id="@+id/option_male"
+            style="@style/GenderOptionStyle"
+            android:text="Male" />
+
+        <View style="@style/DividerLine" />
+
+        <TextView
+            android:id="@+id/option_female"
+            style="@style/GenderOptionStyle"
+            android:text="Famale" />
+
+        <View style="@style/DividerLine" />
+
+        <TextView
+            android:id="@+id/option_other"
+            style="@style/GenderOptionStyle"
+            android:text="Other" />
+    </LinearLayout>
+
+    <!-- Nút hủy -->
+    <TextView
+        android:id="@+id/option_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_sheet_box"
+        android:text="Cancel"
+        android:textSize="16sp"
+        android:textColor="#007AFF"
+        android:gravity="center"
+        android:padding="16dp" />
+</LinearLayout>

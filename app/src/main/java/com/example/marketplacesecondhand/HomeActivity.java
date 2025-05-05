@@ -11,8 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.adapter.ViewPagerAdapter;
 import com.example.marketplacesecondhand.databinding.ActivityHomeBinding;
+import com.example.marketplacesecondhand.models.UserLoginInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -38,6 +40,13 @@ public class HomeActivity extends AppCompatActivity {
 //        getSupportFragmentManager().beginTransaction()
 //                .replace(R.id.content_frame, new HomeFragment())
 //                .commit();
+
+        DatabaseHandler dbHandler = new DatabaseHandler(this);
+        UserLoginInfo userInfo = dbHandler.getLoginInfoSQLite();
+        if (userInfo != null) {
+            RetrofitClient.currentToken = userInfo.token;
+        }
+
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         binding.contentFrame.setAdapter(viewPagerAdapter);
 
