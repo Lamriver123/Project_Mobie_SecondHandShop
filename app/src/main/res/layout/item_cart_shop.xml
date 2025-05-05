@@ -26,7 +26,9 @@
                 android:id="@+id/checkboxShop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/custom_checkbox"/>
+                android:button="@drawable/custom_checkbox"
+                android:buttonTint="@color/transparent"
+                android:buttonTintMode="screen"/>
 
             <TextView
                 android:id="@+id/textViewShopName"
