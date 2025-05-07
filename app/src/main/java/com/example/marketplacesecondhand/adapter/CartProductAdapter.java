@@ -1,6 +1,7 @@
 package com.example.marketplacesecondhand.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -12,7 +13,9 @@ import com.example.marketplacesecondhand.databinding.ItemProductCartBinding;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.CartProduct;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.CartItemViewHolder> {
 
@@ -43,8 +46,9 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         if (product == null) return;
 
         holder.binding.textViewProductName.setText(product.getProductName());
-        holder.binding.textViewOriginalPrice.setText(product.getOriginalPrice() + "đ");
-        holder.binding.textViewDiscountPrice.setText(product.getCurrentPrice() + "đ");
+        holder.binding.textViewOriginalPrice.setText(formatCurrency(Integer.parseInt(product.getOriginalPrice())) + " VND");
+        holder.binding.textViewOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.binding.textViewDiscountPrice.setText(formatCurrency(Integer.parseInt(product.getCurrentPrice())) + " VND");
         holder.binding.textViewQuantity.setText(String.valueOf(cartProduct.getQuantityCart()));
         holder.binding.checkboxSelectItem.setChecked(cartProduct.isChecked());
 
@@ -85,6 +89,11 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
                 Toast.makeText(context, "Không thể giảm thêm", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    private String formatCurrency(int number) {
+        return NumberFormat.getInstance(new Locale("vi", "VN")).format(number);
     }
 
     @Override

@@ -23,6 +23,15 @@ public class FooterProductDetailFragment extends Fragment {
                              @Nullable Bundle saveInstanceState) {
         binding = FragmentFooterProductDetailBinding.inflate(inflater, container, false);
 
+        binding.buttonBuyNow.setOnClickListener(v -> {
+            BottomSheetBuyNowFragment bottomSheet = new BottomSheetBuyNowFragment();
+            bottomSheet.show(getParentFragmentManager(), bottomSheet.getTag());
+        });
+
+        binding.buttonAddToCart.setOnClickListener(v -> {
+            BottomSheetAddToCartFragment bottomSheet = new BottomSheetAddToCartFragment();
+            bottomSheet.show(getParentFragmentManager(), bottomSheet.getTag());
+        });
         return binding.getRoot();
     }
 }

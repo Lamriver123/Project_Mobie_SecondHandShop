@@ -21,8 +21,10 @@ import com.example.marketplacesecondhand.models.CartShop;
 import com.example.marketplacesecondhand.models.Product;
 import com.example.marketplacesecondhand.models.User;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CartDetailFragment extends Fragment {
     private FragmentCartDetailBinding binding;
@@ -62,8 +64,12 @@ public class CartDetailFragment extends Fragment {
             }
         }
         if (textViewTotalPrice != null) {
-            textViewTotalPrice.setText("Tổng: " + total + "đ");
+            textViewTotalPrice.setText("Tổng: " + formatCurrency(total) + "đ");
         }
+    }
+
+    private String formatCurrency(int number) {
+        return NumberFormat.getInstance(new Locale("vi", "VN")).format(number);
     }
 
     private void loadSampleData() {

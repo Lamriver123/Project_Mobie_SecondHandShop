@@ -38,6 +38,7 @@
         <activity android:name=".FavoritesActivity" />
         <activity android:name=".VerifyPasswordActivity" />
         <activity android:name=".ShopDetailActivity" />
+        <activity android:name=".PaymentActivity" />
 
     </application>
 
