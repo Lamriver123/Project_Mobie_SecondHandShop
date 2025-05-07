@@ -11,19 +11,30 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/filter_product"
-        android:name="com.example.marketplacesecondhand.fragment.FilterProductFragment"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutProductSort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/header_shop" />
+        app:tabMode="scrollable"
+        app:tabIndicatorColor="@color/yellow"
+        app:tabTextColor="@color/gray"
+        app:tabSelectedTextColor="@color/yellow"
+        android:background="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/header_shop"
+        tools:ignore="MissingConstraints" />
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:id="@+id/filter_product"-->
+<!--        android:name="com.example.marketplacesecondhand.fragment.FilterProductFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/header_shop" />-->
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/shop_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filter_product"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayoutProductSort"
         app:layout_constraintVertical_bias="0.599"
         tools:layout_editor_absoluteX="0dp" />
 

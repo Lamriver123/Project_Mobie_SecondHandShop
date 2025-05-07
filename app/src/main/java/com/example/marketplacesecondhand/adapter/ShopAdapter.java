@@ -4,6 +4,7 @@ import static androidx.core.content.ContentProviderCompat.requireContext;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Intent;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import com.example.marketplacesecondhand.databinding.ItemShopBinding;
 import com.example.marketplacesecondhand.models.Shop;
 
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder> {
 
@@ -54,10 +57,14 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
 
             List<String> productImages = shop.getProductImagesAds();
 
+            int radiusInPx = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 16f, binding.getRoot().getContext().getResources().getDisplayMetrics());
+
             // Load ảnh thứ nhất
             if (productImages != null && productImages.size() >= 1) {
                 Glide.with(binding.getRoot().getContext())
                         .load(productImages.get(0))
+                        .transform(new RoundedCornersTransformation(radiusInPx, 0))
                         .error(R.drawable.bg1)
                         .placeholder(R.drawable.bg_shape)
                         .into(binding.imgProduct1);
@@ -70,6 +77,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             if (productImages != null && productImages.size() >= 2) {
                 Glide.with(binding.getRoot().getContext())
                         .load(productImages.get(1))
+                        .transform(new RoundedCornersTransformation(radiusInPx, 0))
                         .error(R.drawable.bg1)
                         .placeholder(R.drawable.bg_shape)
                         .into(binding.imgProduct2);
