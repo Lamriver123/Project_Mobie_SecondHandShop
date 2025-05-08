@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sample_items">
+        <item>Chọn tỉnh/thành</item>
+        <item>Hồ Chí Minh</item>
+        <item>Hà Nội</item>
+        <item>Đà Nẵng</item>
+        <item>Cần Thơ</item>
+        <item>Hải Phòng</item>
+    </string-array>
+</resources>
