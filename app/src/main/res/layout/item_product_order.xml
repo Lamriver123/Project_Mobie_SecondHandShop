@@ -18,7 +18,7 @@
             android:layout_height="80dp"
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Corner4dp"
-            android:src="@drawable/img"/>
+            />
 
             <LinearLayout
                 android:layout_width="0dp"

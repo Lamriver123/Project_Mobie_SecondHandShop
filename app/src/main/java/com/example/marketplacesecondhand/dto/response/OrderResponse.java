@@ -1,23 +1,22 @@
-package com.example.marketplacesecondhand.models;
+package com.example.marketplacesecondhand.dto.response;
 
-import com.example.marketplacesecondhand.dto.response.ProductResponse;
-
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Order implements Serializable {
-    private int orderId;
-    private User buyer;;
-    private Date createdAt;
-    private String totalAmount;
-    private String address;
-    private String status;
-    private List<OrderDetail> orderDetails;
+public class OrderResponse {
+    int orderId;
+    String buyerName;
+    String ownerName;
+    Date createdAt;
+    String totalAmount;
+    String address;
+    String status;
+    List<OrderDetailResponse> orderDetails;
 
-    public Order(int orderId, User buyer, Date createdAt, String totalAmount, String address, String status, List<OrderDetail> orderDetails) {
+    public OrderResponse(int orderId, String buyerName, String ownerName, Date createdAt, String totalAmount, String address, String status, List<OrderDetailResponse> orderDetails) {
         this.orderId = orderId;
-        this.buyer = buyer;
+        this.buyerName = buyerName;
+        this.ownerName = ownerName;
         this.createdAt = createdAt;
         this.totalAmount = totalAmount;
         this.address = address;
@@ -33,12 +32,20 @@ public class Order implements Serializable {
         this.orderId = orderId;
     }
 
-    public User getBuyer() {
-        return buyer;
+    public String getBuyerName() {
+        return buyerName;
     }
 
-    public void setBuyer(User buyer) {
-        this.buyer = buyer;
+    public void setBuyerName(String buyerName) {
+        this.buyerName = buyerName;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
     public Date getCreatedAt() {
@@ -73,13 +80,11 @@ public class Order implements Serializable {
         this.status = status;
     }
 
-    public List<OrderDetail> getOrderDetails() {
+    public List<OrderDetailResponse> getOrderDetails() {
         return orderDetails;
     }
 
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
+    public void setOrderDetails(List<OrderDetailResponse> orderDetails) {
         this.orderDetails = orderDetails;
     }
 }
-
-

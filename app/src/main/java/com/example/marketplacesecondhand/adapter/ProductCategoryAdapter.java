@@ -1,6 +1,7 @@
 package com.example.marketplacesecondhand.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
+import com.example.marketplacesecondhand.ProductDetailActivity;
 import com.example.marketplacesecondhand.R;
 import com.example.marketplacesecondhand.RetrofitClient;
 import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
@@ -89,6 +91,15 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
         });
 
         holder.itemView.setOnClickListener(v -> listener.onItemClick(product));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("product_id", product.getProductId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     private void toggleFavorite(int productId, int position, ProductCategoryViewHolder holder) {

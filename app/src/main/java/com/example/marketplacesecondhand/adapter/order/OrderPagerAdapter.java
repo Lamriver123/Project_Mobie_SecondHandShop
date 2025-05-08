@@ -1,4 +1,4 @@
-package com.example.marketplacesecondhand.adapter;
+package com.example.marketplacesecondhand.adapter.order;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,15 +18,15 @@ public class OrderPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return OrderStatusFragment.newInstance("CHO_XAC_NHAN");
+                return OrderStatusFragment.newInstance("Chờ xác nhận"); // Chờ xác nhận
             case 1:
-                return OrderStatusFragment.newInstance("DANG_GIAO");
+                return OrderStatusFragment.newInstance("Đang giao"); // Đang giao
             case 2:
-                return OrderStatusFragment.newInstance("DA_GIAO");
+                return OrderStatusFragment.newInstance("Đã giao"); // Đã giao
             case 3:
-                return OrderStatusFragment.newInstance("DA_HUY");
+                return OrderStatusFragment.newInstance("Đã hủy"); // Đã hủy
             default:
-                return OrderStatusFragment.newInstance("CHO_XAC_NHAN");
+                return OrderStatusFragment.newInstance("Chờ xác nhận");
         }
     }
 

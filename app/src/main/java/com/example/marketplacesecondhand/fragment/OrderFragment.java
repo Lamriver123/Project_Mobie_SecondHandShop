@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.marketplacesecondhand.adapter.OrderPagerAdapter;
+import com.example.marketplacesecondhand.adapter.order.OrderPagerAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentOrderBinding;
 import com.google.android.material.tabs.TabLayoutMediator;
 

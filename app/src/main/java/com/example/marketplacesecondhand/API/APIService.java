@@ -9,6 +9,7 @@ import com.example.marketplacesecondhand.dto.request.UserUpdateRequest;
 import com.example.marketplacesecondhand.dto.request.VerifyAccountRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.AuthResponse;
+import com.example.marketplacesecondhand.dto.response.OrderResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.dto.response.UserResponse;
 import com.example.marketplacesecondhand.models.Category;
@@ -87,4 +88,6 @@ public interface APIService {
     @PUT("users/{userId}")
     Call<ApiResponse<UserResponse>> updateUser(@Path("userId") int userId, @Body UserUpdateRequest request);
 
+    @GET("orders/my-orders")
+    Call<ApiResponse<List<OrderResponse>>> getMyOrders(@Query("status") String status);
 }
