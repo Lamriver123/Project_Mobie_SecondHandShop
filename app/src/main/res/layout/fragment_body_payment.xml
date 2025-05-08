@@ -16,7 +16,7 @@
 
         <!-- Địa chỉ giao hàng -->
         <LinearLayout
-            android:id="@+id/layoutAddress"
+            android:id="@+id/btnChooseLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -393,65 +393,73 @@
                 android:text="Phương thức thanh toán"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <RadioGroup
+                android:id="@+id/radioGroupPayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/momo" />
-
-                <RadioButton
-                    android:id="@+id/radioMomo"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ví MoMo"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/momo" />
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/vnpay" />
+                    <RadioButton
+                        android:id="@+id/radioMomo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ví MoMo"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
 
-                <RadioButton
-                    android:id="@+id/radioBank"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Thanh toán vnpay"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/vnpay" />
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/cod" />
+                    <RadioButton
+                        android:id="@+id/radioBank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thanh toán vnpay"
+                        android:layout_marginStart="8dp"
+                        android:checked="true"/>
+                </LinearLayout>
 
-                <RadioButton
-                    android:id="@+id/radioCod"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Thanh toán khi nhận hàng (COD)"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/cod" />
+
+                    <RadioButton
+                        android:id="@+id/radioCod"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thanh toán khi nhận hàng (COD)"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+            </RadioGroup>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
