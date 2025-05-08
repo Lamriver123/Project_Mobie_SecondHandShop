@@ -32,12 +32,14 @@
         android:textSize="14sp" />
 
     <ImageView
+        android:id="@+id/ivFavorite"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
         android:src="@drawable/icon_heart" />
 
     <ImageView
+        android:id="@+id/ivCart"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="10dp"

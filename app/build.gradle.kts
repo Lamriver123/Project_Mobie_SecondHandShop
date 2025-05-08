@@ -58,6 +58,8 @@ dependencies {
 
     implementation ("jp.wasabeef:glide-transformations:4.3.0")
 
+    implementation("com.cloudinary:cloudinary-android:3.0.2")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

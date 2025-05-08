@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.LoginActivity;
@@ -186,13 +187,13 @@ public class ProfileFragment extends Fragment {
                     tvEmail.setText(user.getEmail());
 
                     // Nếu có link avatar thì load bằng Glide
-//                    if (user.getAvatarUrl() != null && !user.getAvatarUrl().isEmpty()) {
-//                        Glide.with(requireContext())
-//                                .load(user.getAvatarUrl())
-//                                .placeholder(R.drawable.default_avatar) // ảnh mặc định nếu chưa có
-//                                .error(R.drawable.default_avatar)       // nếu load thất bại
-//                                .into(imgAvatar);
-//                    }
+                    if (user.getAvt() != null && !user.getAvt().isEmpty()) {
+                        Glide.with(requireContext())
+                                .load(user.getAvt())
+                                .placeholder(R.drawable.user) // ảnh mặc định nếu chưa có
+                                .error(R.drawable.user)       // nếu load thất bại
+                                .into(imgAvatar);
+                    }
 
                 } else {
                     try {

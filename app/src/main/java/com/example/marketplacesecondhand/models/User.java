@@ -10,6 +10,7 @@ public class User {
     private String phoneNumber;
     private String gender;
     private Date dateOfBirth;
+    private String avt;
     private String email;
     private String username;
     private String password;
@@ -19,12 +20,13 @@ public class User {
     private Set<String> roles;
     public User() {
     }
-    public User(int id, String fullName, String phoneNumber, String gender, Date dateOfBirth, String email, String username, String password, Boolean isActive, String otp, LocalDateTime otpGeneratedTime, Set<String> roles) {
+    public User(int id, String fullName, String phoneNumber, String gender, Date dateOfBirth, String avt, String email, String username, String password, Boolean isActive, String otp, LocalDateTime otpGeneratedTime, Set<String> roles) {
         this.id = id;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
+        this.avt = avt;
         this.email = email;
         this.username = username;
         this.password = password;
@@ -72,6 +74,13 @@ public class User {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+    public String getAvt() {
+        return avt;
+    }
+
+    public void setAvt(String avt) {
+        this.avt = avt;
     }
 
     public String getEmail() {

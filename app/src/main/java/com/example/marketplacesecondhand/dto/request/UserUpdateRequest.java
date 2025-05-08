@@ -5,15 +5,24 @@ public class UserUpdateRequest {
     private String phoneNumber;
     private String gender;
     private String dateOfBirth;
+    private String avt;
 
     public UserUpdateRequest() {
     }
 
-    public UserUpdateRequest(String fullName, String phoneNumber, String gender, String dateOfBirth) {
+    public UserUpdateRequest(String fullName, String phoneNumber, String gender, String dateOfBirth, String avt) {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
+        this.avt = avt;
+    }
+    public String getAvt() {
+        return avt;
+    }
+
+    public void setAvt(String avt) {
+        this.avt = avt;
     }
 
     public String getFullName() {

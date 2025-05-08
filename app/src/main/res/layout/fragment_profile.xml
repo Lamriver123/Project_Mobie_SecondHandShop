@@ -44,8 +44,8 @@
                     android:background="@drawable/circle_white"
                     android:padding="8dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/user"
-                    app:shapeAppearanceOverlay="@style/CircleImageView" />
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    app:srcCompat="@drawable/user" />
 
                 <View
                     android:layout_width="10dp"

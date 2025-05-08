@@ -1,5 +1,6 @@
 package com.example.marketplacesecondhand.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
+import com.example.marketplacesecondhand.LoginActivity;
 import com.example.marketplacesecondhand.RetrofitClient;
 import com.example.marketplacesecondhand.adapter.order.OrderProductAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentOrderStatusBinding;
@@ -48,6 +50,7 @@ public class OrderStatusFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         binding = FragmentOrderStatusBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -89,14 +92,6 @@ public class OrderStatusFragment extends Fragment {
     }
 
     private void loadOrders(String status) {
-        // Kiểm tra đăng nhập
-        DatabaseHandler dbHandler = new DatabaseHandler(requireContext());
-        if (dbHandler.getLoginInfoSQLite() == null) {
-            Toast.makeText(requireContext(), "Vui lòng đăng nhập để xem đơn hàng", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Gọi API
         Call<ApiResponse<List<OrderResponse>>> call = apiService.getMyOrders(status);
         call.enqueue(new Callback<ApiResponse<List<OrderResponse>>>() {
             @Override
@@ -186,4 +181,21 @@ public class OrderStatusFragment extends Fragment {
 //            }
 //        });
     }
+
+//    private void clearOrderData() {
+//        orderList.clear();
+//        if (adapter != null) {
+//            adapter.notifyDataSetChanged();
+//        }
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        String status = getArguments() != null ? getArguments().getString(ARG_STATUS) : "";
+//        if (!status.isEmpty()) {
+//            loadOrders(status); // Gọi lại API mỗi lần fragment được hiển thị
+//        }
+//    }
 }

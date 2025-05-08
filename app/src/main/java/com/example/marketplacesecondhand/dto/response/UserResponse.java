@@ -16,6 +16,8 @@ public class UserResponse implements Serializable {
     private String gender;
     @SerializedName("dateOfBirth")
     private Date dateOfBirth;
+    @SerializedName("avt")
+    private String avt;
     @SerializedName("email")
     private String email;
     @SerializedName("username")
@@ -31,11 +33,12 @@ public class UserResponse implements Serializable {
 
     public UserResponse() {}
 
-    public UserResponse(String fullName, String phoneNumber, String gender, Date dateOfBirth, String email, String username, Boolean isActive, String otp, String otpGenaratedTime, Set<String> roles) {
+    public UserResponse(String fullName, String phoneNumber, String gender, Date dateOfBirth, String avt, String email, String username, Boolean isActive, String otp, String otpGenaratedTime, Set<String> roles) {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
+        this.avt = avt;
         this.email = email;
         this.username = username;
         this.isActive = isActive;
@@ -81,6 +84,13 @@ public class UserResponse implements Serializable {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+    public String getAvt() {
+        return avt;
+    }
+
+    public void setAvt(String avt) {
+        this.avt = avt;
     }
 
     public String getEmail() {

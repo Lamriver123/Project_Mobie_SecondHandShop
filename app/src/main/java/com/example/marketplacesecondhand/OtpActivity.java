@@ -1,11 +1,15 @@
 package com.example.marketplacesecondhand;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,6 +44,21 @@ public class OtpActivity extends AppCompatActivity {
         tvResendOtp = findViewById(R.id.tvResendOtp);
         pinView = findViewById(R.id.pinView);
 
+        if (pinView != null) {
+            // Đảm bảo PinView có thể nhận focus khi chạm vào
+            pinView.setFocusableInTouchMode(true);
+            // Yêu cầu focus cho PinView
+            pinView.requestFocus();
+
+            // Sử dụng post để đảm bảo view đã sẵn sàng trước khi hiển thị bàn phím
+            pinView.post(() -> {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.showSoftInput(pinView, InputMethodManager.SHOW_IMPLICIT);
+                }
+            });
+        }
+
         pinView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -54,6 +73,8 @@ public class OtpActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length() == 6) {
+                    // Tự động ẩn bàn phím khi nhập đủ 6 ký tự
+                    hideKeyboard();
                     btnOtp.performClick(); // tự động gọi sự kiện bấm nút "Verify"
                 }
             }
@@ -81,17 +102,22 @@ public class OtpActivity extends AppCompatActivity {
                 String email = getIntent().getStringExtra("email");
                 EmailRequest emailRequest = new EmailRequest(email);
                 regenerateOtp(emailRequest);
+
+                showKeyboardAgain();
             }
         });
-
-
-//        pinView = findViewById(R.id.pinView);
-//        pinView.setOnClickListener(str -> {
-//            Toast.makeText(this, "OTP Entered: " + str, Toast.LENGTH_SHORT).show();
-//        });
-
     }
-
+    private void showKeyboardAgain() {
+        if (pinView != null) {
+            pinView.requestFocus();
+            pinView.post(() -> { // Sử dụng post cho độ tin cậy
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.showSoftInput(pinView, InputMethodManager.SHOW_IMPLICIT);
+                }
+            });
+        }
+    }
     private void activateAccount(VerifyAccountRequest verifyAccountRequest) {
         APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
         Call<ApiResponse<Void>> call = apiService.verifyAccount(verifyAccountRequest);
@@ -169,6 +195,19 @@ public class OtpActivity extends AppCompatActivity {
             String email = getIntent().getStringExtra("email");
             intent.putExtra("email", email);
             startActivity(intent);
+        }
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view == null) {
+            view = pinView;
+        }
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
         }
     }
 }
