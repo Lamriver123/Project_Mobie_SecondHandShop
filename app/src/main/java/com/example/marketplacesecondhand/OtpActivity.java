@@ -196,6 +196,10 @@ public class OtpActivity extends AppCompatActivity {
             intent.putExtra("email", email);
             startActivity(intent);
         }
+        else if (source.equals("login_activation")){
+            Intent intent = new Intent(OtpActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void hideKeyboard() {

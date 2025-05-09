@@ -9,16 +9,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.LoginActivity;
 import com.example.marketplacesecondhand.adapter.order.OrderPagerAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentOrderBinding;
+import com.example.marketplacesecondhand.viewModel.OrderViewModel;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class OrderFragment extends Fragment {
     private FragmentOrderBinding binding;
     private boolean uiInitialized = false;
+    private OrderViewModel orderViewModel;
 
     public OrderFragment() {}
 
@@ -29,7 +32,7 @@ public class OrderFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         binding = FragmentOrderBinding.inflate(inflater, container, false);
-
+        orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
         // Gắn adapter
 //        OrderPagerAdapter adapter = new OrderPagerAdapter(requireActivity());
 //        binding.viewPagerOrder.setAdapter(adapter);

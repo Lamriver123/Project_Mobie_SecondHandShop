@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.dto.request.RegisterRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import java.text.ParseException;
@@ -34,20 +36,16 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etFullName, etBirthday, etPhoneNumber, etEmail, etUsername, etPassword;
+    private TextInputEditText etFullName, etBirthday, etPhoneNumber, etEmail, etUsername, etPassword;
     private RadioButton rbMale, rbFemale;
     private ImageButton btnSignUp;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
 
         mapping();
 
@@ -76,6 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
         rbMale = findViewById(R.id.radioButton);
         rbFemale = findViewById(R.id.radioButton2);
         btnSignUp = findViewById(R.id.btnSignUp);
+        progressBar = findViewById(R.id.progressBar);
     }
 
     private void registerUser() {
@@ -93,6 +92,12 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        // Hiển thị ProgressBar và vô hiệu hóa nút
+        progressBar.setVisibility(View.VISIBLE);
+        btnSignUp.setEnabled(false);
+        // Bạn cũng có thể vô hiệu hóa các trường nhập liệu khác nếu muốn
+        // setInputFieldsEnabled(false);
+
         RegisterRequest request = new RegisterRequest(fullName, phone, gender, dateOfBirth, email, username, password);
 
         sendRegisterRequest(request);
@@ -104,7 +109,11 @@ public class RegisterActivity extends AppCompatActivity {
         call.enqueue(new Callback<ApiResponse<Void>>() {
             @Override
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
-             //   Log.e("Register", "Response Body: " + new Gson().toJson(response.body()));
+                // Ẩn ProgressBar và kích hoạt lại nút
+                progressBar.setVisibility(View.GONE);
+                btnSignUp.setEnabled(true);
+                // setInputFieldsEnabled(true);
+
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(RegisterActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         openOtpOtpActivity(request.getEmail());
@@ -126,6 +135,10 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                // Ẩn ProgressBar và kích hoạt lại nút
+                progressBar.setVisibility(View.GONE);
+                btnSignUp.setEnabled(true);
+                // setInputFieldsEnabled(true);
                 Log.e("Register", "Error: " + t.getMessage());
                 Toast.makeText(RegisterActivity.this, "Lỗi hệ thống!", Toast.LENGTH_SHORT).show();
             }

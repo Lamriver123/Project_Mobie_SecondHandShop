@@ -1,14 +1,17 @@
 package com.example.marketplacesecondhand.API;
 
+import com.example.marketplacesecondhand.dto.request.CancelOrderRequest;
 import com.example.marketplacesecondhand.dto.request.EmailRequest;
 import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
 import com.example.marketplacesecondhand.dto.request.LoginRequest;
 import com.example.marketplacesecondhand.dto.request.RegisterRequest;
 import com.example.marketplacesecondhand.dto.request.ResetPasswordRequest;
+import com.example.marketplacesecondhand.dto.request.UpdateOrderStatusRequest;
 import com.example.marketplacesecondhand.dto.request.UserUpdateRequest;
 import com.example.marketplacesecondhand.dto.request.VerifyAccountRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.AuthResponse;
+import com.example.marketplacesecondhand.dto.response.CancelledOrderResponse;
 import com.example.marketplacesecondhand.dto.response.OrderResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.dto.response.UserResponse;
@@ -20,6 +23,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -90,4 +94,12 @@ public interface APIService {
 
     @GET("orders/my-orders")
     Call<ApiResponse<List<OrderResponse>>> getMyOrders(@Query("status") String status);
+    @PUT("orders/{orderId}/status")
+    Call<ApiResponse<Void>> updateOrderStatus(
+            @Path("orderId") int orderId,
+            @Body UpdateOrderStatusRequest request
+    );
+
+    @POST("orders/cancel")
+    Call<ApiResponse<CancelledOrderResponse>> cancelOrder(@Body CancelOrderRequest request);
 }

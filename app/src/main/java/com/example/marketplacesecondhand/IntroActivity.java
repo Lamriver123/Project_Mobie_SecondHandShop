@@ -14,7 +14,7 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            startActivity(new Intent(IntroActivity.this, HomeActivity.class));
+            startActivity(new Intent(IntroActivity.this, LoginActivity.class));
             finish(); // Đóng SplashActivity
         }, 2000); // Hiển thị trong 2 giây
     }

@@ -1,0 +1,549 @@
+-- CREATE database marketplace;
+use marketplace;
+--  select *from user
+
+-- Xóa dữ liệu cũ nếu có (cẩn thận khi chạy)
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE cart;
+TRUNCATE TABLE product_image;
+TRUNCATE TABLE product;
+TRUNCATE TABLE category;
+TRUNCATE TABLE delivery_address;
+SET FOREIGN_KEY_CHECKS = 1;
+
+use marketplace;
+UPDATE user
+SET
+    is_active = 1,
+    username = 'TechZoneStore',
+    avt = 'https://mms.img.susercontent.com/79ddac4389d9482ae5363c2bb3d3579a_tn'
+WHERE id = 2;
+
+UPDATE user
+SET
+    is_active = 1,
+    username = 'FashionHubVN',
+    avt = 'https://mms.img.susercontent.com/93b8ef0260ad997ba4b98c64d0167a4b'
+WHERE id = 3;
+
+UPDATE user
+SET
+    is_active = 1,
+    username = 'NoiThatCuTot',
+    avt = 'https://media.loveitopcdn.com/40474/thumb/upload/images/o-dau-ban-noi-that-cu-chat-luong-voi-gia-tot.jpg'
+WHERE id = 4;
+
+UPDATE user
+SET
+    is_active = 1,
+    username = 'GocTriThuc',
+    avt = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-YutXobp6AA84uFmra72dwzG65Nz3YcX0Jfvc_WrqWWb5cpY3aQTvY55v06Tf2DHPNXQ&usqp=CAU'
+WHERE id = 5;
+
+UPDATE user
+SET
+    is_active = 1,
+    username = 'CoVatPhuongDong',
+    avt = 'https://maydopro.com/cdn/images/tin-tuc/tieu-chi-dinh-gia-do-co/dinh-gia-do-co.jpg'
+WHERE id = 6;
+
+UPDATE user
+SET
+    is_active = 1,
+    username = 'TienIchCuocSong',
+    avt = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIFmN-UiLMHCRaV_jTFZrSPi19polx0dNrLQ&s'
+WHERE id = 7;
+INSERT INTO category (category_id, category_name, category_img) VALUES
+(101, 'Điện tử & Công nghệ', 'https://png.pngtree.com/png-vector/20240314/ourmid/pngtree-electronic-device-set-png-image_11963319.png'),
+(102, 'Phụ kiện Công nghệ', 'https://png.pngtree.com/png-vector/20240926/ourmid/pngtree-sleek-blue-wireless-headphones-metallic-finish-over-ear-design-padded-ear-png-image_13917657.png'),
+(103, 'Thời trang Nam', 'https://img.lovepik.com/free-png/20220414/lovepik-yuan-universe-fashion-male-photo-png-image_wh1200.png'),
+(104, 'Thời trang Nữ & Phụ kiện', 'https://png.pngtree.com/png-vector/20250130/ourmid/pngtree-fashion-accessories-luxury-handbags-png-image_15375084.png'),
+(105, 'Đồ gia dụng & Bếp', 'https://png.pngtree.com/png-clipart/20241016/original/pngtree-modern-kitchen-appliances-png-image_16343626.png'),
+(106, 'Nội thất & Trang trí nhà cửa', 'https://i.ytimg.com/vi/WFZPoa_Pg0w/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBLefbdzJlQ9yVk8xboYpwFLBevvQ'),
+(107, 'Sách & Văn phòng phẩm', 'https://vietaus.com/wp-content/uploads/2023/04/van-phong-pham.jpg'),
+(108, 'Giải trí & Media', 'https://image.phunuonline.com.vn/news/2019/20191220/fckimage/171898_screen-shot-2019-12-20-at-08-38-35-20839103.png'),
+(109, 'Đồ sưu tầm & Vintage', 'https://i.pinimg.com/236x/24/71/64/247164cc9e0633b9067aca44928c2f7d.jpg'),
+(110, 'Thủ công & Nghệ thuật', 'https://gomsumoc.com/wp-content/uploads/2023/06/lang-nghe-min.png');
+
+INSERT INTO product (product_id, owner_id, product_name, category_id, original_price, current_price, quantity, origin, warranty, product_condition, condition_description, product_description, created_at, sold) VALUES
+(1,2,'Laptop Gaming XYZ Series',101,'30000000','28000000',2,'Nhật Bản','12 tháng','Như mới','Mới dùng 1 tháng, không trầy xước','Laptop cấu hình cao, chuyên game','2024-01-15 10:00:00',1),
+(2,2,'Điện thoại Smart ZFold 5',101,'25000000','22500000',3,'Hàn Quốc','6 tháng','Như mới','Fullbox, ít dùng','Điện thoại gập cao cấp','2024-02-20 11:30:00',1),
+(3,2,'Tai nghe Bluetooth ABC',102,'3500000','3000000',5,'Trung Quốc','3 tháng','Mới','Chưa bóc tem','Tai nghe chống ồn cao cấp','2024-03-10 14:00:00',2),
+(4,2,'Đồng hồ thông minh FitPro X',102,'5000000','4500000',4,'Mỹ','9 tháng','Như mới','Pin còn 98%','Theo dõi sức khỏe chính xác','2024-04-05 09:15:00',1),
+(5,2,'Máy ảnh Mirrorless D900',102,'45000000','40000000',1,'Nhật Bản','18 tháng','Như mới','Chụp dưới 1000 tấm','Máy ảnh chuyên nghiệp','2024-05-01 16:00:00',0),
+(6,2,'Bàn phím cơ RGB Pro',101,'2000000','1800000',7,'Đài Loan','6 tháng','Mới','Fullbox','Bàn phím cơ gõ êm, led RGB đẹp','2024-05-10 10:30:00',3),
+(7,2,'Router Wifi 6 tốc độ cao',102,'1800000','1600000',6,'Trung Quốc','12 tháng','Mới','Hàng nguyên seal','Router phủ sóng mạnh, ổn định','2024-06-01 15:00:00',2),
+(8,2,'Màn hình Gaming 27 inch 144Hz',101,'7000000','6500000',3,'Hàn Quốc','9 tháng','Như mới','Không điểm chết ảnh','Màn hình tần số quét cao','2024-06-18 08:45:00',1),
+(9,2,'Loa Bluetooth di động Bass XL',102,'1200000','1000000',8,'Trung Quốc','3 tháng','Mới','Fullbox','Loa nhỏ gọn, âm bass mạnh mẽ','2024-07-01 11:00:00',4),
+(10,2,'Pin sạc dự phòng 20000mAh',102,'800000','700000',10,'Trung Quốc','6 tháng','Mới','Nguyên hộp','Sạc nhanh, dung lượng lớn','2024-07-20 14:30:00',5),
+(11,2,'Ổ cứng SSD 1TB tốc độ cao',101,'2500000','2300000',5,'Hàn Quốc','12 tháng','Mới','Nguyên seal','Tăng tốc độ máy tính đáng kể','2024-08-05 09:00:00',2),
+(12,2,'Card đồ họa RTX 3060',101,'8000000','7500000',2,'Đài Loan','6 tháng','Như mới','Dùng 6 tháng, hiệu năng tốt','Card đồ họa mạnh mẽ cho gaming','2024-08-25 15:30:00',1),
+(13,2,'Máy đọc sách điện tử E-Ink',102,'3000000','2800000',3,'Trung Quốc','3 tháng','Mới','Nguyên hộp','Màn hình chống chói, pin lâu','2024-09-01 10:00:00',1),
+(14,2,'Webcam Full HD 1080p',102,'1000000','900000',7,'Trung Quốc','6 tháng','Mới','Fullbox','Hình ảnh sắc nét cho họp online','2024-09-15 14:00:00',3),
+(15,2,'Chuột Gaming không dây',101,'1500000','1300000',5,'Đài Loan','3 tháng','Mới','Nguyên seal','Chuột độ nhạy cao, pin trâu','2024-10-01 11:30:00',2),
+(16,2,'Tay cầm chơi game PS5',101,'1600000','1500000',4,'Trung Quốc','3 tháng','Như mới','Dùng ít','Tay cầm chính hãng Sony','2024-10-10 09:00:00',1),
+(17,2,'Loa thanh Soundbar TV',102,'4000000','3800000',2,'Nhật Bản','12 tháng','Mới','Nguyên hộp','Âm thanh sống động cho TV','2024-11-01 15:00:00',0),
+(18,3,'Áo Thun Cotton Trắng',103,'250000','200000',20,'Việt Nam','Không bảo hành','Mới','Nguyên tag','Áo thun basic dễ phối đồ','2024-01-20 10:00:00',10),
+(19,3,'Quần Jeans Xanh Đậm Skinny',104,'500000','400000',15,'Việt Nam','Không bảo hành','Mới','Nguyên tag','Quần jeans co giãn tốt','2024-02-15 11:30:00',5),
+(20,3,'Giày Sneaker Trắng Đơn Giản',104,'800000','650000',10,'Trung Quốc','Không bảo hành','Như mới','Đi vài lần, còn hộp','Giày thể thao thời trang','2024-03-05 14:00:00',3),
+(21,3,'Túi Xách Nữ Da PU Đen',104,'700000','550000',8,'Trung Quốc','Không bảo hành','Như mới','Ít sử dụng, không trầy xước','Túi xách công sở thanh lịch','2024-04-10 09:15:00',2),
+(22,3,'Váy Maxi Hoa Nhí',103,'600000','450000',12,'Việt Nam','Không bảo hành','Mới','Nguyên tag','Váy đi biển, đi chơi thoải mái','2024-05-05 16:00:00',6),
+(23,3,'Kính Mát Unisex Gọng Vuông',104,'300000','200000',18,'Trung Quốc','Không bảo hành','Mới','Fullbox','Kính chống tia UV','2024-05-20 10:30:00',9),
+(24,3,'Áo Sơ Mi Nam Caro',103,'400000','300000',14,'Việt Nam','Không bảo hành','Mới','Nguyên tag','Áo sơ mi trẻ trung','2024-06-10 15:00:00',7),
+(25,3,'Dép Quai Ngang Đơn Giản',104,'150000','100000',25,'Việt Nam','Không bảo hành','Mới','Nguyên tag','Dép đi trong nhà, đi chơi','2024-06-28 08:45:00',15),
+(26,3,'Nón Bucket Vải',103,'100000','70000',30,'Việt Nam','Không bảo hành','Mới','Nguyên tag','Nón phong cách streetwear','2024-07-10 11:00:00',20),
+(27,3,'Set Đồ Ngủ',103,'350000','250000',10,'Trung Quốc','Không bảo hành','Mới','Nguyên tag','Chất vải mềm mịn, thoáng mát','2024-07-25 14:30:00',5),
+(28,3,'Vớ (Tất) Cổ Ngắn Set 5 Đôi',104,'80000','50000',40,'Trung Quốc','Không bảo hành','Mới','Nguyên tag','Vớ thoáng khí, thấm hút mồ hôi','2024-08-10 09:00:00',30),
+(29,3,'Đầm Dự Tiệc Bodycon',103,'900000','700000',5,'Việt Nam','Không bảo hành','Mới','Nguyên tag','Đầm ôm sát tôn dáng','2024-08-30 15:30:00',2),
+(30,3,'Áo Khoác Bomber Unisex',103,'700000','550000',8,'Trung Quốc','Không bảo hành','Như mới','Dùng 1 mùa','Áo khoác cá tính','2024-09-10 10:00:00',4),
+(31,3,'Thắt Lưng Da Nam Đơn Giản',104,'400000','300000',10,'Việt Nam','Không bảo hành','Mới','Nguyên tag','Thắt lưng bền đẹp','2024-09-25 14:00:00',6),
+(32,3,'Khăn Choàng Cổ Họa Tiết',104,'200000','150000',15,'Trung Quốc','Không bảo hành','Mới','Nguyên tag','Khăn giữ ấm, phụ kiện thời trang','2024-10-05 11:30:00',8),
+(33,3,'Quần Short Jean Rách',103,'300000','200000',12,'Việt Nam','Không bảo hành','Mới','Nguyên tag','Quần short phong cách bụi bặm','2024-10-20 09:00:00',7),
+(34,4,'Ghế Sofa Vải 3 Chỗ',105,'5000000','2500000',1,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Vải còn tốt, khung chắc chắn','Ghế sofa cũ, cần thanh lý','2024-01-25 10:00:00',1),
+(35,4,'Bàn Ăn Gỗ 4 Ghế',105,'3000000','1500000',1,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Mặt bàn có vài vết xước nhỏ','Bộ bàn ăn gia đình','2024-02-20 11:30:00',1),
+(36,4,'Giường Đơn Gỗ Công Nghiệp',106,'2000000','800000',1,'Việt Nam','Không bảo hành','Đã dùng - Khá','Có vài chỗ bong tróc sơn','Giường đơn 1m2','2024-03-15 14:00:00',1),
+(37,4,'Tủ Quần Áo Cửa Lùa',106,'4000000','2000000',1,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Ray trượt còn mượt','Tủ quần áo lớn','2024-04-01 09:15:00',1),
+(38,4,'Kệ Sách Gỗ 5 Tầng',105,'1500000','700000',2,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Chắc chắn, không mối mọt','Kệ sách đa năng','2024-05-08 16:00:00',1),
+(39,4,'Bàn Làm Việc Có Hộc Kéo',106,'1200000','600000',1,'Việt Nam','Không bảo hành','Đã dùng - Khá','Mặt bàn có vết bút','Bàn làm việc học tập','2024-05-25 10:30:00',1),
+(40,4,'Nệm Cao Su Thiên Nhiên 1m6',106,'6000000','3000000',1,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Độ đàn hồi còn tốt','Nệm ngủ êm ái','2024-06-15 15:00:00',1),
+(41,4,'Bếp Ga Đôi Mặt Kính',105,'1000000','400000',1,'Việt Nam','Không bảo hành','Đã dùng - Khá','Kiềng hơi gỉ','Bếp ga đã qua sử dụng','2024-06-30 08:45:00',1),
+(42,4,'Máy Giặt Cửa Trước 7kg',105,'7000000','3500000',1,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Vận hành êm ái','Máy giặt cũ, cần thanh lý','2024-07-15 11:00:00',1),
+(43,4,'Quạt Điện Đứng',106,'300000','100000',3,'Việt Nam','Không bảo hành','Đã dùng - Khá','Hơi bụi','Quạt mát','2024-07-30 14:30:00',2),
+(44,4,'Lò vi sóng AQUA MWM2001R 20L',105,'800000','300000',1,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Hoạt động bình thường','Lò vi sóng cũ','2024-08-15 09:00:00',1),
+(45,4,'Tủ Lạnh Mini 50L',106,'1500000','700000',1,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Đông đá tốt','Tủ lạnh nhỏ gọn','2024-08-30 15:30:00',1),
+(46,4,'Bàn Trang Điểm Có Gương',106,'1200000','500000',1,'Việt Nam','Không bảo hành','Đã dùng - Khá','Gương hơi mờ','Bàn trang điểm cũ','2024-09-10 10:00:00',1),
+(47,4,'Ghế Văn Phòng Xoay',105,'700000','200000',2,'Việt Nam','Không bảo hành','Đã dùng - Khá','Hơi lỏng chân','Ghế làm việc cũ','2024-09-25 14:00:00',1),
+(48,4,'Máy Hút Bụi Gia Đình',105,'2000000','800000',1,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Lực hút còn mạnh','Máy hút bụi cũ','2024-10-05 11:30:00',0),
+(49,5,'Sách \'Đắc Nhân Tâm\'',107,'120000','80000',50,'Việt Nam','Không bảo hành','Mới','Nguyên seal','Sách kỹ năng sống kinh điển','2024-01-30 10:00:00',20),
+(50,5,'Truyện Tranh Conan Tập 1',107,'20000','10000',100,'Nhật Bản','Không bảo hành','Đã dùng - Khá','Giấy hơi ố vàng','Truyện tranh thám tử','2024-02-25 11:30:00',60),
+(51,5,'Tiểu Thuyết \'Nhà Giả Kim\'',107,'100000','70000',60,'Việt Nam','Không bảo hành','Mới','Nguyên seal','Sách văn học nổi tiếng','2024-03-20 14:00:00',30),
+(52,5,'Đĩa DVD Phim Hành Động A',108,'50000','30000',80,'Mỹ','Không bảo hành','Mới','Nguyên seal','Phim bom tấn Hollywood','2024-04-15 09:15:00',50),
+(53,5,'Sách - Thần số học',107,'30000','15000',70,'Việt Nam','Không bảo hành','Mới','Nguyên seal','Cập nhật kiến thức khoa học mới','2024-05-10 16:00:00',40),
+(54,5,'Sách Học Tiếng Anh Giao Tiếp',107,'150000','100000',40,'Việt Nam','Không bảo hành','Mới','Nguyên seal','Sách tự học tiếng Anh','2024-05-30 10:30:00',15),
+(55,5,'Sách khoa học vũ trụ',108,'80000','40000',90,'Mỹ','Không bảo hành','Mới','Nguyên seal','Sự tiến hóa của vũ trụ và nền văn minh','2024-06-20 15:00:00',70),
+(56,5,'Sách Tô Màu Cho Bé',107,'50000','30000',120,'Trung Quốc','Không bảo hành','Mới','Nguyên seal','Giúp giảm stress','2024-07-05 08:45:00',90),
+(57,5,'Bộ Sách Giáo Khoa Lớp 10',107,'500000','200000',30,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Không thiếu trang','Bộ sách cũ','2024-07-20 11:00:00',20),
+(58,5,'Đĩa Game PC Chiến Thuật',108,'150000','80000',50,'Châu Âu','Không bảo hành','Mới','Nguyên seal','Game nhập vai chiến thuật','2024-08-01 14:30:00',35),
+(59,5,'Sách Nấu Ăn Món Việt',107,'100000','60000',70,'Việt Nam','Không bảo hành','Mới','Nguyên seal','Hướng dẫn nấu ăn chi tiết','2024-08-20 09:00:00',45),
+(60,5,'Sách Lập Trình C/C++',108,'120000','70000',60,'Việt Nam','Không bảo hành','Mới','Nguyên seal','Các kiến thức lập trình C/C++ từ cơ bản tới nâng cao','2024-09-05 15:30:00',40),
+(61,5,'Sách Lập Trình Python Cơ Bản',107,'200000','150000',40,'Mỹ','Không bảo hành','Mới','Nguyên seal','Sách học lập trình cho người mới','2024-09-20 10:00:00',25),
+(62,5,'Sách Lập Trình Java',108,'80000','50000',75,'Việt Nam','Không bảo hành','Mới','Nguyên seal','Lập trình Java từ cơ bản đến nâng cao','2024-10-01 14:00:00',60),
+(63,5,'Sách Lịch Sử Việt Nam',107,'150000','100000',55,'Việt Nam','Không bảo hành','Mới','Nguyên seal','Tổng quan lịch sử Việt Nam','2024-10-15 11:30:00',30),
+(64,6,'Tượng Gỗ Cổ Khắc Rồng',109,'15000000','12000000',1,'Việt Nam','Không bảo hành','Đã dùng - Rất Tốt','Gỗ quý, chạm khắc tinh xảo','Tượng phong thủy cổ','2024-02-01 10:00:00',0),
+(65,6,'Đồng Xu Cổ Thế Kỷ 19',110,'5000000','4500000',1,'Pháp','Không bảo hành','Đã dùng - Tốt','Còn rõ nét, có giấy xác nhận','Đồng xu hiếm','2024-03-01 11:30:00',0),
+(66,6,'Tranh Sơn Dầu Phong Cảnh',109,'10000000','8000000',1,'Việt Nam','Không bảo hành','Đã dùng - Rất Tốt','Khung gỗ đẹp, màu sắc tươi mới','Tranh nghệ thuật','2024-04-05 14:00:00',0),
+(67,6,'Bộ Ấm Trà Bát Tràng Cổ',109,'8000000','6500000',1,' Việt Nam','Không bảo hành','Đã dùng - Tốt','Men còn nguyên vẹn','Bộ ấm trà gốm sứ cổ','2024-05-01 09:15:00',0),
+(68,6,'Chiếc Đồng Hồ Bỏ Túi Vintage',110,'3000000','2500000',1,'Thụy Sĩ','Không bảo hành','Đã dùng - Tốt','Cơ chế hoạt động tốt','Đồng hồ bỏ túi cổ điển','2024-06-01 16:00:00',0),
+(69,6,'Con Tem Cổ Giá Trị Cao',110,'2000000','1800000',1,'Anh','Không bảo hành','Đã dùng - Rất Tốt','Còn nguyên keo, màu sắc tươi','Tem hiếm cho người sưu tập','2024-07-01 10:30:00',0),
+(70,6,'Bình Gốm Sứ Minh Triều',109,'20000000','18000000',1,'Trung Quốc','Không bảo hành','Đã dùng - Tốt','Có vết tích thời gian','Bình gốm sứ cổ, có giá trị lịch sử','2024-08-01 15:00:00',0),
+(71,6,'Bộ Bách Khoa Toàn Thư Cũ',107,'5000000','3500000',1,'Pháp','Không bảo hành','Đã dùng - Tốt','Đầy đủ các tập','Bộ sách kiến thức cổ','2024-09-01 08:45:00',0),
+(72,6,'Đồng xu cổ Thế Kỷ 19',110,'1000000','800000',5,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Còn nguyên vẹn','Đồ cổ ngày xưa','2024-10-01 11:00:00',2),
+(73,6,'Chiếc Nhẫn Bạc Khắc Hoa Văn',109,'1500000','1200000',1,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Bạc sáng, hoa văn rõ nét','Nhẫn bạc thủ công cổ','2024-11-01 14:30:00',0),
+(74,6,'Áo Dài Gấm Cổ Truyền',103,'3000000','2500000',1,'Việt Nam','Không bảo hành','Đã dùng - Tốt','Vải gấm đẹp, đường may tỉ mỉ','Áo dài cho dịp đặc biệt','2024-11-20 09:00:00',0),
+(75,6,'Bộ Bài Tây Cổ',110,'500000','300000',3,'Châu Âu','Không bảo hành','Đã dùng - Khá','Hộp hơi cũ','Bộ bài sưu tập','2024-12-01 15:30:00',1),
+(76,6,'Con Dấu Cổ Khắc Tên',109,'1000000','800000',1,'Trung Quốc','Không bảo hành','Đã dùng - Tốt','Nét khắc còn rõ','Con dấu cổ','2024-12-15 10:00:00',0),
+(77,7,'Xe Đạp Thể Thao',106,'4000000','3500000',1,'Trung Quốc','3 tháng','Như mới','Đi được vài lần','Xe đạp nhẹ, phù hợp tập thể dục','2024-02-10 10:00:00',1),
+(78,7,'Vợt Cầu Lông Carbon',104,'1000000','800000',5,'Trung Quốc','1 tháng','Mới','Nguyên seal','Vợt nhẹ, đánh linh hoạt','2024-03-05 11:30:00',3),
+(79,7,'Bộ Dụng Cụ Sửa Chữa Đa Năng',105,'500000','400000',10,'Trung Quốc','6 tháng','Mới','Nguyên hộp','Bộ dụng cụ cần thiết cho gia đình','2024-03-30 14:00:00',5),
+(80,7,'Balo Laptop Chống Nước',104,'600000','500000',8,'Trung Quốc','Không bảo hành','Mới','Nguyên tag','Balo nhiều ngăn, chắc chắn','2024-04-20 09:15:00',4),
+(81,7,'Ấm Đun Nước Siêu Tốc',105,'300000','250000',12,'Trung Quốc','3 tháng','Mới','Nguyên hộp','Ấm đun nhanh, an toàn','2024-05-15 16:00:00',6),
+(82,7,'Đèn Bàn Led Chống Cận',106,'400000','350000',15,'Trung Quốc','6 tháng','Mới','Nguyên hộp','Đèn ánh sáng dịu nhẹ, tốt cho mắt','2024-06-05 10:30:00',7),
+(83,7,'Bộ Nồi Chảo Chống Dính',105,'800000','650000',5,'Trung Quốc','3 tháng','Mới','Nguyên hộp','Bộ nồi dùng cho bếp từ','2024-06-25 15:00:00',2),
+(84,7,'Máy Sấy Tóc Công Suất Cao',105,'500000','400000',7,'Trung Quốc','3 tháng','Mới','Nguyên hộp','Sấy tóc nhanh khô','2024-07-10 08:45:00',3),
+(85,7,'Bàn Chải Điện Sóng Âm',105,'700000','600000',10,'Trung Quốc','6 tháng','Mới','Nguyên hộp','Làm sạch răng hiệu quả','2024-07-30 11:00:00',5),
+(86,7,'Cân Điện Tử Sức Khỏe',105,'300000','250000',15,'Trung Quốc','3 tháng','Mới','Nguyên hộp','Đo cân nặng chính xác','2024-08-10 14:30:00',10),
+(87,7,'Máy Ép Trái Cây Tốc Độ Chậm',105,'1500000','1300000',3,'Trung Quốc','6 tháng','Mới','Nguyên hộp','Giữ trọn vitamin','2024-08-30 09:00:00',1),
+(88,7,'Bình Giữ Nhiệt Inox',105,'200000','150000',20,'Trung Quốc','Không bảo hành','Mới','Nguyên tag','Giữ nhiệt nóng/lạnh lâu','2024-09-15 15:30:00',15),
+(89,7,'Máy Cạo Râu Điện',105,'800000','700000',5,'Trung Quốc','6 tháng','Mới','Nguyên hộp','Cạo râu sạch, tiện lợi','2024-09-30 10:00:00',2),
+(90,7,'Camera IP Giám Sát Gia Đình',101,'1000000','900000',8,'Trung Quốc','3 tháng','Mới','Nguyên seal','Quan sát từ xa qua điện thoại','2024-10-10 14:00:00',4),
+(91,7,'Máy Photocopy Mini',102,'1200000','1000000',3,'Trung Quốc','3 tháng','Mới','Nguyên hộp','Photocopy, scan tiện lợi','2024-10-25 11:30:00',1),
+(92,7,'Bộ Loa Vi Tính 2.1',102,'500000','400000',10,'Trung Quốc','3 tháng','Mới','Nguyên hộp','Âm thanh tốt cho máy tính','2024-11-05 09:00:00',5),
+(93,7,'Máy Massage Cầm Tay',105,'600000','500000',7,'Trung Quốc','3 tháng','Mới','Nguyên hộp','Giúp thư giãn cơ bắp','2024-11-25 15:00:00',3),
+(94,7,'Đèn Pin Sạc Siêu Sáng',105,'150000','100000',25,'Trung Quốc','Không bảo hành','Mới','Nguyên hộp','Chiếu sáng mạnh','2024-12-05 08:45:00',18),
+(95,7,'Bộ Dao Kéo Nhà Bếp',105,'300000','250000',12,'Trung Quốc','Không bảo hành','Mới','Nguyên hộp','Sắc bén, dễ sử dụng','2024-12-20 11:00:00',8),
+(96,7,'Thảm Yoga Chống Trượt',104,'250000','200000',15,'Trung Quốc','Không bảo hành','Mới','Nguyên tag','Thảm êm, bám sàn tốt','2025-01-01 14:30:00',10),
+(97,7,'Gậy Selfie Kèm Tripod',102,'180000','150000',18,'Trung Quốc','Không bảo hành','Mới','Nguyên hộp','Tiện lợi chụp ảnh, quay phim','2025-01-15 09:00:00',14),
+(98,7,'Khóa Cửa Thông Minh',106,'2000000','1800000',4,'Trung Quốc','12 tháng','Mới','Nguyên hộp','Mở khóa bằng vân tay, mã số','2025-01-30 15:30:00',2),
+(99,7,'Chuột Không Dây Văn Phòng',101,'200000','150000',20,'Trung Quốc','6 tháng','Mới','Nguyên hộp','Chuột nhỏ gọn, kết nối ổn định','2025-02-10 10:00:00',12),
+(100,7,'Quạt Phun Sương Mini',105,'350000','300000',10,'Trung Quốc','3 tháng','Mới','Nguyên hộp','Tạo độ ẩm, làm mát nhanh','2025-02-25 11:30:00',5);
+INSERT INTO product_image (image_id, product_id, initial_image, current_image) VALUES
+-- Ảnh cho Product 1 (image_id 1-3)
+(1, 1, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7vzyxbk9l6v3d@resize_w450_nl.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7vzyxbk9l6v3d@resize_w450_nl.webp'),
+(2, 1, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7vzyxbk9l6658.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7vzyxbk9l6v3d@resize_w450_nl.webp'),
+(3, 1, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7vzyxbkazqm1e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7vzyxbk9l6v3d@resize_w450_nl.webp'),
+-- Ảnh cho Product 2 (image_id 4-6)
+(4, 2, 'https://down-vn.img.susercontent.com/file/vn-11134201-7qukw-lk7lb0apwhky7f.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7qukw-lk7lb0apwhky7f.webp'),
+(5, 2, 'https://down-vn.img.susercontent.com/file/vn-11134201-7qukw-lkgj6deujh604a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7qukw-lk7lb0apwhky7f.webp'),
+(6, 2, 'https://down-vn.img.susercontent.com/file/vn-11134201-7qukw-lkgj6dt9ycnwd8.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7qukw-lk7lb0apwhky7f.webp'),
+-- Ảnh cho Product 3 (image_id 7-9)
+(7, 3, 'https://down-vn.img.susercontent.com/file/cn-11134207-7ras8-m3amfldrotf360.webp', 'https://down-vn.img.susercontent.com/file/cn-11134207-7ras8-m3amfldrotf360.webp'),
+(8, 3, 'https://down-vn.img.susercontent.com/file/cn-11134207-7ras8-m3ymsucjyg3b23.webp', 'https://down-vn.img.susercontent.com/file/cn-11134207-7ras8-m3amfldrotf360.webp'),
+(9, 3, 'https://down-vn.img.susercontent.com/file/cn-11134207-7ras8-m3amadynydwvd2.webp', 'https://down-vn.img.susercontent.com/file/cn-11134207-7ras8-m3amfldrotf360.webp'),
+-- Ảnh cho Product 4 (image_id 10-12)
+(10, 4, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6j417osfwvs47.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6j417osfwvs47.webp'),
+(11, 4, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m30d38rvdzne8a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6j417osfwvs47.webp'),
+(12, 4, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m30d38rv9ry28d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6j417osfwvs47.webp'),
+-- Ảnh cho Product 5 (image_id 13-15)
+(13, 5, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbm1-m5d0ltdgalxc8a.webp', 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbm1-m5d0ltdgalxc8a.webp'),
+(14, 5, 'https://down-vn.img.susercontent.com/file/d46cfc87d1cba444f334520d6337324c.webp', 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbm1-m5d0ltdgalxc8a.webp'),
+(15, 5, 'https://down-vn.img.susercontent.com/file/1317fb5fd5d5db9721acdca63915f1a2.webp', 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbm1-m5d0ltdgalxc8a.webp'),
+-- Ảnh cho Product 6 (image_id 16-18)
+(16, 6, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzjxn5fhhr9p3a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzjxn5fhhr9p3a.webp'),
+(17, 6, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzjxn54dxzyldb.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzjxn5fhhr9p3a.webp'),
+(18, 6, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzjxn55rvyvh02.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzjxn5fhhr9p3a.webp'),
+-- Ảnh cho Product 7 (image_id 19-21)
+(19, 7, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2j8jfe58pma00.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2j8jfe58pma00.webp'),
+(20, 7, 'https://down-vn.img.susercontent.com/file/ac295b8056020e95e21ac8dace849372.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2j8jfe58pma00.webp'),
+(21, 7, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m1scmaiukc4318.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2j8jfe58pma00.webp'),
+-- Ảnh cho Product 8 (image_id 22-24)
+(22, 8, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lza9onydap41e7.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lza9onydap41e7.webp'),
+(23, 8, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m6275vgt7jjs04.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lza9onydap41e7.webp'),
+(24, 8, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lza9oo5b0joh7a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lza9onydap41e7.webp'),
+-- Ảnh cho Product 9 (image_id 25-27)
+(25, 9, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9i5g0dxw96q3b.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9i5g0dxw96q3b.webp'),
+(26, 9, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9i5g0f1umpu8c.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9i5g0dxw96q3b.webp'),
+(27, 9, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9i5g0e7vubof1.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9i5g0dxw96q3b.webp'),
+-- Ảnh cho Product 10 (image_id 28-30)
+(28, 10, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m799qch74vg3da.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m799qch74vg3da.webp'),
+(29, 10, 'https://down-vn.img.susercontent.com/file/3c63861c78b91c2f7bdc22d7cce0026a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m799qch74vg3da.webp'),
+(30, 10, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lxtgccb5bbvf1a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m799qch74vg3da.webp'),
+-- Ảnh cho Product 11 (image_id 31-33)
+(31, 11, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lxk03ab1mf2xcb.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lxk03ab1mf2xcb.webp'),
+(32, 11, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lxk03ab1ntnd64.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lxk03ab1mf2xcb.webp'),
+(33, 11, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lxk03ab1mevvac.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lxk03ab1mf2xcb.webp'),
+-- Ảnh cho Product 12 (image_id 34-36)
+(34, 12, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m8lhf056vb0n59.webp', 'https://down-vn.img.susercontent.com/file/sg-11134201-22120-1bytogkppmlv4d@resize_w450_nl.webp'),
+(35, 12, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m8lhf060u35z25.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyjoervs8x1p0b.webp'),
+(36, 12, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m8lhezwb9pbi5b.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyjogdh9ymch39.webp'),
+-- Ảnh cho Product 13 (image_id 37-39)
+(37, 13, 'https://down-vn.img.susercontent.com/file/sg-11134201-7reoj-m8batg11yej990.webp', 'https://down-vn.img.susercontent.com/file/vn-11134258-7ra0g-m9fioii159vof8'),
+(38, 13, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rdxm-ly5px04p22b03b.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7q6apnqji4j9f.webp'),
+(39, 13, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rdxk-ly5pwyanqpii7d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7q6apnqkx4h28.webp'),
+-- Ảnh cho Product 14 (image_id 40-42)
+(40, 14, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lx3dogriu1nfb3.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzj9iyr3h4r151.webp'),
+(41, 14, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lezg6dg3j1ca48.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzjwzgy8zqkt83.webp'),
+(42, 14, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lfi6yhbj68p089.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzj9iyr3ijkx4e.webp'),
+-- Ảnh cho Product 15 (image_id 43-45)
+(43, 15, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lq4ln8caxelzbc.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lq4ln8cb8n5j15.webp'),
+(44, 15, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lq4ln8cb30vrc7.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lq4ln8cayt6f0c.webp'),
+(45, 15, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lq4ln8cb1mbb91.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lq4ln8cb78l38a.webp'),
+-- Ảnh cho Product 16 (image_id 46-48)
+(46, 16, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwffy15zfs2hb9.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwffy15zpm1l5f.webp'),
+(47, 16, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwffy15zh6mx2f.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwffy15zo7h580.webp'),
+(48, 16, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwffy15zil7d03.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwffy15zmswp05.webp'),
+-- Ảnh cho Product 17 (image_id 49-51)
+(49, 17, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6j4236sdumwf2@resize_w450_nl.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m8ijfrhc070nf7.webp'),
+(50, 17, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6j426wswbw88d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m8ijfzj08ajy1e.webp'),
+(51, 17, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4tr5cw6xc8m15.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m8ijfrhc06zybd.webp'),
+-- Ảnh cho Product 18 (image_id 52-54)
+(52, 18, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m95ay21urxc782.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m99z0cjxhbvye8.webp'),
+(53, 18, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m66n20tlvx2u1c.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m66n20tbwbx301.webp'),
+(54, 18, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m9aza0wgb7esae.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m99z0cjxhbvye8.webp'),
+-- Ảnh cho Product 19 (image_id 55-57)
+(55, 19, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9a1y5a9v3bb77.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9a1y5jphbwi60.webp'),
+(56, 19, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9a1y5k9gh3b4c.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9a1y5ivtsaq0d.webp'),
+(57, 19, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9a1y5j5i3k76e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m9a1y5j5jjgk49.webp'),
+-- Ảnh cho Product 20 (image_id 58-60)
+(58, 20, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2hkc6uiv0z843.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2hkboc1yboy4b.webp'),
+(59, 20, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2hkc6uiv0z6cb.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2hkbvn39eic7a.webp'),
+(60, 20, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2hkc6vctt4icf.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2hkdvrlppys6c.webp'),
+-- Ảnh cho Product 21 (image_id 61-63)
+(61, 21, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lz95gq3t7c8110.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lz95gq3ta53h8e.webp'),
+(62, 21, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lz95qbn3ijbh69.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lz95gq3t8qsh1a.webp'),
+(63, 21, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lz95gq3t8qj105.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lz95g6ufclzh1e.webp'),
+-- Ảnh cho Product 22 (image_id 64-66)
+(64, 22, 'https://down-vn.img.susercontent.com/file/b8afb1056147fd8ad4d1c8590af50c1d.webp', 'https://down-vn.img.susercontent.com/file/sg-11134201-7rffu-m9fkquena5w9d4.webp'),
+(65, 22, 'https://down-vn.img.susercontent.com/file/640544d68f886cdfac833056f84f9283.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lz5yczuzlw7h1d.webp'),
+(66, 22, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lz5ye814ywjxb2.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lz5ye1y7v9upe7.webp'),
+-- Ảnh cho Product 23 (image_id 67-69)
+(67, 23, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m3vr5a9sm56k4f.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwqyxnolghqx6a.webp'),
+(68, 23, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwqyxnolhw4bfc.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwqyxnobjpi11a.webp'),
+(69, 23, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwqyxnobgwd5b0.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwqyxnp5fobfd1.webp'),
+-- Ảnh cho Product 24 (image_id 70-72)
+(70, 24, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2tqyffj716i1e@resize_w450_nl.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m37t1z8lef3g86.webp'),
+(71, 24, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m36l2sou24zg44.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m37t1z8lftnw83.webp'),
+(72, 24, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m36l2sou0pwh91.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m41kyrnonv2f0b.webp'),
+-- Ảnh cho Product 25 (image_id 73-75)
+(73, 25, 'https://down-vn.img.susercontent.com/file/5b313306fc113d6c4b7dec48f834e9c0.webp', 'https://down-vn.img.susercontent.com/file/cba450a908e2e44385937f4111157c72.webp'),
+(74, 25, 'https://down-vn.img.susercontent.com/file/52c53499247297aadd1043a6955be6cd.webp', 'https://down-vn.img.susercontent.com/file/e0e26ac7a655ed637275d43820fdfa3b.webp'),
+(75, 25, 'https://down-vn.img.susercontent.com/file/d091bd54245c519b965ccefd3ef93448.webp', 'https://down-vn.img.susercontent.com/file/2588b315f7e7f5e30029d0db8773b82d.webp'),
+-- Ảnh cho Product 26 (image_id 76-78)
+(76, 26, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lukf3caqkphuf0.webp', 'https://down-vn.img.susercontent.com/file/ca5a412dc285db57461a3dd5a4dfd8e3.webp'),
+(77, 26, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lomgxjhkjsp794.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltkjtu9cyia2fe.webp'),
+(78, 26, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lukf3caqqbrm35.webp', 'https://down-vn.img.susercontent.com/file/e55939cc6cc74114cba67816327518cd.webp'),
+-- Ảnh cho Product 27 (image_id 79-81)
+(79, 27, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4o6kpzvvmyva7.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4o6lipptebzaa.webp'),
+(80, 27, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4o6l10y4nsgc6.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4o6lmyllns0c8.webp'),
+(81, 27, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4o6lbfsgp1rf1.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4o6ls5vzl4040.webp'),
+-- Ảnh cho Product 28 (image_id 82-84)
+(82, 28, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m6ikj15mij6pe8.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m6ikj152ja60e1.webp'),
+(83, 28, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m6ikj184euzrc9.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m6ikj17ag3hd92.webp'),
+(84, 28, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m6ikj0zssego35.webp', 'https://down-vn.img.susercontent.com/file/vn-11134201-7ra0g-m6ikj152jcf544.webp'),
+-- Ảnh cho Product 29 (image_id 85-87)
+(85, 29, 'https://down-vn.img.susercontent.com/file/sg-11134201-7qvf1-lfqazow9vqmm98.webp', 'https://down-vn.img.susercontent.com/file/sg-11134201-7qvg5-lff8tbcacs015c.webp'),
+(86, 29, 'https://down-vn.img.susercontent.com/file/cn-11134207-7r98o-lueoh2el0nes21.webp', 'https://down-vn.img.susercontent.com/file/sg-11134201-7qvdc-lff8t9bbbkbr5b.webp'),
+(87, 29, 'https://down-vn.img.susercontent.com/file/cn-11134207-7r98o-ly0nb60hjxnn3f.webp', 'https://down-vn.img.susercontent.com/file/sg-11134201-7qvg2-lff8tacrsqqve8.webp'),
+-- Ảnh cho Product 30 (image_id 88-90)
+(88, 30, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m9h3a8o6cgav32.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1o9rmt4m6378c.webp'),
+(89, 30, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6ccxxnw6st36e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1o9rmt3zpa75a.webp'),
+(90, 30, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6ccxxnc67h364.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1o9rmt4m6378c.webp'),
+-- Ảnh cho Product 31 (image_id 91-93)
+(91, 31, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-llxriu8kxm1r55.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lpay8xq8o8y62e.webp'),
+(92, 31, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-llirxfnn9aywf1.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lpay8xq8pnim22.webp'),
+(93, 31, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-llirxfnnc43s7a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lpaya4o9ttfy3b.webp'),
+-- Ảnh cho Product 32 (image_id 94-96)
+(94, 32, 'https://down-vn.img.susercontent.com/file/cn-11134211-7r98o-lkkfpftykv5o39.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-losexh7c6jgrf9.webp'),
+(95, 32, 'https://down-vn.img.susercontent.com/file/cn-11134211-7r98o-lkkfpftym9q45f.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lpvuwxwoodh3a7.webp'),
+(96, 32, 'https://down-vn.img.susercontent.com/file/cn-11134211-7r98o-lkkfpftyup4s1a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lpvuwxwops1jbc.webp'),
+-- Ảnh cho Product 33 (image_id 97-99)
+(97, 33, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lve3s5nvrc7h90.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lu4dsqi48wm7f5.webp'),
+(98, 33, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lve3s5nvu5cd1a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lu4dsqi4bpched.webp'),
+(99, 33, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lut0lnxyozki13.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lu4dsqi48w7ld5.webp'),
+-- Ảnh cho Product 34 (image_id 100-102)
+(100, 34, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2jao3p9v3jobe.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7xm6ql5d1ta52.webp'),
+(101, 34, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2jao3q3tvoycc.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7m102p1blvnac.webp'),
+(102, 34, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2nolynzfa9m81.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7m102p1a7b7b8.webp'),
+-- Ảnh cho Product 35 (image_id 103-105)
+(103, 35, 'https://down-vn.img.susercontent.com/file/vn-11134211-7ra0g-m70xqi24ooyge9.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m37ue1on3o3g45.webp'),
+(104, 35, 'https://down-vn.img.susercontent.com/file/vn-11134211-7ras8-m3emtg2ya0mgb2.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m37ue1rezlep10.webp'),
+(105, 35, 'https://down-vn.img.susercontent.com/file/vn-11134211-7ras8-m3emtg2ybf6w24.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m37ue1od427599.webp'),
+-- Ảnh cho Product 36 (image_id 106-108)
+(106, 36, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbmj-lp0ocgfgprebd0.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lxfo4au49c63ef.webp'),
+(107, 36, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4xslgyrxrcoc6.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lxfo4au49cd53d.webp'),
+(108, 36, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4xslgyrwcs820.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-m09x4az7rhcfcf.webp'),
+-- Ảnh cho Product 37 (image_id 109-111)
+(109, 37, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4ofydwz5vd304.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lq3cpfvubdbrf6.webp'),
+(110, 37, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4ofydwz5vu8a9.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lqz3muikstl06a.webp'),
+(111, 37, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4zwa4wm1anqde.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-luqed51kjz0ye7.webp'),
+-- Ảnh cho Product 38 (image_id 112-114)
+(112, 38, 'https://down-vn.img.susercontent.com/file/sg-11134201-23010-qcejwjxcdtmvc8.webp', 'https://down-vn.img.susercontent.com/file/fc19aee025a8b6a1df599fc7c1fe06b7.webp'),
+(113, 38, 'https://down-vn.img.susercontent.com/file/f8d4e224dabdc2711e90022d8025c1d8.webp', 'https://down-vn.img.susercontent.com/file/a615198f7d470fdd54a15e2cc0dc4e22.webp'),
+(114, 38, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liqvp5l9tyj022.webp', 'https://down-vn.img.susercontent.com/file/5b496d61694d98fc067bf40fe0fde9c4.webp'),
+-- Ảnh cho Product 39 (image_id 115-117)
+(115, 39, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lud6o73gq3o13e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m30m6eiw006o6a.webp'),
+(116, 39, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6xf3b6wc487de.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lz6aivp355lt3a.webp'),
+(117, 39, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m30kpe5kl7nqff.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m41qo60c04moc1.webp'),
+-- Ảnh cho Product 40 (image_id 118-120)
+(118, 40, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m8dhtkqkfudjb3.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lswkm7xbmheh2a.webp'),
+(119, 40, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m8de6o6sopky9b.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lswkm7whp3us30.webp'),
+(120, 40, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m3df18i9mk9t36.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22090-utaf1snl1ohve1.webp'),
+-- Ảnh cho Product 41 (image_id 121-123)
+(121, 41, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltsavzf3x43x62.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lxkohtoitujf52.webp'),
+(122, 41, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltsavzf41bt9d0.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m4ftlk5626qodd.webp'),
+(123, 41, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltsavzf444y567.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m30hmxcl0ruu14.webp'),
+-- Ảnh cho Product 42 (image_id 124-126)
+(124, 42, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m99xmh5evkhu47.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m641za4agl4za3.webp'),
+(125, 42, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m29fiu1h7fskf2.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m716b3aznfc78b.webp'),
+(126, 42, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m29fiu1h8ud0bd.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m8u1osywissk3e.webp'),
+-- Ảnh cho Product 43 (image_id 127-129)
+(127, 43, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rd69-lvw60slc1ryia8.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m8745ea1p2su81.webp'),
+(128, 43, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rd3p-lvw60sq1uvgqce.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m8745ea1p2su81.webp'),
+(129, 43, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rd4i-lwtjj98rzy4q42.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m8745eb5ngbycc.webp'),
+-- Ảnh cho Product 44 (image_id 130-132)
+(130, 44, 'https://down-vn.img.susercontent.com/file/6f5e1fe90878e49e7d15511a7b644d7d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-lham0cqb6kmr91.webp'),
+(131, 44, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lykaqnsg74ipd9.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-lham0cqabo4zce.webp'),
+(132, 44, 'https://down-vn.img.susercontent.com/file/9fac1f401d5b5629d6d1e6087253d1f6.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-lham0cqabnzmb0.webp'),
+-- Ảnh cho Product 45 (image_id 133-135)
+(133, 45, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7t5fy6gwo8h78.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m9afvwoo9jla0c.webp'),
+(134, 45, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7t5fy66x2f752.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m8zrz5v3sf2cef.webp'),
+(135, 45, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7t5etfskdc3ce.webp', 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7t5fy66x2f752.webp'),
+-- Ảnh cho Product 46 (image_id 136-138)
+(136, 46, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lw2u1dsxsg637c.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lnfv1rc0n0ml96.webp'),
+(137, 46, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lw2u1dsxtuqj36.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22080-rqp2r66iccgv96.webp'),
+(138, 46, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lw2u1dsxy2fv97.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-m0bad9v79qlpd1.webp'),
+-- Ảnh cho Product 47 (image_id 139-141)
+(139, 47, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lukwd0jvqtd17a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lxtorwgf98ez45.webp'),
+(140, 47, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lukwd0jvv12d3e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2708zlgegtwa8.webp'),
+(141, 47, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lukwd0jw21wlcd.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2708zlgfvec1b.webp'),
+-- Ảnh cho Product 48 (image_id 142-144)
+(142, 48, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m12ryoprnwgr9d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m13lmkupr4pr2a.webp'),
+(143, 48, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m12ryoxtc49r3b.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1vxuw3jorir4b.webp'),
+(144, 48, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m12ryoprnw67a9.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1vxuw3jlydvc1.webp'),
+-- Ảnh cho Product 49 (image_id 145-147)
+(145, 49, 'https://down-vn.img.susercontent.com/file/c96c6ba3e555a375f27d5928c86c55dc.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lxvpcfsojpwb83.webp'),
+(146, 49, 'https://down-vn.img.susercontent.com/file/d6ba72946a2703bc33c9a29f15b0ebf5.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-ltvou6l32ih655.webp'),
+(147, 49, 'https://down-vn.img.susercontent.com/file/8e95c6799605079f3703282f02e5daa7.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-ltvou6l2zpca32.webp'),
+-- Ảnh cho Product 50 (image_id 148-150)
+(148, 50, 'https://down-vn.img.susercontent.com/file/d675d026c08fe75e6d9c6e1d013f8011.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1kzcqoy52z7a4.webp'),
+(149, 50, 'https://down-vn.img.susercontent.com/file/417e97c6b81d68b915cbd6a3c8a978eb.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7c7gc1bgfub88.webp'),
+(150, 50, 'https://down-vn.img.susercontent.com/file/0fe4998a1622dee9ca34a16851b4c1ec.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m6qlasoal8iv8d.webp'),
+-- Ảnh cho Product 51 (image_id 151-153)
+(151, 51, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rdvx-lxqacidrubc9d2.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22070-ofuie13ytuev63.webp'),
+(152, 51, 'https://down-vn.img.susercontent.com/file/vn-11134103-22120-syzq5q73fvkv8d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22070-7nf014f6tuevdf.webp'),
+(153, 51, 'https://down-vn.img.susercontent.com/file/vn-11134103-22120-delp5q73fvkva6.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22070-071hy13ytuev84.webp'),
+-- Ảnh cho Product 52 (image_id 154-156)
+(154, 52, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m3d4ihuacluwaf.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m8lf7dea0bcya4.webp'),
+(155, 52, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m3d4ihuae0fccf.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m8lf7dejzwhwb8.webp'),
+(156, 52, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m3d4ihuamfu041.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m6xu8v1bsswofe.webp'),
+-- Ảnh cho Product 53 (image_id 157-159)
+(157, 53, 'https://down-vn.img.susercontent.com/file/sg-11134201-23020-g8ii0jguwlnv8e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lmfymokpdb6n19.webp'),
+(158, 53, 'https://down-vn.img.susercontent.com/file/sg-11134201-23020-54o33uguwlnv6f.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lmfymoj1fqoved.webp'),
+(159, 53, 'https://down-vn.img.susercontent.com/file/sg-11134201-23020-3l8ie9guwlnv41.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lmfymokzcwdb8a.webp'),
+-- Ảnh cho Product 54 (image_id 160-162)
+(160, 54, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltg63ukkuw3x05.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lzhrd98yyoipb3.webp'),
+(161, 54, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltgka151nbwqba.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lx55wd5m317d0b.webp'),
+(162, 54, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltxcykwp01zzef.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m44h7l3s3ftb0b.webp'),
+-- Ảnh cho Product 55 (image_id 163-165)
+(163, 55, 'https://down-vn.img.susercontent.com/file/5f5effcbc5cf71f3a4b00c75f879feea.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-lgv1qtty10xf4b.webp'),
+(164, 55, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzlc0tyxrm193f.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lxrxkazfg6vv63.webp'),
+(165, 55, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzlc0m5v6xlt06.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lxrxkaz5i02j58.webp'),
+-- Ảnh cho Product 56 (image_id 166-168)
+(166, 56, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lq1fi1gli8k2cb.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lydliecldokh99.webp'),
+(167, 56, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmvmzzdl4yxr82.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-m07a0ewm14lr65.webp'),
+(168, 56, 'https://down-vn.img.susercontent.com/file/a9d5dc5092db922329cf95a5d28a8b33.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22100-cehikry5u0iv8c.webp'),
+-- Ảnh cho Product 57 (image_id 169-171)
+(169, 57, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lug01fhn69t181.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lzc5lxdixs4h86.webp'),
+(170, 57, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lug01fhnbw2t8b.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lzc5lxdiwdk16b.webp'),
+(171, 57, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lug01fhng3s584.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m0e3nlzttwbx51.webp'),
+-- Ảnh cho Product 58 (image_id 172-174)
+(172, 58, 'https://down-vn.img.susercontent.com/file/vn-11134258-7ra0g-m9fio87283uv1a', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2gtcebmh7762a.webp'),
+(173, 58, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ras8-m5wr8x0mjveg90.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2ckr0ygaenm8f.webp'),
+(174, 58, 'https://down-vn.img.susercontent.com/file/vn-11134201-7ras8-m5wr8x8e9woodf.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1pdf0poxwszb0.webp'),
+-- Ảnh cho Product 59 (image_id 175-177)
+(175, 59, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ll8pqgm1uls83d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lmpxka3iv3kvda.webp'),
+(176, 59, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ll8pqgm2316w7d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lmpy59rikhcve7.webp'),
+(177, 59, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ll8pqgm1xex4bc.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-23030-juhx536hkbov6f.webp'),
+-- Ảnh cho Product 60 (image_id 178-180)
+(178, 60, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7suumzizpo1e6.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m9h0j5ubyw5g9c.webp'),
+(179, 60, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7suumyz3blv15.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m9h0j5ti048yb3.webp'),
+(180, 60, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7suufzvasoh55.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m9h0j5ubyw5g9c.webp'),
+-- Ảnh cho Product 61 (image_id 181-183)
+(181, 61, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m48bkykz2xeo26.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m24xvivnm7q395.webp'),
+(182, 61, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lypxrhxqngrl7d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lu4gs2pxjtwf74.webp'),
+(183, 61, 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lukoat6k5zpu38.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lu4gs2pxl8gv25.webp'),
+-- Ảnh cho Product 62 (image_id 184-186)
+(184, 62, 'https://down-vn.img.susercontent.com/file/d73aca0b3d41f44f46965fb860a01798.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-23030-t5c7ouza4cov83.webp'),
+(185, 62, 'https://down-vn.img.susercontent.com/file/b6bf7570f739ea55902ba9901f2df32d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-litu5ijqqu4s93.webp'),
+(186, 62, 'https://down-vn.img.susercontent.com/file/vn-11134103-23030-8fcnyawndoov32.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lnrcnrtic6p96a.webp'),
+-- Ảnh cho Product 63 (image_id 187-189)
+(187, 63, 'https://down-vn.img.susercontent.com/file/df8952541bec96bc57877c6cc6450000@resize_w450_nl.webp', 'https://down-vn.img.susercontent.com/file/07956a211b262308f92c4a1fb3ee43e7.webp'),
+(188, 63, 'https://down-vn.img.susercontent.com/file/6806080f155ded9f728618bfafbc61fe.webp', 'https://down-vn.img.susercontent.com/file/1f5d293ff45d997a139977224480f060.webp'),
+(189, 63, 'https://down-vn.img.susercontent.com/file/0c3edb24d8169f8031f166e3c5f6a888.webp', 'https://down-vn.img.susercontent.com/file/d8dc80e1984c63b10ee7499d812ac4e8.webp'),
+-- Ảnh cho Product 64 (image_id 190-192)
+(190, 64, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbnc-loqcr312mpjx6f.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lrwl7j9zbn440c.webp'),
+(191, 64, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbmd-loopzev9notv69.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lrwl7j9zd1okc3.webp'),
+(192, 64, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbnc-loqcr312mpjx6f.webp', 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbkz-loopzh907mnnb9.webp'),
+-- Ảnh cho Product 65 (image_id 193-195)
+(193, 65, 'https://down-vn.img.susercontent.com/file/sg-11134201-22110-nc27vy5baqjv96.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1qjp7crrlq7a9.webp'),
+(194, 65, 'https://down-vn.img.susercontent.com/file/sg-11134201-22110-m884vy5baqjv53.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m48ecsmjtuj32c.webp'),
+(195, 65, 'https://down-vn.img.susercontent.com/file/sg-11134201-22110-fedr3i5baqjv4b.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m3ejksz1a4scf1.webp'),
+-- Ảnh cho Product 66 (image_id 196-198)
+(196, 66, 'https://down-vn.img.susercontent.com/file/sg-11134201-22100-eq3er2km99hvad.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-leyfyi4t50uif7.webp'),
+(197, 66, 'https://down-vn.img.susercontent.com/file/sg-11134201-22100-i6130twm99hvf2.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-leyfyi4t50uif7.webp'),
+(198, 66, 'https://down-vn.img.susercontent.com/file/sg-11134201-22100-6bme3r6k99hvce.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-leyfyi4t50uif7.webp'),
+-- Ảnh cho Product 67 (image_id 199-201)
+(199, 67, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lfoxdcywv1bp42@resize_w450_nl.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lldpwfrtq1meca.webp'),
+(200, 67, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lspwrtu1vqh018.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lldpwfu1msom1e.webp'),
+(201, 67, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lfoxdcywwfw5ac.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2l0y6antuwq9e.webp'),
+-- Ảnh cho Product 68 (image_id 202-204)
+(202, 68, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rcd8-lrl53s5n5e6pec.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1y2rkmow2aj4f.webp'),
+(203, 68, 'https://down-vn.img.susercontent.com/file/sg-11134201-23020-2cwl11e9yanv14.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1y2rkniuuhq48.webp'),
+(204, 68, 'https://down-vn.img.susercontent.com/file/sg-11134201-23020-0ebx8m211anv93.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1y2rkmow2aj4f.webp'),
+-- Ảnh cho Product 69 (image_id 205-207)
+(205, 69, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rdvq-m12lmdibilt538.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2kk8kx6rvgm11.webp'),
+(206, 69, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rdwr-m12lme6qhh8n7f.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2c3or9f05v880.webp'),
+(207, 69, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rdxr-m12lmegg39mv2e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m3vzr7lr4t6006.webp'),
+-- Ảnh cho Product 70 (image_id 208-210)
+(208, 70, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rdya-m182sq28tl7i76.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7xop4rn9hfrf2.webp'),
+(209, 70, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rdyi-m182sqgy9hld5c.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m3qa2pecrbudf0.webp'),
+(210, 70, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rdx0-m182sriyog5q47.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7t8z5bm04g3a0.webp'),
+-- Ảnh cho Product 71 (image_id 211-213)
+(211, 71, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7gl22vp86lydc.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lzloij2oz1al82.webp'),
+(212, 71, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m1xyrzn72q5ac0.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lzloij2p4nkd0e.webp'),
+(213, 71, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m1xyrbb8okuzba.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lzloij2p38zx71.webp'),
+-- Ảnh cho Product 72 (image_id 214-216)
+(214, 72, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbln-lqffpxgw1uee9e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1cm40v9okm013.webp'),
+(215, 72, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbl7-llip4av8yeetd0.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m94m69mzp2em6e.webp'),
+(216, 72, 'https://down-vn.img.susercontent.com/file/sg-11134201-7r9ba-llip4fg297qtce.webp', 'https://down-vn.img.susercontent.com/file/sg-11134201-7rbk4-llip4bmpx0gt47.webp'),
+-- Ảnh cho Product 73 (image_id 217-219)
+(217, 73, 'https://down-vn.img.susercontent.com/file/59721e57eb58fb8758cde2f3b4837da4.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22090-2o6eqdjq2dhvcb.webp'),
+(218, 73, 'https://down-vn.img.susercontent.com/file/10c2db754c9535b5014bc6a44d40e246.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22090-1o6eqdjq2dhv8f.webp'),
+(219, 73, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2856ahkd7sie1.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22070-w6n0dy4hcyevf6.webp'),
+-- Ảnh cho Product 74 (image_id 220-222)
+(220, 74, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6z5sti1jqzr0e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7ujnus7s5kj3a.webp'),
+(221, 74, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6z5sti14bdt8f.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7xlzru4dtny44.webp'),
+(222, 74, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6z5sti18j3583.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7xlzru4f88ee1.webp'),
+-- Ảnh cho Product 75 (image_id 223-225)
+(223, 75, 'https://down-vn.img.susercontent.com/file/vn-11134207-23010-oi4tsc8vq4lv83.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m62nyjo843mf6f.webp'),
+(224, 75, 'https://down-vn.img.susercontent.com/file/vn-11134207-23010-vzossc8vq4lv56.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m62nyjo82p1z87.webp'),
+(225, 75, 'https://down-vn.img.susercontent.com/file/vn-11134207-23010-slcq84mwq4lve0.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m4uk9fska9nb1c.webp'),
+-- Ảnh cho Product 76 (image_id 226-228)
+(226, 76, 'https://down-vn.img.susercontent.com/file/61237fcef2264de268047973b3b9a4e9.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lps33l5bw27rfa.webp'),
+(227, 76, 'https://down-vn.img.susercontent.com/file/2b0e9a3a2d2fb4bd8278a03649d4a1d2.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lqzlxwo8ej7o33.webp'),
+(228, 76, 'https://down-vn.img.susercontent.com/file/9a8051837df6316e948f411429bedd66.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lqzlxwo8ej7o33.webp'),
+-- Ảnh cho Product 77 (image_id 229-231)
+(229, 77, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m48orpnkd69z99.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m5go2rep2zp2fc.webp'),
+(230, 77, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m48orpmgg7sg90.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m5go2rep4e9i0a.webp'),
+(231, 77, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m48orpmget8006.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m5gnoyjyd3yv01.webp'),
+-- Ảnh cho Product 78 (image_id 232-234)
+(232, 78, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m63wkalunyuua7.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1qeh70cjcfz15.webp'),
+(233, 78, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m63wnqyqn7r7f5.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1qepip9uu9rdf.webp'),
+(234, 78, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m63wkalunz2v53.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m1tlo4cjju0va3.webp'),
+-- Ảnh cho Product 79 (image_id 235-237)
+(235, 79, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltchn52ke5qx84.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-ltt2y8txge8a07.webp'),
+(236, 79, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltchn52kcr6hf1.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-ltt2y8txhssqfb.webp'),
+(237, 79, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltchn52kgyvt1d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-ltt4hhjj98gd41.webp'),
+-- Ảnh cho Product 80 (image_id 238-240)
+(238, 80, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ly94h3p2vbd9bf.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2klexh1ushm45.webp'),
+(239, 80, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-luz5fn9167f639.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2klexh1w722b0.webp'),
+(240, 80, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-luz5fn90wdut29.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2klexh1tdx6c1.webp'),
+-- Ảnh cho Product 81 (image_id 241-243)
+(241, 81, 'https://down-vn.img.susercontent.com/file/vn-11134201-7qukw-lj7b6a6outjg5d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lveau2cp5l5we0.webp'),
+(242, 81, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljbmnkm2ne3059.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m45i8ibji3xsf8.webp'),
+(243, 81, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljbmnkm2t0cs7e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-loul09crdqog7b.webp'),
+-- Ảnh cho Product 82 (image_id 244-246)
+(244, 82, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lw3tuaf3znq3fb.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-lfzjglw1q31z36.webp'),
+(245, 82, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lvy3olen36jd64.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-lfzjh2f7j4zbf4.webp'),
+(246, 82, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwfkb5js31ll0e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-lfzjlvn81hivbb.webp'),
+-- Ảnh cho Product 83 (image_id 247-249)
+(247, 83, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rfh3-m9fdbnjdbyahcc.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lkpjgrvnxpcg0e.webp'),
+(248, 83, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyxdd8wl26a57c.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22120-daudyzwy27kv07.webp'),
+(249, 83, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lyxdd8wl0rppb0.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-23030-pqbvs53htwov07.webp'),
+-- Ảnh cho Product 84 (image_id 250-252)
+(250, 84, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7rep4nbcfub0b.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lx5hh0mqliaj39.webp'),
+(251, 84, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m3kxx5nik7j59d.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lx5hh0mqmwuz4c.webp'),
+(252, 84, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m3kz8e7tvh29c1.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m5wy2srv2sqr17.webp'),
+-- Ảnh cho Product 85 (image_id 253-255)
+(255, 85, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m9i5ora1396s35.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-22090-2wjbnmylechv9a.webp'),
+-- Ảnh cho Product 86 (image_id 256-258)
+(256, 86, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m3a7ft5eep64eb.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-liu89iloe5u4b8.webp'),
+(258, 86, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lvvrdftq9om178.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-liu8aagpmccs76.webp'),
+-- Ảnh cho Product 87 (image_id 259-261)
+(259, 87, 'https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lmovfbeedrkvf0.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lqc5xjess3071f.webp'),
+(260, 87, 'https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lmovfd71r5jz60.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lqc6kt1d0j7b76.webp'),
+(261, 87, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lnem8fcy006lca.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lqc8k1wtmrbmf6.webp'),
+-- Ảnh cho Product 88 (image_id 262-264)
+(262, 88, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lu4squmkl0rjbe.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lzxd33m4vjxdf0.webp'),
+(264, 88, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lu4squmkp8gv6e.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lzxd33m4wyht84.webp'),
+-- Ảnh cho Product 89 (image_id 265-267)
+(265, 89, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4q06r2u804gc1.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m223giyz2y1qda.webp'),
+-- Ảnh cho Product 90 (image_id 268-270)
+(268, 90, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m9gg9q4tvdl38c.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-lftua8t9gjcn93.webp'),
+(270, 90, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m683l2nq98g368.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7qukw-lftuanfm2ad304.webp'),
+-- Ảnh cho Product 91 (image_id 271-273)
+(271, 91, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwmwya1tl2vta1.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m0pfdpca1pm53e.webp'),
+(273, 91, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lwmwya1tpal5ab.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m0pfdpca4ir1b8.webp'),
+-- Ảnh cho Product 92 (image_id 274-276)
+(274, 92, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lz63bum79odddb.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lvpxxpzot1mha4.webp'),
+-- Ảnh cho Product 93 (image_id 277-279)
+(277, 93, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m4oyankx3ifb7a.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m11ljpwos8f38f.webp'),
+-- Ảnh cho Product 94 (image_id 280-282)
+(281, 94, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lvcoqsiqyy5ged.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m3am3lj5q5upfd.webp'),
+-- Ảnh cho Product 95 (image_id 283-285)
+(284, 95, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m81libroep1gdb.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-ltuuq7w9qk22f4.webp'),
+(285, 95, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lk0p5qkyp72a8c.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-ltuuq7vfrrwqbc.webp'),
+-- Ảnh cho Product 96 (image_id 286-288)
+(286, 96, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ll1zk62dlbrf23.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lyhnk0ivjn35af.webp'),
+-- Ảnh cho Product 97 (image_id 289-291)
+(289, 97, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzle1izq2lvx4b.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m41xjyai684gc5.webp'),
+(291, 97, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzctnlx9cua5d6.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ras8-m2l8rcbnjnraf4.webp'),
+-- Ảnh cho Product 98 (image_id 292-294)
+(292, 98, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzc927elp4r142.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7d4p1jn04bc96.webp'),
+(294, 98, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzc927elrxvxf5.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m7d4p1jn2xg8c4.webp'),
+-- Ảnh cho Product 99 (image_id 295-297)
+(295, 99, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liiju9kyf3yqee.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lr1zhftpx1388e.webp'),
+(297, 99, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liiju9kyoxxua4.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7r98o-lr1zhftpvmisca.webp'),
+-- Ảnh cho Product 100 (image_id 298-300)
+(298, 100, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7ltikkl34xydf.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m95uu2y5g3n2f9.webp'),
+(299, 100, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m794i1lr8hco5c.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m8ntn57ypeh302.webp'),
+(300, 100, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m794i1lr72s830.webp', 'https://down-vn.img.susercontent.com/file/vn-11134103-7ra0g-m8ntn57yqt1jc4.webp');
