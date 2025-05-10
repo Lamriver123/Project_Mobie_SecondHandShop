@@ -1,159 +1,260 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
-    android:padding="8dp"
-    android:background="#F7F7F7">
+    android:background="?android:colorBackground"
+    tools:context=".fragment.productDetail.ProductDetailFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <!-- Banner / Slider -->
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPagerImages"
-            android:layout_width="match_parent"
-            android:layout_height="285dp"
-            android:layout_marginBottom="12dp"
-            android:background="#FFFFFF"
-            android:elevation="2dp" />
-
-        <!-- Loại hình ảnh (Hiện tại / Lúc mới mua) -->
-        <RadioGroup
-            android:id="@+id/imageTypeSelector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-
-            <RadioButton
-                android:id="@+id/radioCurrent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ảnh hiện tại"
-                android:checked="true" />
-
-            <RadioButton
-                android:id="@+id/radioOriginal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ảnh lúc mới mua"
-                android:layout_marginStart="16dp" />
-        </RadioGroup>
-
-        <!-- Tên + Giá -->
-        <TextView
-            android:id="@+id/textProductName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="OPPO Reno Z"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#212121" />
-
-        <TextView
-            android:id="@+id/textProductPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1.200.000 ₫"
-            android:textColor="#E53935"
-            android:textSize="18sp"
-            android:layout_marginTop="4dp" />
-
-
-
-        <!-- Người bán -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="20dp"
-            android:background="#FFFFFF"
-            android:padding="12dp"
-            android:elevation="1dp">
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/name"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/circle_white"
-                android:scaleType="centerCrop" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Hải"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Hoạt động 4 giờ trước"
-                    android:textSize="14sp"
-                    android:textColor="#757575" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/btnViewShop"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:background="@drawable/bg_filter_button"
-                android:text="Xem trang"
-                android:drawablePadding="4dp"
-                android:textColor="#666666"
-                android:gravity="center"
-                android:paddingHorizontal="16dp"
-                android:layout_marginEnd="8dp"/>
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Thông tin chi tiết"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="8dp" />
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/content_scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/tableProductDetails"
+            android:id="@+id/contentGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:padding="12dp"
-            android:elevation="1dp">
+            android:paddingBottom="16dp">
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPagerImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="285dp" />
+            </androidx.cardview.widget.CardView>
+
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/dots_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"
+                app:dotsColor="@color/blue_light"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="8dp"
+                app:dotsSpacing="4dp"
+                app:dotsWidthFactor="2.5"
+                app:selectedDotColor="@color/yellow"
+                app:progressMode="false" />
+
+
+            <RadioGroup
+                android:id="@+id/imageTypeSelector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <RadioButton
+                    android:id="@+id/radioCurrent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ảnh hiện tại"
+                    android:checked="true"
+                    android:buttonTint="@color/yellow" />
+
+                <RadioButton
+                    android:id="@+id/radioOriginal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ảnh lúc mới mua"
+                    android:layout_marginStart="16dp"
+                    android:buttonTint="@color/yellow"/>
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:id="@+id/textProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="OPPO Reno Z - Siêu phẩm camera, cấu hình mạnh mẽ"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="?android:textColorPrimary" />
+
+                <TextView
+                    android:id="@+id/textProductPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="1.200.000 ₫"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="1dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:id="@+id/ivSellerAvatar"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/icon_user"
+                        android:layout_marginEnd="12dp"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Ảnh đại diện người bán" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvSellerName"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            tools:text="Hải Nguyễn Store"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="?android:textColorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tvSellerLastActive"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            tools:text="Hoạt động 4 giờ trước"
+                            android:textSize="13sp"
+                            android:textColor="@color/gray" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/btnViewShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:background="@drawable/button_outline_background"
+                        android:text="Xem Shop"
+                        android:textColor="@color/yellow"
+                        android:gravity="center"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thông tin chi tiết"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="?android:textColorPrimary"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="1dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp">
+
+                <LinearLayout
+                    android:id="@+id/tableProductDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"/>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvSimilarProductsLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sản phẩm tương tự"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="?android:textColorPrimary"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/similar_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"/>
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
+    <ProgressBar
+        android:id="@+id/progressBarProductDetail"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sản phẩm tương tự"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="8dp" />
+    <TextView
+        android:id="@+id/textErrorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Không thể tải thông tin sản phẩm."
+        android:textSize="16sp"
+        android:textColor="?android:textColorSecondary"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="16dp"
+        android:gravity="center"
+        tools:visibility="gone"/>
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/similar_products"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF" />
-
-    </LinearLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

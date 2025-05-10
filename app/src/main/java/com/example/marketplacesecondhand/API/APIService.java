@@ -102,4 +102,7 @@ public interface APIService {
 
     @POST("orders/cancel")
     Call<ApiResponse<CancelledOrderResponse>> cancelOrder(@Body CancelOrderRequest request);
+
+    @GET("users/{userId}")
+    Call<ApiResponse<UserResponse>> getShopInfo(@Path("userId") int userId);
 }

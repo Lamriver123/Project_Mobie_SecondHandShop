@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ProductResponse {
     private int productId;
+    private int ownerId;
     private String productName;
     private String currentPrice;
     private String originalPrice;
@@ -29,8 +30,9 @@ public class ProductResponse {
         this.originalPrice = originalPrice;
     }
 
-    public ProductResponse(int productId, String productName, String currentPrice, String originalPrice, String origin, String warranty, String productCondition, String productDescription, String conditionDescription, Date createdAt, int sold, int quantity, int categoryId, String categoryName, List<String> initialImages, List<String> currentImages) {
+    public ProductResponse(int productId, int ownerId, String productName, String currentPrice, String originalPrice, String origin, String warranty, String productCondition, String productDescription, String conditionDescription, Date createdAt, int sold, int quantity, int categoryId, String categoryName, List<String> initialImages, List<String> currentImages) {
         this.productId = productId;
+        this.ownerId = ownerId;
         this.productName = productName;
         this.currentPrice = currentPrice;
         this.originalPrice = originalPrice;
@@ -47,7 +49,13 @@ public class ProductResponse {
         this.initialImages = initialImages;
         this.currentImages = currentImages;
     }
+    public int getOwnerId() {
+        return ownerId;
+    }
 
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
     public int getCategoryId() {
         return categoryId;
     }
