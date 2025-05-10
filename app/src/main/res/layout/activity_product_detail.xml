@@ -21,7 +21,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/footer_product_detail"
-        android:name="com.example.marketplacesecondhand.fragment.FooterProductDetailFragment"
+        android:name="com.example.marketplacesecondhand.fragment.productDetail.FooterProductDetailFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

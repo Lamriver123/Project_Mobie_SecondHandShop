@@ -11,9 +11,10 @@ public class OrderResponse {
     String totalAmount;
     String address;
     String status;
+    String paymentMethod;
     List<OrderDetailResponse> orderDetails;
 
-    public OrderResponse(int orderId, String buyerName, String ownerName, Date createdAt, String totalAmount, String address, String status, List<OrderDetailResponse> orderDetails) {
+    public OrderResponse(int orderId, String buyerName, String ownerName, Date createdAt, String totalAmount, String address, String status, String paymentMethod, List<OrderDetailResponse> orderDetails) {
         this.orderId = orderId;
         this.buyerName = buyerName;
         this.ownerName = ownerName;
@@ -21,9 +22,17 @@ public class OrderResponse {
         this.totalAmount = totalAmount;
         this.address = address;
         this.status = status;
+        this.paymentMethod = paymentMethod;
         this.orderDetails = orderDetails;
     }
 
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
     public int getOrderId() {
         return orderId;
     }

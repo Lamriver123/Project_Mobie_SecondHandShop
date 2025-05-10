@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.marketplacesecondhand.fragment.ProductDetailFragment;
 import com.example.marketplacesecondhand.fragment.ProductShopFragment;
 
 public class ShopDetailActivity extends AppCompatActivity {

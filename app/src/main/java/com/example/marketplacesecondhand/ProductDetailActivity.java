@@ -1,11 +1,10 @@
 package com.example.marketplacesecondhand;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.marketplacesecondhand.fragment.ProductDetailFragment;
+import com.example.marketplacesecondhand.fragment.productDetail.ProductDetailFragment;
 
 public class ProductDetailActivity extends AppCompatActivity {
     @Override

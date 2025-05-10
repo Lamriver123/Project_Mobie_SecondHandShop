@@ -1,4 +1,4 @@
-package com.example.marketplacesecondhand.fragment;
+package com.example.marketplacesecondhand.fragment.productDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-import com.example.marketplacesecondhand.HomeActivity;
-import com.example.marketplacesecondhand.IntroActivity;
 import com.example.marketplacesecondhand.PaymentActivity;
 import com.example.marketplacesecondhand.databinding.BottomSheetBuyNowBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;

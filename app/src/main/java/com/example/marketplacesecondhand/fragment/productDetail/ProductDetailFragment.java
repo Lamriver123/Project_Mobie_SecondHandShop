@@ -1,4 +1,4 @@
-package com.example.marketplacesecondhand.fragment;
+package com.example.marketplacesecondhand.fragment.productDetail;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -8,21 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.R;
 import com.example.marketplacesecondhand.RetrofitClient;
 import com.example.marketplacesecondhand.adapter.ImageSliderAdapter;
-import com.example.marketplacesecondhand.adapter.SliderAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentProductDetailBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
+import com.example.marketplacesecondhand.fragment.SimilarProductsFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;

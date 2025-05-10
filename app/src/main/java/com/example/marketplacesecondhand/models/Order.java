@@ -13,18 +13,26 @@ public class Order implements Serializable {
     private String totalAmount;
     private String address;
     private String status;
+    String paymentMethod;
     private List<OrderDetail> orderDetails;
 
-    public Order(int orderId, User buyer, Date createdAt, String totalAmount, String address, String status, List<OrderDetail> orderDetails) {
+    public Order(int orderId, User buyer, Date createdAt, String totalAmount, String address, String status, String paymentMethod, List<OrderDetail> orderDetails) {
         this.orderId = orderId;
         this.buyer = buyer;
         this.createdAt = createdAt;
         this.totalAmount = totalAmount;
         this.address = address;
         this.status = status;
+        this.paymentMethod = paymentMethod;
         this.orderDetails = orderDetails;
     }
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
 
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
     public int getOrderId() {
         return orderId;
     }
