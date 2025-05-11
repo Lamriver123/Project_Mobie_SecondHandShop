@@ -12,13 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.example.marketplacesecondhand.API.APIService;
+import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.PaymentActivity;
 import com.example.marketplacesecondhand.R;
+import com.example.marketplacesecondhand.RetrofitClient;
 import com.example.marketplacesecondhand.databinding.BottomSheetAddToCartBinding;
+import com.example.marketplacesecondhand.dto.request.CartRequest;
+import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
+import com.example.marketplacesecondhand.dto.response.ApiResponse;
+import com.example.marketplacesecondhand.models.UserLoginInfo;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BottomSheetAddToCartFragment extends BottomSheetDialogFragment {
     private BottomSheetAddToCartBinding binding;
@@ -30,12 +41,17 @@ public class BottomSheetAddToCartFragment extends BottomSheetDialogFragment {
     private String productImageUrl = "";// URL hình ảnh sản phẩm
     private int productId = -1;         // ID sản phẩm
 
+    private String currentPrice = "";
+    private String originalPrice = "";
+
     // Keys cho Bundle arguments
     private static final String ARG_PRODUCT_ID = "product_id";
     private static final String ARG_PRODUCT_NAME = "product_name";
     private static final String ARG_UNIT_PRICE = "unit_price";
     private static final String ARG_MAX_QUANTITY = "max_quantity";
     private static final String ARG_IMAGE_URL = "image_url";
+//    private static final String ARG_PRODUCT_ID = "product_id";
+//    private static final String ARG_PRODUCT_NAME = "product_name";
     private static final String TAG = "BottomSheetBuyNow";
 
     public static BottomSheetAddToCartFragment newInstance(int productId, String productName, int unitPrice, int maxQuantity, String imageUrl) {
@@ -151,15 +167,36 @@ public class BottomSheetAddToCartFragment extends BottomSheetDialogFragment {
                 return;
             }
 
-            Intent intent = new Intent(requireContext(), PaymentActivity.class);
-            intent.putExtra("PRODUCT_ID", productId);
-            intent.putExtra("PRODUCT_NAME", productName);
-            intent.putExtra("QUANTITY", quantity);
-            intent.putExtra("UNIT_PRICE", unitPrice);
-            intent.putExtra("TOTAL_PRICE", quantity * unitPrice);
-            intent.putExtra("PRODUCT_IMAGE_URL", productImageUrl);
-            startActivity(intent);
-            dismiss();
+
+            DatabaseHandler db = new DatabaseHandler(requireContext());
+            UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+
+            if (userLoginInfo == null || userLoginInfo.getUserId() == 0) {
+                Toast.makeText(requireContext(), "Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                return; // Không thực hiện gọi API nữa
+            }
+
+            APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+
+            CartRequest request = new CartRequest(userLoginInfo.getUserId(), productId, quantity);
+
+            Call<ApiResponse<Void>> call = apiService.addToCart(request);
+            call.enqueue(new Callback<ApiResponse<Void>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Toast.makeText(requireContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        dismiss();
+                    } else {
+                        Toast.makeText(requireContext(), "Có lỗi xảy ra, thử lại sau!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                    Toast.makeText(requireContext(), "Không thể kết nối server!", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 

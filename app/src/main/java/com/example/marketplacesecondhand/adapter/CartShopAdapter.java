@@ -46,7 +46,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartSh
         User shop = cartShop.getUser();
         if (shop == null) return;
 
-        holder.binding.textViewShopName.setText(shop.getFullName());
+        holder.binding.textViewShopName.setText(shop.getUsername());
         holder.binding.checkboxShop.setChecked(cartShop.isChecked());
 
         holder.binding.recyclerViewProducts.setLayoutManager(new LinearLayoutManager(context));

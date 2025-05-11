@@ -13,6 +13,9 @@ public class CartProduct {
     private int quantityCart;
     private boolean isChecked;
 
+    public CartProduct() {
+    }
+
     public CartProduct(ProductResponse productResponse, int quantityCart, boolean isChecked) {
         this.productResponse = productResponse;
         this.quantityCart = quantityCart;

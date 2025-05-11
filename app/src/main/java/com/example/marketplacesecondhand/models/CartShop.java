@@ -7,6 +7,10 @@ public class CartShop {
     private boolean isChecked;
     private List<CartProduct> products;
 
+
+    public CartShop() {
+    }
+
     public CartShop(User user, boolean isChecked, List<CartProduct> products) {
         this.user = user;
         this.isChecked = isChecked;
