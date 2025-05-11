@@ -337,7 +337,9 @@
                 android:gravity="top|start"
                 android:inputType="textMultiLine"
                 android:padding="8dp"
-                android:paddingBottom="15dp"/>
+                android:paddingBottom="15dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
         </LinearLayout>
 
         <!-- Tóm tắt đơn hàng -->

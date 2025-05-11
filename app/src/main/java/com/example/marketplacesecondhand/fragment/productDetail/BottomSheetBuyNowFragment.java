@@ -160,6 +160,7 @@ public class BottomSheetBuyNowFragment extends BottomSheetDialogFragment {
             intent.putExtra("UNIT_PRICE", unitPrice);
             intent.putExtra("TOTAL_PRICE", quantity * unitPrice);
             intent.putExtra("PRODUCT_IMAGE_URL", productImageUrl);
+            intent.putExtra("SHOP_NAME", ProductDetailFragment.SHOP_NAME);
             startActivity(intent);
             dismiss();
         });

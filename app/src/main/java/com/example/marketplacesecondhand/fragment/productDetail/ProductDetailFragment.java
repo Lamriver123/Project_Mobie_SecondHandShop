@@ -45,6 +45,7 @@ public class ProductDetailFragment extends Fragment {
     private FragmentProductDetailBinding binding;
     private ProductDetailViewModel productDetailViewModel;
     private int currentProductId = -1;
+    public static String SHOP_NAME;
 
     public static ProductDetailFragment newInstance(int productId) {
         ProductDetailFragment fragment = new ProductDetailFragment();
@@ -341,7 +342,7 @@ public class ProductDetailFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                     UserResponse userResponse = response.body().getData();
                     binding.tvSellerName.setText(userResponse.getUsername());
-
+                    SHOP_NAME = userResponse.getUsername();
                     Glide.with(requireContext())
                             .load(userResponse.getAvt())
                             .circleCrop()

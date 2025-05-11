@@ -1,4 +1,4 @@
-package com.example.marketplacesecondhand.fragment;
+package com.example.marketplacesecondhand.fragment.payment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

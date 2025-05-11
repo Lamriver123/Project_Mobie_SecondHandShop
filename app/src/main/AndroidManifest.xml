@@ -39,7 +39,7 @@
         <activity android:name=".FavoritesActivity" />
         <activity android:name=".VerifyPasswordActivity" />
         <activity android:name=".ShopDetailActivity" />
-        <activity android:name=".PaymentActivity" />
+        <activity android:name=".PaymentActivity" android:windowSoftInputMode="stateHidden"/>
 
     </application>
 
