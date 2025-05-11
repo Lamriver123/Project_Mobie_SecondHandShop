@@ -1,6 +1,7 @@
 package com.example.marketplacesecondhand.API;
 
 import com.example.marketplacesecondhand.dto.request.CancelOrderRequest;
+import com.example.marketplacesecondhand.dto.request.CartRequest;
 import com.example.marketplacesecondhand.dto.request.EmailRequest;
 import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
 import com.example.marketplacesecondhand.dto.request.LoginRequest;
@@ -12,9 +13,11 @@ import com.example.marketplacesecondhand.dto.request.VerifyAccountRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.AuthResponse;
 import com.example.marketplacesecondhand.dto.response.CancelledOrderResponse;
+import com.example.marketplacesecondhand.dto.response.CartResponse;
 import com.example.marketplacesecondhand.dto.response.OrderResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.dto.response.UserResponse;
+import com.example.marketplacesecondhand.models.CartShop;
 import com.example.marketplacesecondhand.models.Category;
 import com.example.marketplacesecondhand.models.Product;
 
@@ -105,4 +108,16 @@ public interface APIService {
 
     @GET("users/{userId}")
     Call<ApiResponse<UserResponse>> getShopInfo(@Path("userId") int userId);
+
+    @POST("cart/add")
+    Call<ApiResponse<Void>> addToCart(@Body CartRequest request);
+
+    @PUT("cart/update")
+    Call<ApiResponse<Void>> updateToCart(@Body CartRequest request);
+
+    @GET("cart")
+    Call<ApiResponse<List<CartResponse>>> getCartItems();
+
+    @GET("cart/{userId}")
+    Call<ApiResponse<List<CartResponse>>> getCartItemsByUserId(@Path("userId") int userId);
 }

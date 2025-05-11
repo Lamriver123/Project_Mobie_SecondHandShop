@@ -1,5 +1,7 @@
 package com.example.marketplacesecondhand.adapter;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -8,17 +10,28 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.example.marketplacesecondhand.API.APIService;
+import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.R;
+import com.example.marketplacesecondhand.RetrofitClient;
 import com.example.marketplacesecondhand.databinding.ItemProductCartBinding;
+import com.example.marketplacesecondhand.dto.request.CartRequest;
+import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.CartProduct;
+import com.example.marketplacesecondhand.models.UserLoginInfo;
 
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.CartItemViewHolder> {
 
+    private static final String TAG = "CartProductAdapter";
     private Context context;
     private List<CartProduct> productList;
     private CartShopAdapter.OnCartItemCheckListener onCartItemCheckListener;
@@ -53,7 +66,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         holder.binding.checkboxSelectItem.setChecked(cartProduct.isChecked());
 
         Glide.with(context)
-                .load(R.drawable.img)
+                .load(cartProduct.getProductResponse().getCurrentImages().get(0))
                 .placeholder(R.drawable.img)
                 .error(R.drawable.img)
                 .into(holder.binding.imageViewProduct);
@@ -69,10 +82,13 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         // Nút tăng số lượng
         holder.binding.buttonIncrease.setOnClickListener(v -> {
             int qty = cartProduct.getQuantityCart();
-            cartProduct.setQuantityCart(qty + 1);
-            notifyItemChanged(position);
-            if (cartProduct.isChecked() && onCartItemCheckListener != null) {
-                onCartItemCheckListener.onItemChecked();
+            if (qty < product.getQuantity()){
+                cartProduct.setQuantityCart(qty + 1);
+                updateCartQuantity(qty + 1,product.getProductId());
+                notifyItemChanged(position);
+                if (cartProduct.isChecked() && onCartItemCheckListener != null) {
+                    onCartItemCheckListener.onItemChecked();
+                }
             }
         });
 
@@ -82,6 +98,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             if (qty > 1) {
                 cartProduct.setQuantityCart(qty - 1);
                 notifyItemChanged(position);
+                updateCartQuantity(qty - 1,product.getProductId());
                 if (cartProduct.isChecked() && onCartItemCheckListener != null) {
                     onCartItemCheckListener.onItemChecked();
                 }
@@ -91,6 +108,36 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         });
     }
 
+    private void updateCartQuantity(int quantity,int productId){
+        DatabaseHandler db = new DatabaseHandler(context);
+        UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+
+        if (userLoginInfo == null || userLoginInfo.getUserId() == 0) {
+            Toast.makeText(context, "Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+            return; // Không thực hiện gọi API nữa
+        }
+
+        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+
+        CartRequest request = new CartRequest(userLoginInfo.getUserId(), productId, quantity);
+
+        Call<ApiResponse<Void>> call = apiService.updateToCart(request);
+        call.enqueue(new Callback<ApiResponse<Void>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Có lỗi xảy ra, thử lại sau!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                Toast.makeText(context, "Không thể kết nối server!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private String formatCurrency(int number) {
         return NumberFormat.getInstance(new Locale("vi", "VN")).format(number);
@@ -109,6 +156,8 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             this.binding = binding;
         }
     }
+
+
 
     public List<CartProduct> getProductList() {
         return productList;
