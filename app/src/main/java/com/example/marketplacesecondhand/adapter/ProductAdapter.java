@@ -3,6 +3,7 @@ package com.example.marketplacesecondhand.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Paint;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +28,10 @@ import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.Product;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
 
+import java.text.NumberFormat;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import retrofit2.Call;
@@ -67,9 +70,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         ProductResponse product = productList.get(position);
 
         holder.tvTitle.setText(product.getProductName());
-        holder.tvPrice.setText(product.getCurrentPrice() );
-        holder.tvTimeLocation.setText(product.getTimeAgoText() + " · Tp Hồ Chí Minh");
-
+        holder.tvPrice.setText(formatCurrency(Integer.parseInt(product.getCurrentPrice())) + " VND");
+        holder.tvTimeLocation.setText(product.getTimeAgoText());
+        holder.tvPricePre.setText(formatCurrency(Integer.parseInt(product.getOriginalPrice())) + " VND");
+        holder.tvPricePre.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.tvSold.setText(product.getSoldText());
         // Badge (số lượng đã bán hoặc thứ hạng)
         holder.tvBadge.setText(String.valueOf(product.getSold()));
 
@@ -130,6 +135,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     }
 
+    private String formatCurrency(int number) {
+        return NumberFormat.getInstance(new Locale("vi", "VN")).format(number);
+    }
     private void toggleFavorite(int productId, int position, ProductViewHolder holder) {
         DatabaseHandler db = new DatabaseHandler(context);
         UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
@@ -178,7 +186,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageProduct, iconFavorite;
-        TextView tvBadge, tvTitle, tvPrice, tvTimeLocation;
+        TextView tvBadge, tvTitle, tvPrice, tvTimeLocation, tvPricePre, tvSold;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -188,6 +196,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvTimeLocation = itemView.findViewById(R.id.tvTimeLocation);
+            tvPricePre = itemView.findViewById(R.id.tvPricePre);
+            tvSold = itemView.findViewById(R.id.tvSold);
         }
     }
 }
