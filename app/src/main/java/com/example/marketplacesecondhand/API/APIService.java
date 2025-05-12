@@ -29,7 +29,9 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -124,6 +126,9 @@ public interface APIService {
 
     @GET("cart/{userId}")
     Call<ApiResponse<List<CartResponse>>> getCartItemsByUserId(@Path("userId") int userId);
+
+    @HTTP(method = "DELETE", path = "cart/remove", hasBody = true)
+    Call<ApiResponse<Void>> deleteCart(@Body CartRequest request);
 
     @GET("address")
     Call<ApiResponse<List<DeliveryAddressResponse>>> getUserAddresses();

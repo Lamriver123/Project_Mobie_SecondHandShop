@@ -1,8 +1,10 @@
 package com.example.marketplacesecondhand.dto.response;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductResponse {
     private int productId;
@@ -205,5 +207,19 @@ public class ProductResponse {
 
         if (diffDays == 1) return "Hôm qua";
         else return diffDays + " ngày trước";
+    }
+
+    public String getSoldText() {
+        if (sold < 1000) {
+            return "Đã bán: " + sold;
+        } else if (sold < 1000000) {
+            double kQty = sold / 1000.0;
+            DecimalFormat formatter = new DecimalFormat("#,##0.#", new java.text.DecimalFormatSymbols(new Locale("vi", "VN"))); // Sử dụng Locale Việt Nam cho dấu phẩy
+            return "Đã bán: " + formatter.format(kQty) + "k";
+        } else {
+            double mQty = sold / 1000000.0;
+            DecimalFormat formatter = new DecimalFormat("#,##0.#", new java.text.DecimalFormatSymbols(new Locale("vi", "VN")));
+            return "Đã bán: " + formatter.format(mQty) + "M";
+        }
     }
 }
