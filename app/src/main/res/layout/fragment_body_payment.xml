@@ -47,7 +47,7 @@
                     android:id="@+id/txtAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nguyễn Văn A, 123 Đường ABC, Quận 1, TP.HCM" />
+                    android:text="Vui Lòng chọn địa chỉ nhận hàng." />
             </LinearLayout>
 
         </LinearLayout>

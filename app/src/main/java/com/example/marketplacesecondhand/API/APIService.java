@@ -2,11 +2,14 @@ package com.example.marketplacesecondhand.API;
 
 import com.example.marketplacesecondhand.dto.request.CancelOrderRequest;
 import com.example.marketplacesecondhand.dto.request.CartRequest;
+import com.example.marketplacesecondhand.dto.request.DeliveryAddressRequest;
 import com.example.marketplacesecondhand.dto.request.EmailRequest;
 import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
 import com.example.marketplacesecondhand.dto.request.LoginRequest;
 import com.example.marketplacesecondhand.dto.request.RegisterRequest;
 import com.example.marketplacesecondhand.dto.request.ResetPasswordRequest;
+import com.example.marketplacesecondhand.dto.request.UpdateDefaultAddressRequest;
+import com.example.marketplacesecondhand.dto.request.UpdateDeliveryAddressRequest;
 import com.example.marketplacesecondhand.dto.request.UpdateOrderStatusRequest;
 import com.example.marketplacesecondhand.dto.request.UserUpdateRequest;
 import com.example.marketplacesecondhand.dto.request.VerifyAccountRequest;
@@ -14,6 +17,7 @@ import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.AuthResponse;
 import com.example.marketplacesecondhand.dto.response.CancelledOrderResponse;
 import com.example.marketplacesecondhand.dto.response.CartResponse;
+import com.example.marketplacesecondhand.dto.response.DeliveryAddressResponse;
 import com.example.marketplacesecondhand.dto.response.OrderResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.dto.response.UserResponse;
@@ -120,4 +124,19 @@ public interface APIService {
 
     @GET("cart/{userId}")
     Call<ApiResponse<List<CartResponse>>> getCartItemsByUserId(@Path("userId") int userId);
+
+    @GET("address")
+    Call<ApiResponse<List<DeliveryAddressResponse>>> getUserAddresses();
+
+    @POST("address")
+    Call<ApiResponse<DeliveryAddressResponse>> createDeliveryAddress(
+            @Body DeliveryAddressRequest request
+    );
+
+    @PUT("address")
+    Call<ApiResponse<DeliveryAddressResponse>> updateDeliveryAddress(@Body UpdateDeliveryAddressRequest request);
+
+    @PUT("address/default")
+    Call<ApiResponse<DeliveryAddressResponse>> updateDefaultAddress(@Body UpdateDefaultAddressRequest request);
+
 }

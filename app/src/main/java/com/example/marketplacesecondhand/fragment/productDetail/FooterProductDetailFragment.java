@@ -1,5 +1,6 @@
 package com.example.marketplacesecondhand.fragment.productDetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +13,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.marketplacesecondhand.API.DatabaseHandler;
+import com.example.marketplacesecondhand.LoginActivity;
 import com.example.marketplacesecondhand.databinding.FragmentFooterProductDetailBinding;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
+import com.example.marketplacesecondhand.models.UserLoginInfo;
 import com.example.marketplacesecondhand.viewModel.ProductDetailViewModel;
 
 import java.text.NumberFormat;
@@ -81,95 +85,113 @@ public class FooterProductDetailFragment extends Fragment {
             }
         });
 
-        binding.buttonBuyNow.setOnClickListener(v -> {
-            ProductResponse product = productDetailViewModel.getProductDetail().getValue();
-            if (product != null) {
-                if (product.getQuantity() <= 0) {
-                    if(getContext() != null) Toast.makeText(getContext(), "Sản phẩm đã hết hàng.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (product.getCurrentPrice() == null) {
-                    if (getContext()!=null) Toast.makeText(getContext(), "Thông tin sản phẩm không đầy đủ.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
-                String firstImageUrl = (product.getCurrentImages() != null && !product.getCurrentImages().isEmpty()) ? product.getCurrentImages().get(0) : "";
-                int price = 0;
-                try {
-                    String cleanPriceString = product.getCurrentPrice().replaceAll("[^\\d]", "");
-                    if (!cleanPriceString.isEmpty()) {
-                        price = Integer.parseInt(cleanPriceString);
-                    } else {
+
+        binding.buttonBuyNow.setOnClickListener(v -> {
+            DatabaseHandler db = new DatabaseHandler(getContext());
+            UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+            if (userLoginInfo != null) {
+                ProductResponse product = productDetailViewModel.getProductDetail().getValue();
+                if (product != null) {
+                    if (product.getQuantity() <= 0) {
+                        if(getContext() != null) Toast.makeText(getContext(), "Sản phẩm đã hết hàng.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (product.getCurrentPrice() == null) {
+                        if (getContext()!=null) Toast.makeText(getContext(), "Thông tin sản phẩm không đầy đủ.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    String firstImageUrl = (product.getCurrentImages() != null && !product.getCurrentImages().isEmpty()) ? product.getCurrentImages().get(0) : "";
+                    int price = 0;
+                    try {
+                        String cleanPriceString = product.getCurrentPrice().replaceAll("[^\\d]", "");
+                        if (!cleanPriceString.isEmpty()) {
+                            price = Integer.parseInt(cleanPriceString);
+                        } else {
+                            if(getContext()!=null) Toast.makeText(getContext(), "Lỗi định dạng giá sản phẩm.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    } catch (NumberFormatException e) {
+                        Log.e(TAG, "Lỗi parse giá sản phẩm khi mua ngay: " + product.getCurrentPrice(), e);
                         if(getContext()!=null) Toast.makeText(getContext(), "Lỗi định dạng giá sản phẩm.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                } catch (NumberFormatException e) {
-                    Log.e(TAG, "Lỗi parse giá sản phẩm khi mua ngay: " + product.getCurrentPrice(), e);
-                    if(getContext()!=null) Toast.makeText(getContext(), "Lỗi định dạng giá sản phẩm.", Toast.LENGTH_SHORT).show();
-                    return;
+
+                    BottomSheetBuyNowFragment bottomSheet = BottomSheetBuyNowFragment.newInstance(
+                            product.getProductId(),
+                            product.getProductName(),
+                            price,
+                            product.getQuantity(),
+                            firstImageUrl
+                    );
+                    bottomSheet.show(getParentFragmentManager(), bottomSheet.getTag());
+
                 }
-
-                BottomSheetBuyNowFragment bottomSheet = BottomSheetBuyNowFragment.newInstance(
-                        product.getProductId(),
-                        product.getProductName(),
-                        price,
-                        product.getQuantity(),
-                        firstImageUrl
-                );
-                bottomSheet.show(getParentFragmentManager(), bottomSheet.getTag());
-
+                else {
+                    if(getContext() != null){
+                        Toast.makeText(getContext(), "Dữ liệu chi tiết sản phẩm chưa sẵn sàng.", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
             else {
-                if(getContext() != null){
-                    Toast.makeText(getContext(), "Dữ liệu chi tiết sản phẩm chưa sẵn sàng.", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
             }
         });
 
         binding.buttonAddToCart.setOnClickListener(v -> {
-            ProductResponse product = productDetailViewModel.getProductDetail().getValue();
-            if (product != null) {
-                if (product.getQuantity() <= 0) {
-                    if(getContext()!=null) {
-                        Toast.makeText(getContext(), "Sản phẩm đã hết hàng.", Toast.LENGTH_SHORT).show();
+            DatabaseHandler db = new DatabaseHandler(getContext());
+            UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+            if (userLoginInfo != null) {
+                ProductResponse product = productDetailViewModel.getProductDetail().getValue();
+                if (product != null) {
+                    if (product.getQuantity() <= 0) {
+                        if(getContext()!=null) {
+                            Toast.makeText(getContext(), "Sản phẩm đã hết hàng.", Toast.LENGTH_SHORT).show();
+                        }
+                        return;
                     }
-                    return;
-                }
-                if (product.getCurrentPrice() == null) {
-                    if (getContext()!=null) Toast.makeText(getContext(), "Thông tin sản phẩm không đầy đủ.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                    if (product.getCurrentPrice() == null) {
+                        if (getContext()!=null) Toast.makeText(getContext(), "Thông tin sản phẩm không đầy đủ.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                String firstImageUrl = (product.getCurrentImages() != null && !product.getCurrentImages().isEmpty()) ? product.getCurrentImages().get(0) : "";
-                int price = 0;
-                try {
-                    String cleanPriceString = product.getCurrentPrice().replaceAll("[^\\d]", "");
-                    if (!cleanPriceString.isEmpty()) {
-                        price = Integer.parseInt(cleanPriceString);
-                    } else {
+                    String firstImageUrl = (product.getCurrentImages() != null && !product.getCurrentImages().isEmpty()) ? product.getCurrentImages().get(0) : "";
+                    int price = 0;
+                    try {
+                        String cleanPriceString = product.getCurrentPrice().replaceAll("[^\\d]", "");
+                        if (!cleanPriceString.isEmpty()) {
+                            price = Integer.parseInt(cleanPriceString);
+                        } else {
+                            if(getContext()!=null) Toast.makeText(getContext(), "Lỗi định dạng giá sản phẩm.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    } catch (NumberFormatException e) {
+                        Log.e(TAG, "Lỗi parse giá sản phẩm khi mua ngay: " + product.getCurrentPrice(), e);
                         if(getContext()!=null) Toast.makeText(getContext(), "Lỗi định dạng giá sản phẩm.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                } catch (NumberFormatException e) {
-                    Log.e(TAG, "Lỗi parse giá sản phẩm khi mua ngay: " + product.getCurrentPrice(), e);
-                    if(getContext()!=null) Toast.makeText(getContext(), "Lỗi định dạng giá sản phẩm.", Toast.LENGTH_SHORT).show();
-                    return;
+
+                    BottomSheetAddToCartFragment bottomSheet = BottomSheetAddToCartFragment.newInstance(
+                            product.getProductId(),
+                            product.getProductName(),
+                            price,
+                            product.getQuantity(),
+                            firstImageUrl
+                    );
+                    bottomSheet.show(getParentFragmentManager(), bottomSheet.getTag());
+
                 }
-
-                BottomSheetAddToCartFragment bottomSheet = BottomSheetAddToCartFragment.newInstance(
-                        product.getProductId(),
-                        product.getProductName(),
-                        price,
-                        product.getQuantity(),
-                        firstImageUrl
-                );
-                bottomSheet.show(getParentFragmentManager(), bottomSheet.getTag());
-
+                else {
+                    if(getContext() != null){
+                        Toast.makeText(getContext(), "Dữ liệu chi tiết sản phẩm chưa sẵn sàng.", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
             else {
-                if(getContext() != null){
-                    Toast.makeText(getContext(), "Dữ liệu chi tiết sản phẩm chưa sẵn sàng.", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
             }
         });
     }

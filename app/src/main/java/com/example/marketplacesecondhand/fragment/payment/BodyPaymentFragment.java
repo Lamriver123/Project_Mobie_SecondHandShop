@@ -10,18 +10,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.R; // Đảm bảo import R đúng
 import com.example.marketplacesecondhand.databinding.FragmentBodyPaymentBinding;
-import com.example.marketplacesecondhand.fragment.BottomSheetAddLocationFragment;
+import com.example.marketplacesecondhand.dto.response.DeliveryAddressResponse;
+import com.example.marketplacesecondhand.viewModel.LocationViewModel;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 public class BodyPaymentFragment extends Fragment {
     private static final String TAG = "BodyPaymentFragment";
     private FragmentBodyPaymentBinding binding;
+    private LocationViewModel locationViewModel;
 
     // Keys cho arguments
     private static final String ARG_PRODUCT_ID = "arg_product_id";
@@ -69,12 +73,17 @@ public class BodyPaymentFragment extends Fragment {
         } else {
             Log.e(TAG, "onCreate: Không có arguments nào được truyền cho BodyPaymentFragment.");
         }
+        locationViewModel = new ViewModelProvider(requireActivity()).get(LocationViewModel.class);
+
+
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentBodyPaymentBinding.inflate(inflater, container, false);
+        locationViewModel.loadAddresses();
+        locationViewModel.getSelectedAddress();
         return binding.getRoot();
     }
 
@@ -82,6 +91,34 @@ public class BodyPaymentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.layoutPaymentBody.requestFocus();
+
+        // Observe địa chỉ được chọn
+        locationViewModel.getSelectedAddress().observe(getViewLifecycleOwner(), address -> {
+            if (address != null) {
+                binding.txtAddress.setText(address.getAddressName());
+            } else {
+                // Nếu không có địa chỉ được chọn, hiển thị địa chỉ mặc định
+                List<DeliveryAddressResponse> addresses = locationViewModel.getAddresses().getValue();
+                if (addresses != null && !addresses.isEmpty()) {
+                    for (DeliveryAddressResponse addr : addresses) {
+                        if (addr.getDefaultAddress() != 0) {
+                            binding.txtAddress.setText(addr.getAddressName());
+                            locationViewModel.setSelectedAddress(addr);
+                            break;
+                        }
+                    }
+                } else {
+                    binding.txtAddress.setText("Chọn địa chỉ giao hàng");
+                }
+            }
+        });
+
+        // Observe lỗi
+        locationViewModel.getError().observe(getViewLifecycleOwner(), error -> {
+            if (error != null) {
+                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         if (productId == -1 || quantity == 0) {
             // Xử lý trường hợp không có dữ liệu sản phẩm hợp lệ
@@ -141,8 +178,6 @@ public class BodyPaymentFragment extends Fragment {
 
         binding.btnChooseLocation.setOnClickListener(v -> {
             BottomSheetAddLocationFragment bottomSheet = new BottomSheetAddLocationFragment();
-            // Sử dụng getChildFragmentManager() nếu BottomSheetAddLocationFragment được quản lý bởi BodyPaymentFragment
-            // Hoặc getParentFragmentManager() nếu nó được quản lý bởi Activity cha
             bottomSheet.show(getParentFragmentManager(), bottomSheet.getTag());
         });
     }

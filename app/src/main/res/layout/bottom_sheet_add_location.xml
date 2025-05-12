@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_sheet_background"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingTop="8dp"
+    android:paddingBottom="16dp"
+    android:paddingHorizontal="16dp">
 
-    <!-- Handle bar -->
     <View
         android:layout_width="36dp"
         android:layout_height="4dp"
         android:layout_gravity="center_horizontal"
-        android:background="#CCCCCC"
+        android:background="#BDBDBD"
         android:layout_marginBottom="16dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#CCCCCC"
-        android:clipToOutline="true"
-        android:scaleY="1.0" />
+        android:layout_marginTop="8dp" />
 
     <LinearLayout
         android:id="@+id/btnAddLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="8dp"
+        android:gravity="center_vertical"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_add"
-            android:backgroundTint="@color/gray"
-            android:layout_gravity="center_vertical"/>
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_add"
+            app:tint="@color/yellow"
+            android:contentDescription="Thêm địa chỉ mới" />
 
         <TextView
             android:id="@+id/btnAdd"
@@ -43,156 +48,64 @@
             android:text="Thêm địa chỉ"
             android:textSize="16sp"
             android:textStyle="bold" />
+
         <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:background="@drawable/ic_next"
-            android:layout_gravity="center_vertical"/>
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_next"
+            app:tint="@color/gray"
+            android:contentDescription="Đi tới"/>
     </LinearLayout>
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/viewSeparatorAfterAdd"
         android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_marginVertical="16dp"
-        android:background="#E0E0E0" />
-    <!-- Product Info -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="16dp">
-
-            <TextView
-                android:id="@+id/txtProductName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DuyPham"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(+84)03******48"
-                android:textSize="14sp"
-                android:textColor="#666666"
-                android:layout_marginTop="4dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="52a Kiệt 88 Nguyễn Khoa Chiêm, Thành phố Huế"
-                android:textSize="14sp"
-                android:textColor="#666666"
-                android:layout_marginTop="4dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="An cựu, Thừa Thiên Huế, Việt Nam"
-                android:textSize="14sp"
-                android:textColor="#666666"
-                android:layout_marginTop="4dp" />
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Mặc định"
-                android:background="@drawable/category_text_bg"
-                android:textSize="14sp"
-                android:textColor="#666666"
-                android:layout_marginTop="4dp" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/red"
-            android:text="Chỉnh sửa"/>
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_marginVertical="16dp"
+        android:layout_height="1dp"
+        android:layout_marginVertical="12dp"
         android:background="#E0E0E0" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tvSavedAddressesTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp">
+        android:text="Hoặc chọn từ địa chỉ đã lưu:"
+        android:textSize="14sp"
+        android:textColor="?android:textColorSecondary"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="16dp">
+    <ProgressBar
+        android:id="@+id/progressBarAddresses"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LamNguyen"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(+84)03******48"
-                android:textSize="14sp"
-                android:textColor="#666666"
-                android:layout_marginTop="4dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="52a Kiệt 88 Nguyễn Khoa Chiêm, Thành phố Huế"
-                android:textSize="14sp"
-                android:textColor="#666666"
-                android:layout_marginTop="4dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="An cựu, Thừa Thiên Huế, Việt Nam"
-                android:textSize="14sp"
-                android:textColor="#666666"
-                android:layout_marginTop="4dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/category_text_bg"
-                android:padding="5dp"
-                android:text="Mặc định"
-                android:textColor="#666666"
-                android:textSize="14sp"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/red"
-            android:text="Chỉnh sửa"/>
-    </LinearLayout>
-    <!-- Divider -->
-    <View
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewAddresses"
         android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:background="#E0E0E0"
-        android:layout_marginVertical="16dp" />
+        android:layout_height="wrap_content"
+        android:minHeight="120dp"
+        android:maxHeight="300dp"
+        android:scrollbars="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/tvNoAddresses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        tools:text="Bạn chưa có địa chỉ nào."
+        android:textColor="?android:textColorSecondary"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:visibility="gone" />
+
 </LinearLayout>
