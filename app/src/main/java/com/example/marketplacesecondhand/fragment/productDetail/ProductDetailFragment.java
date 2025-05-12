@@ -168,19 +168,7 @@ public class ProductDetailFragment extends Fragment {
         binding.textProductName.setText(product.getProductName());
 
         if (product.getCurrentPrice() != null && !product.getCurrentPrice().isEmpty()) {
-            try {
-                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-                String cleanPrice = product.getCurrentPrice().replaceAll("[^\\d]", "");
-                if (!cleanPrice.isEmpty()) {
-                    Number priceNum = currencyFormat.parse(cleanPrice);
-                    binding.textProductPrice.setText(currencyFormat.format(priceNum.doubleValue()));
-                } else {
-                    binding.textProductPrice.setText("N/A");
-                }
-            } catch (ParseException | NumberFormatException e) {
-                Log.e(TAG, "Lỗi parse giá tiền: " + product.getCurrentPrice(), e);
-                binding.textProductPrice.setText(product.getCurrentPrice());
-            }
+            binding.textProductPrice.setText(formatCurrency(product.getCurrentPrice()) + " VND");
         } else {
             binding.textProductPrice.setText("Liên hệ");
         }
@@ -237,6 +225,10 @@ public class ProductDetailFragment extends Fragment {
         }
     }
 
+    private String formatCurrency(String number) {
+        int num = Integer.parseInt(number);
+        return NumberFormat.getInstance(new Locale("vi", "VN")).format(num);
+    }
     private void showProductDetailsTable(ProductResponse product) {
         if (binding == null || getContext() == null) return;
         binding.tableProductDetails.removeAllViews();

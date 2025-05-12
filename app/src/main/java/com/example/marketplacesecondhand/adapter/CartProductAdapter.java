@@ -108,6 +108,46 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
         });
     }
 
+    public void removeItem(int position) {
+        if (position >= 0 && position < productList.size()) {
+            DatabaseHandler db = new DatabaseHandler(context);
+            UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+
+            if (userLoginInfo == null || userLoginInfo.getUserId() == 0) {
+                Toast.makeText(context, "Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                return; // Không thực hiện gọi API nữa
+            }
+
+            APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+
+            CartProduct cartProduct = productList.get(position);
+
+            CartRequest request = new CartRequest(userLoginInfo.getUserId(),cartProduct.getProductResponse().getProductId() , 0);
+
+            Call<ApiResponse<Void>> call = apiService.deleteCart(request);
+            call.enqueue(new Callback<ApiResponse<Void>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Có lỗi xảy ra, thử lại sau!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                    Toast.makeText(context, "Không thể kết nối server!", Toast.LENGTH_SHORT).show();
+                }
+            });
+            productList.remove(position);
+            notifyItemRemoved(position);
+            if (onCartItemCheckListener != null) {
+                onCartItemCheckListener.onItemChecked();
+            }
+        }
+    }
+
     private void updateCartQuantity(int quantity,int productId){
         DatabaseHandler db = new DatabaseHandler(context);
         UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();

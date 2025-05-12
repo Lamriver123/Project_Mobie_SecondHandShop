@@ -81,7 +81,8 @@ public class SimilarProductsFragment extends Fragment {
                     }
 
                     ProductAdapter adapter = new ProductAdapter(getContext(), similarProducts);
-                    binding.productRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+                    binding.productRecycler.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false));
                     binding.productRecycler.setAdapter(adapter);
 
                 } else {

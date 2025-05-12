@@ -1,9 +1,12 @@
 package com.example.marketplacesecondhand.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,6 +62,40 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartSh
             }
         });
         holder.binding.recyclerViewProducts.setAdapter(itemAdapter);
+
+        // Gắn ItemTouchHelper
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int swipedPosition = viewHolder.getAdapterPosition();
+
+                new AlertDialog.Builder(context)
+                        .setTitle("Xác nhận")
+                        .setMessage("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")
+                        .setPositiveButton("Xóa", (dialog, which) -> {
+                            itemAdapter.removeItem(swipedPosition);
+                            if(cartShop.getProducts().size() == 0){
+                                shopList.remove(cartShop);
+                                notifyDataSetChanged();
+                            }
+                            if (onCartItemCheckListener != null) {
+                                onCartItemCheckListener.onItemChecked();
+                            }
+                        })
+                        .setNegativeButton("Hủy", (dialog, which) -> {
+                            itemAdapter.notifyItemChanged(swipedPosition); // undo swipe
+                        })
+                        .setCancelable(false)
+                        .show();
+            }
+
+        });
+        itemTouchHelper.attachToRecyclerView(holder.binding.recyclerViewProducts);
 
         // Sự kiện click checkbox Shop
         holder.binding.checkboxShop.setOnCheckedChangeListener((buttonView, isChecked) -> {
