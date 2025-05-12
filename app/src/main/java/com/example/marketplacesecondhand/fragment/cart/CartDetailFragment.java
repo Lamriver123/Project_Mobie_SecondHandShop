@@ -1,25 +1,21 @@
-package com.example.marketplacesecondhand.fragment;
+package com.example.marketplacesecondhand.fragment.cart;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar; // Thêm ProgressBar để hiển thị trạng thái tải
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.R;
 import com.example.marketplacesecondhand.RetrofitClient;
-import com.example.marketplacesecondhand.adapter.CartShopAdapter;
+import com.example.marketplacesecondhand.adapter.cart.CartShopAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentCartDetailBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.CartResponse;
@@ -47,7 +43,7 @@ import retrofit2.Response;
 public class CartDetailFragment extends Fragment {
     private FragmentCartDetailBinding binding;
     private CartShopAdapter cartShopAdapter;
-    private List<CartShop> cartShopList;
+    public static List<CartShop> cartShopList;
     private TextView textViewTotalPrice;
     private ProgressBar progressBar; // Khai báo ProgressBar
     private TextView textViewEmptyCart; // Khai báo TextView thông báo giỏ hàng trống

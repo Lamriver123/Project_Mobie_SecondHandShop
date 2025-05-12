@@ -2,9 +2,10 @@ package com.example.marketplacesecondhand.models;
 
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CartProduct {
+public class CartProduct implements Serializable {
 
 
 

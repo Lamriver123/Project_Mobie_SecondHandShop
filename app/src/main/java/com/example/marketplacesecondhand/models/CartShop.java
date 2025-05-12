@@ -1,8 +1,9 @@
 package com.example.marketplacesecondhand.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CartShop {
+public class CartShop implements Serializable {
     private User user;
     private boolean isChecked;
     private List<CartProduct> products;

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.marketplacesecondhand.fragment.CartDetailFragment;
+import com.example.marketplacesecondhand.fragment.cart.CartDetailFragment;
 
 public class CartActivity extends AppCompatActivity {
     @Override

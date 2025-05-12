@@ -1,12 +1,13 @@
 package com.example.marketplacesecondhand.dto.response;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class ProductResponse {
+public class ProductResponse implements Serializable {
     private int productId;
     private int ownerId;
     private String productName;

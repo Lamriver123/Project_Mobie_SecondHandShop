@@ -10,70 +10,43 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.PaymentActivity;
 import com.example.marketplacesecondhand.R; // Đảm bảo import R đúng
 import com.example.marketplacesecondhand.databinding.BottomSheetBuyNowBinding;
+import com.example.marketplacesecondhand.dto.response.ProductResponse;
+import com.example.marketplacesecondhand.models.CartProduct;
+import com.example.marketplacesecondhand.models.CartShop;
+import com.example.marketplacesecondhand.models.Product;
+import com.example.marketplacesecondhand.models.User;
+import com.example.marketplacesecondhand.viewModel.PaymentViewModel;
+import com.example.marketplacesecondhand.viewModel.ProductDetailViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class BottomSheetBuyNowFragment extends BottomSheetDialogFragment {
 
     private BottomSheetBuyNowBinding binding;
+    private ProductDetailViewModel productDetailViewModel;
+    private ProductResponse productResponse;
+    private int quantity = 1;
 
-    // Các biến lưu trữ thông tin sản phẩm và số lượng
-    private int quantity = 1;           // Số lượng mặc định
-    private int unitPrice = 0;          // Đơn giá, sẽ được cập nhật từ arguments
-    private int maxQuantity = 1;        // Số lượng tối đa trong kho, sẽ được cập nhật
-    private String productName = "";    // Tên sản phẩm
-    private String productImageUrl = "";// URL hình ảnh sản phẩm
-    private int productId = -1;         // ID sản phẩm
-
-    // Keys cho Bundle arguments
-    private static final String ARG_PRODUCT_ID = "product_id";
-    private static final String ARG_PRODUCT_NAME = "product_name";
-    private static final String ARG_UNIT_PRICE = "unit_price";
-    private static final String ARG_MAX_QUANTITY = "max_quantity";
-    private static final String ARG_IMAGE_URL = "image_url";
-    private static final String TAG = "BottomSheetBuyNow";
-
-    public static BottomSheetBuyNowFragment newInstance(int productId, String productName, int unitPrice, int maxQuantity, String imageUrl) {
-        BottomSheetBuyNowFragment fragment = new BottomSheetBuyNowFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_PRODUCT_ID, productId);
-        args.putString(ARG_PRODUCT_NAME, productName);
-        args.putInt(ARG_UNIT_PRICE, unitPrice);
-        args.putInt(ARG_MAX_QUANTITY, maxQuantity);
-        args.putString(ARG_IMAGE_URL, imageUrl);
-        fragment.setArguments(args);
-        return fragment;
+    public static BottomSheetBuyNowFragment newInstance() {
+        return new BottomSheetBuyNowFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Lấy dữ liệu sản phẩm từ arguments
-        if (getArguments() != null) {
-            productId = getArguments().getInt(ARG_PRODUCT_ID, -1);
-            productName = getArguments().getString(ARG_PRODUCT_NAME, "Sản phẩm");
-            unitPrice = getArguments().getInt(ARG_UNIT_PRICE, 0);
-            maxQuantity = getArguments().getInt(ARG_MAX_QUANTITY, 1);
-            productImageUrl = getArguments().getString(ARG_IMAGE_URL, "");
-
-            // Đảm bảo maxQuantity hợp lệ
-            if (maxQuantity <= 0 && unitPrice > 0) {
-                maxQuantity = 1;
-                Log.w(TAG, "maxQuantity không hợp lệ (" + getArguments().getInt(ARG_MAX_QUANTITY) + "), đặt lại thành 1 cho sản phẩm: " + productName);
-            }
-            else if (maxQuantity <= 0) {
-                maxQuantity = 0; // Nếu không có hàng
-            }
-            Log.d(TAG, "onCreate: ProductID=" + productId + ", Name=" + productName + ", Price=" + unitPrice + ", MaxQty=" + maxQuantity + ", Image=" + productImageUrl);
-        } else {
-            Log.e(TAG, "onCreate: Arguments is null. BottomSheet có thể không hiển thị đúng thông tin.");
+        if (getActivity() != null) {
+            productDetailViewModel = new ViewModelProvider(requireActivity()).get(ProductDetailViewModel.class);
         }
     }
 
@@ -84,41 +57,53 @@ public class BottomSheetBuyNowFragment extends BottomSheetDialogFragment {
                              @Nullable Bundle savedInstanceState) {
         binding = BottomSheetBuyNowBinding.inflate(inflater, container, false);
 
-        // Hiển thị thông tin sản phẩm lên UI
-        binding.tvProductNameBottomSheet.setText(productName);
-        if (getContext() != null && productImageUrl != null && !productImageUrl.isEmpty()) {
-            Glide.with(requireContext())
-                    .load(productImageUrl)
-                    .placeholder(R.drawable.img)
-                    .error(R.drawable.img)
-                    .into(binding.ivProductImageBottomSheet);
-        }
-        else {
-            binding.ivProductImageBottomSheet.setImageResource(R.drawable.img);
-        }
-
-        // Nếu không có hàng, vô hiệu hóa các nút và hiển thị thông báo
-        if (maxQuantity <= 0) {
-            quantity = 0;
-            Toast.makeText(getContext(), "Sản phẩm hiện đã hết hàng.", Toast.LENGTH_LONG).show();
-        }
-        else {
-            quantity = 1;
-        }
-
-        updateUI();
-        setupButtonClickListeners();
-
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        productDetailViewModel.getProductDetail().observe(getViewLifecycleOwner(), product -> {
+            if (product != null && binding != null) {
+                productResponse = product;
+
+                // Hiển thị thông tin sản phẩm lên UI
+                binding.tvProductNameBottomSheet.setText(productResponse.getProductName());
+                if (getContext() != null && productResponse.getCurrentImages() != null && !productResponse.getCurrentImages().isEmpty()) {
+                    Glide.with(requireContext())
+                            .load(productResponse.getCurrentImages().get(0))
+                            .placeholder(R.drawable.img)
+                            .error(R.drawable.img)
+                            .into(binding.ivProductImageBottomSheet);
+                }
+                else {
+                    binding.ivProductImageBottomSheet.setImageResource(R.drawable.img);
+                }
+
+                // Nếu không có hàng, vô hiệu hóa các nút và hiển thị thông báo
+                if (productResponse.getQuantity() <= 0) {
+                    quantity = 0;
+                    Toast.makeText(getContext(), "Sản phẩm hiện đã hết hàng.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    quantity = 1;
+                }
+
+                updateUI();
+                setupButtonClickListeners();
+            }
+        });
+
+
+    }
     private void setupButtonClickListeners() {
         binding.buttonIncrease.setOnClickListener(v -> {
-            if (maxQuantity <= 0) {
+            if (productResponse.getQuantity() <= 0) {
                 if(getContext()!=null) Toast.makeText(getContext(), "Sản phẩm đã hết hàng.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (quantity < maxQuantity) {
+            if (quantity < productResponse.getQuantity()) {
                 quantity++;
                 updateUI();
             } else {
@@ -129,7 +114,7 @@ public class BottomSheetBuyNowFragment extends BottomSheetDialogFragment {
         });
 
         binding.buttonDecrease.setOnClickListener(v -> {
-            if (maxQuantity <= 0) {
+            if (productResponse.getQuantity() <= 0) {
                 if(getContext()!=null) Toast.makeText(getContext(), "Sản phẩm đã hết hàng.", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -146,21 +131,27 @@ public class BottomSheetBuyNowFragment extends BottomSheetDialogFragment {
                 }
                 return;
             }
-            if (productId == -1) {
+            if (productResponse.getProductId() == -1) {
                 if(getContext()!=null) {
                     Toast.makeText(getContext(), "Lỗi: Không xác định được sản phẩm.", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
 
+            List<CartShop> selectedShopsToCheckout = new ArrayList<>();
+            productDetailViewModel.getProductDetail().observe(getViewLifecycleOwner(), product -> {
+                if (product != null && binding != null) {
+                    CartProduct productCart = new CartProduct(product, quantity, true);
+                    List<CartProduct> products = new ArrayList<>();
+                    products.add(productCart);
+                    User user = new User();
+                    user.setUsername(ProductDetailFragment.SHOP_NAME);
+                    CartShop cartShop = new CartShop(user, true, products);
+                    selectedShopsToCheckout.add(cartShop);
+                }
+            });
             Intent intent = new Intent(requireContext(), PaymentActivity.class);
-            intent.putExtra("PRODUCT_ID", productId);
-            intent.putExtra("PRODUCT_NAME", productName);
-            intent.putExtra("QUANTITY", quantity);
-            intent.putExtra("UNIT_PRICE", unitPrice);
-            intent.putExtra("TOTAL_PRICE", quantity * unitPrice);
-            intent.putExtra("PRODUCT_IMAGE_URL", productImageUrl);
-            intent.putExtra("SHOP_NAME", ProductDetailFragment.SHOP_NAME);
+            intent.putExtra("SELECTED_CART_SHOPS", (Serializable) selectedShopsToCheckout);
             startActivity(intent);
             dismiss();
         });
@@ -177,10 +168,10 @@ public class BottomSheetBuyNowFragment extends BottomSheetDialogFragment {
         if (binding == null) return; // Đảm bảo binding không null
 
         binding.textViewQuantity.setText(String.valueOf(quantity));
-        int total = quantity * unitPrice;
+        int total = quantity * Integer.parseInt(productResponse.getCurrentPrice());
         binding.txtTotalPrice.setText(formatCurrency(total) + " VND"); // Hiển thị tổng tiền
 
-        if (maxQuantity <= 0) { // Hết hàng
+        if (productResponse.getQuantity() <= 0) { // Hết hàng
             binding.btnApply.setEnabled(false);
             binding.buttonIncrease.setEnabled(false);
             binding.buttonDecrease.setEnabled(false);
@@ -188,7 +179,7 @@ public class BottomSheetBuyNowFragment extends BottomSheetDialogFragment {
         }
         else {
             binding.btnApply.setEnabled(quantity > 0);
-            binding.buttonIncrease.setEnabled(quantity < maxQuantity);
+            binding.buttonIncrease.setEnabled(quantity < productResponse.getQuantity());
             binding.buttonDecrease.setEnabled(quantity > 1);
         }
     }

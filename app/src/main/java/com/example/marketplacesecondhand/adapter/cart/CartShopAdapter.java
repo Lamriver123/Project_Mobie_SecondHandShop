@@ -1,8 +1,7 @@
-package com.example.marketplacesecondhand.adapter;
+package com.example.marketplacesecondhand.adapter.cart;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;

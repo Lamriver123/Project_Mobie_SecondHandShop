@@ -1,6 +1,4 @@
-package com.example.marketplacesecondhand.adapter;
-
-import static androidx.core.content.ContentProviderCompat.requireContext;
+package com.example.marketplacesecondhand.adapter.cart;
 
 import android.content.Context;
 import android.graphics.Paint;

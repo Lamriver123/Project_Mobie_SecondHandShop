@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/cart_detail"
+        android:id="@+id/payment_detail"
         android:name="com.example.marketplacesecondhand.fragment.payment.BodyPaymentFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"

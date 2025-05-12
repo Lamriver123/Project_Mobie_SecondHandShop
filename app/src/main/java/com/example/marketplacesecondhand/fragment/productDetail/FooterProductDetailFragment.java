@@ -13,23 +13,39 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.LoginActivity;
+import com.example.marketplacesecondhand.R;
+import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.adapter.ProductAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentFooterProductDetailBinding;
+import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
+import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
 import com.example.marketplacesecondhand.viewModel.ProductDetailViewModel;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FooterProductDetailFragment extends Fragment {
     private static final String TAG = "FooterProductDetail";
     private FragmentFooterProductDetailBinding binding;
     private ProductDetailViewModel productDetailViewModel;
+  //  private final Set<Integer> favoriteProductIds;
 
     public FooterProductDetailFragment() {}
+//    public FooterProductDetailFragment(Set<Integer> favoriteProductIds) {
+//        this.favoriteProductIds = favoriteProductIds;
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +99,8 @@ public class FooterProductDetailFragment extends Fragment {
                     if (getContext() != null) Toast.makeText(getContext(), "Thông tin số lượng sản phẩm không có sẵn", Toast.LENGTH_SHORT).show();
                 }
             }
+
+        //    setFavoriteIcon(product);
         });
 
 
@@ -118,13 +136,7 @@ public class FooterProductDetailFragment extends Fragment {
                         return;
                     }
 
-                    BottomSheetBuyNowFragment bottomSheet = BottomSheetBuyNowFragment.newInstance(
-                            product.getProductId(),
-                            product.getProductName(),
-                            price,
-                            product.getQuantity(),
-                            firstImageUrl
-                    );
+                    BottomSheetBuyNowFragment bottomSheet = BottomSheetBuyNowFragment.newInstance();
                     bottomSheet.show(getParentFragmentManager(), bottomSheet.getTag());
 
                 }
@@ -196,6 +208,59 @@ public class FooterProductDetailFragment extends Fragment {
         });
     }
 
+//    private void setFavoriteIcon(ProductResponse product) {
+//        // Set iconFavorite ban đầu theo danh sách favoriteProductIds
+//        if (favoriteProductIds.contains(product.getProductId())) {
+//            binding.ivFavorite.setImageResource(R.drawable.ic_heart_selected);
+//        } else {
+//            binding.ivFavorite.setImageResource(R.drawable.ic_heart_border_red);
+//        }
+//
+//        // Xử lý sự kiện nhấn vào iconFavorite
+//        binding.ivFavorite.setOnClickListener(v -> {
+//            toggleFavorite(product.getProductId());
+//        });
+//    }
+//
+//    private void toggleFavorite(int productId) {
+//        DatabaseHandler db = new DatabaseHandler(getContext());
+//        UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+//
+//        if (userLoginInfo == null || userLoginInfo.getUserId() == 0) {
+//            Toast.makeText(getContext(), "Bạn cần đăng nhập để sử dụng tính năng yêu thích!", Toast.LENGTH_SHORT).show();
+//            return; // Không thực hiện gọi API nữa
+//        }
+//
+//        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+//
+//        FavoriteRequest request = new FavoriteRequest(userLoginInfo.getUserId(), productId);
+//
+//        Call<ApiResponse<String>> call = apiService.toggleFavorite(request);
+//        call.enqueue(new Callback<ApiResponse<String>>() {
+//            @Override
+//            public void onResponse(Call<ApiResponse<String>> call, Response<ApiResponse<String>> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                    // Toggle favorite ID trong danh sách
+//                    if (favoriteProductIds.contains(productId)) {
+//                        favoriteProductIds.remove(productId);
+//                        binding.ivFavorite.setImageResource(R.drawable.ic_heart_border_red);
+//                    } else {
+//                        favoriteProductIds.add(productId);
+//                        binding.ivFavorite.setImageResource(R.drawable.ic_heart_selected);
+//                    }
+//                } else {
+//                    Toast.makeText(getContext(), "Có lỗi xảy ra, thử lại sau!", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ApiResponse<String>> call, Throwable t) {
+//                Toast.makeText(getContext(), "Không thể kết nối server!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

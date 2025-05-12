@@ -1,10 +1,11 @@
 package com.example.marketplacesecondhand.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
-public class User {
+public class User implements Serializable {
     private int id;
     private String fullName;
     private String phoneNumber;
