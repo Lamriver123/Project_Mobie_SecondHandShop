@@ -3,8 +3,7 @@ package com.example.marketplacesecondhand;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,111 +14,165 @@ import com.example.marketplacesecondhand.fragment.PriceFilterBottomSheetFragment
 import com.example.marketplacesecondhand.fragment.ProductCategoryFragment;
 import com.example.marketplacesecondhand.models.Category;
 
-public class ActivityCategory extends AppCompatActivity implements FilterFragment.OnFilterChangeListener {
+public class ActivityCategory extends AppCompatActivity implements FilterFragment.OnFilterChangeListener, HeaderWithBackFragment.SearchHandler {
     private ProductCategoryFragment productFragment;
     private HeaderWithBackFragment headerFragment;
     private FilterFragment filterFragment;
 
+    private static final String TAG = "ActivityCategory";
+    private String currentKeyword = "";
+    private int currentCategoryId = -1;
+    private String currentCategoryName = "Danh mục";
+    private int currentMinPrice = -1;
+    private int currentMaxPrice = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_category);
 
-        String categoryName = getIntent().getStringExtra("category_name");
-        int categoryId = getIntent().getIntExtra("category_id", -1);
+        currentKeyword = getIntent().getStringExtra("keyword");
+        if (currentKeyword == null) currentKeyword = "";
+        currentCategoryName = getIntent().getStringExtra("category_name");
+        if (currentCategoryName == null) currentCategoryName = "";
+        currentCategoryId = getIntent().getIntExtra("category_id", -1);
+        currentMinPrice = getIntent().getIntExtra("min_price", -1);
+        currentMaxPrice = getIntent().getIntExtra("max_price", -1);
 
-        // Setup header fragment
-        headerFragment = new HeaderWithBackFragment();
-        Bundle headerBundle = new Bundle();
-        headerBundle.putString("category_name", categoryName);
-        headerFragment.setArguments(headerBundle);
+        Log.d(TAG, "onCreate - Initial filters: keyword=" + currentKeyword + ", catId=" + currentCategoryId +
+                ", catName=" + currentCategoryName + ", minP=" + currentMinPrice + ", maxP=" + currentMaxPrice);
+        setupHeaderFragment();
+        setupFilterFragment();
+        loadProductFragment();
+    }
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.header_with_back, headerFragment)
-                .commit();
+    private void setupHeaderFragment() {
+        if (getSupportFragmentManager().findFragmentById(R.id.header_with_back) == null) {
+            headerFragment = new HeaderWithBackFragment();
+        } else {
+            headerFragment = (HeaderWithBackFragment) getSupportFragmentManager().findFragmentById(R.id.header_with_back);
+        }
+        if (headerFragment != null) { // headerFragment có thể null nếu layout không có R.id.header_with_back
+            headerFragment.setSearchHandler(this);
+            Bundle headerArgs = new Bundle();
+            headerArgs.putString("keyword", currentKeyword); // Truyền keyword ban đầu nếu muốn SearchView hiển thị
+            headerFragment.setArguments(headerArgs);
 
-        // Setup filter fragment
-        filterFragment = new FilterFragment();
-        Bundle filterBundle = new Bundle();
-        filterBundle.putInt("category_id", categoryId);
-        filterBundle.putString("category_name", categoryName);
-        filterFragment.setArguments(filterBundle);
+            if (getSupportFragmentManager().findFragmentById(R.id.header_with_back) == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.header_with_back, headerFragment)
+                        .commit();
+            }
+        } else {
+            Log.e(TAG, "HeaderFragment container (R.id.header_with_back) not found or headerFragment is null.");
+        }
+    }
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.filter_container, filterFragment)
-                .commit();
+    private void setupFilterFragment() {
+        if (getSupportFragmentManager().findFragmentById(R.id.filter_container) == null) {
+            filterFragment = new FilterFragment();
+            Bundle filterBundle = new Bundle();
+            filterBundle.putInt("category_id", currentCategoryId);
+            filterBundle.putString("category_name", currentCategoryName);
 
-        // Setup product fragment
+            filterFragment.setArguments(filterBundle);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.filter_container, filterFragment)
+                    .commit();
+        } else {
+            filterFragment = (FilterFragment) getSupportFragmentManager().findFragmentById(R.id.filter_container);
+        }
+        if (filterFragment != null && filterFragment.isAdded()) {
+            Bundle args = filterFragment.getArguments();
+            if (args == null) args = new Bundle();
+            args.putInt("category_id", currentCategoryId);
+            args.putString("category_name", currentCategoryName);
+            if(!filterFragment.isStateSaved()) {
+                filterFragment.setArguments(args);
+            }
+
+        }
+    }
+
+
+    private void loadProductFragment() {
+        Log.i(TAG, "Loading ProductFragment with: Keyword='" + currentKeyword +
+                "', CategoryID=" + currentCategoryId +
+                ", MinPrice=" + currentMinPrice +
+                ", MaxPrice=" + currentMaxPrice);
+
         productFragment = new ProductCategoryFragment();
         Bundle productBundle = new Bundle();
-        productBundle.putInt("category_id", categoryId);
+        productBundle.putString("keyword", currentKeyword);
+        productBundle.putInt("category_id", currentCategoryId);
+        productBundle.putInt("min_price", currentMinPrice);
+        productBundle.putInt("max_price", currentMaxPrice);
         productFragment.setArguments(productBundle);
-        
-        getSupportFragmentManager()
-                .beginTransaction()
+
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.category_content, productFragment)
                 .commit();
     }
 
+
     @Override
     public void onCategoryChanged(Category category) {
-        if (productFragment != null) {
-            // Tạo bundle mới với category id mới
-            Bundle args = new Bundle();
-            args.putInt("category_id", category.getCategoryId());
-            args.putString("category_name", category.getCategoryName());
+        Log.d(TAG, "onCategoryChanged: " + category.getCategoryName() + " (ID: " + category.getCategoryId() + ")");
+        this.currentCategoryId = category.getCategoryId();
+        this.currentCategoryName = category.getCategoryName();
+        this.currentKeyword = ""; // Reset keyword
+        this.currentMinPrice = -1;  // Reset giá
+        this.currentMaxPrice = -1;
 
-            // Tạo fragment header mới để load search
-            headerFragment = new HeaderWithBackFragment();
-            headerFragment.setArguments(args);
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.header_with_back, headerFragment)
-                    .commit();
-
-            // Tạo fragment mới
-            productFragment = new ProductCategoryFragment();
-            productFragment.setArguments(args);
-            
-            // Replace fragment cũ bằng fragment mới
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.category_content, productFragment)
-                    .commit();
+        if (headerFragment != null && headerFragment.isAdded()) {
+            headerFragment.clearSearchQuery();
         }
+        // Cập nhật lại FilterFragment nếu cần (ví dụ: nút giá về mặc định)
+        if (filterFragment != null && filterFragment.isAdded()) {
+            filterFragment.resetPriceButton();
+        }
+
+        loadProductFragment();
     }
 
     @Override
-    public void onPriceChanged(int categoryId, int minPrice, int maxPrice) {
-        if (productFragment != null) {
-            Bundle args = new Bundle();
-            args.putInt("category_id", categoryId);
-            args.putInt("min_price", minPrice);
-            args.putInt("max_price", maxPrice);
+    public void onPriceChanged(int categoryIdFromFilter, int minPrice, int maxPrice) {
+        // categoryIdFromFilter có thể dùng để xác nhận, nhưng chúng ta đã có currentCategoryId
+        Log.d(TAG, "onPriceChanged: For CategoryID=" + this.currentCategoryId + // Sử dụng currentCategoryId của Activity
+                ", MinPrice=" + minPrice + ", MaxPrice=" + maxPrice);
+        // this.currentCategoryId KHÔNG nên thay đổi ở đây, nó chỉ đổi khi onCategoryChanged
+        this.currentMinPrice = minPrice;
+        this.currentMaxPrice = maxPrice;
+        // Keyword giữ nguyên
 
-            productFragment = new ProductCategoryFragment();
-            productFragment.setArguments(args);
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.category_content, productFragment)
-                    .commit();
-        }
+        loadProductFragment();
     }
 
+    @Override
+    public void performSearch(String query) {
+        Log.d(TAG, "performSearch called with query: " + query);
+        this.currentKeyword = query != null ? query.trim() : "";
+        loadProductFragment();
+    }
+
+    @Override
+    public int getCurrentCategoryIdForSearch() { return currentCategoryId; }
+
+    @Override
+    public int getCurrentMinPriceForSearch() { return currentMinPrice; }
+
+    @Override
+    public int getCurrentMaxPriceForSearch() { return currentMaxPrice; }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Xóa giá trị lọc theo giá trong SharedPreferences khi Activity kết thúc
+        // Xóa SharedPreferences nếu cần
         SharedPreferences prefs = getSharedPreferences(PriceFilterBottomSheetFragment.PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(PriceFilterBottomSheetFragment.KEY_MIN_PRICE);
         editor.remove(PriceFilterBottomSheetFragment.KEY_MAX_PRICE);
-        editor.apply(); // Lưu lại thay đổi
+        editor.apply();
+        Log.d(TAG, "onDestroy - Cleared price filter SharedPreferences");
     }
 }

@@ -57,6 +57,7 @@ public class CategoryBottomSheetFragment extends BottomSheetDialogFragment {
             public void onResponse(Call<ApiResponse<List<Category>>> call, Response<ApiResponse<List<Category>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Category> categories = response.body().getData();
+                    categories.add(new Category(-1, "Tất cả",""));
                     displayCategories(categories);
                 } else {
                     Log.e("API", "Lỗi dữ liệu hoặc response body null");

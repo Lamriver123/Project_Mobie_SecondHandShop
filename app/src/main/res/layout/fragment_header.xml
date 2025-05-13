@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_header"
     android:layout_width="match_parent"
     android:layout_height="90dp"
@@ -11,16 +12,20 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <EditText
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/editTextSearch"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_weight="1"
-        android:background="@drawable/search"
-        android:hint="Search..."
-        android:paddingStart="50dp"
+        android:background="@drawable/bg_category_chip"
+        android:backgroundTint="@color/white"
+        app:queryHint="Tìm kiếm..."
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:paddingStart="5dp"
         android:paddingEnd="10dp"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:iconifiedByDefault="false"/>
 
     <ImageView
         android:id="@+id/ivFavorite"

@@ -2,6 +2,7 @@ package com.example.marketplacesecondhand.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,10 @@ import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
 
+import java.text.NumberFormat;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import retrofit2.Call;
@@ -59,7 +62,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
         ProductResponse product = productList.get(position);
 
         holder.tvTitle.setText(product.getProductName());
-        holder.tvPrice.setText(product.getCurrentPrice() + " đ");
+        holder.tvPrice.setText(formatCurrency(Integer.parseInt(product.getCurrentPrice())) + " VND");
+        holder.tvPricePre.setText(formatCurrency(Integer.parseInt(product.getCurrentPrice())) + " VND");
+        holder.tvPricePre.setPaintFlags(holder.tvPricePre.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tvTimeLocation.setText(product.getTimeAgoText() + " · Tp Hồ Chí Minh");
         holder.tvSold.setText(product.getSold() + " Đã bán");
         holder.tvSpec.setText(product.getProductDescription());
@@ -102,6 +107,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
         });
     }
 
+    private String formatCurrency(int number) {
+        return NumberFormat.getInstance(new Locale("vi", "VN")).format(number);
+    }
     private void toggleFavorite(int productId, int position, ProductCategoryViewHolder holder) {
         DatabaseHandler db = new DatabaseHandler(context);
         UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
@@ -150,7 +158,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
     public static class ProductCategoryViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageProduct, iconFavorite;
-        TextView tvTitle, tvSpec, tvPrice, tvTimeLocation, tvShop, tvRate, tvSold;
+        TextView tvTitle, tvSpec, tvPrice, tvTimeLocation, tvShop, tvRate, tvSold, tvPricePre;
 
         public ProductCategoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -163,6 +171,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
             tvShop = itemView.findViewById(R.id.textShop);
             tvRate = itemView.findViewById(R.id.textRating);
             tvSold = itemView.findViewById(R.id.textSold);
+            tvPricePre = itemView.findViewById(R.id.tvPricePre);
         }
     }
 

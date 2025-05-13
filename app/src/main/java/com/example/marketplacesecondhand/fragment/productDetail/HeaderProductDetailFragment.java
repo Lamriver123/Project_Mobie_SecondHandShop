@@ -1,13 +1,10 @@
-package com.example.marketplacesecondhand.fragment;
+package com.example.marketplacesecondhand.fragment.productDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -19,31 +16,20 @@ import androidx.fragment.app.Fragment;
 import com.example.marketplacesecondhand.ActivityCategory;
 import com.example.marketplacesecondhand.CartActivity;
 import com.example.marketplacesecondhand.FavoritesActivity;
-import com.example.marketplacesecondhand.R;
 import com.example.marketplacesecondhand.databinding.FragmentHeaderBinding;
+import com.example.marketplacesecondhand.databinding.FragmentHeaderProductDetailBinding;
 
-public class HeaderFragment extends Fragment {
-    private FragmentHeaderBinding binding;
-    private OnSearchListener searchListener;
-
+public class HeaderProductDetailFragment extends Fragment {
+    private FragmentHeaderProductDetailBinding binding;
     private boolean isSubmitted = false;
 
-    public interface OnSearchListener {
-        void onSearch(String query);
-    }
-
-    public void setOnSearchListener(OnSearchListener listener) {
-        this.searchListener = listener;
-    }
-
-    public HeaderFragment() {}
-
+    public HeaderProductDetailFragment() {}
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentHeaderBinding.inflate(inflater, container, false);
+        binding = FragmentHeaderProductDetailBinding.inflate(inflater, container, false);
         setupSearch();
         setupClickListener();
 
@@ -51,7 +37,14 @@ public class HeaderFragment extends Fragment {
     }
 
     private void setupClickListener(){
-        binding.btnCart.setOnClickListener(v -> {
+        binding.icBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().onBackPressed();
+            }
+        });
+
+        binding.ivCart.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), CartActivity.class);
             startActivity(intent);
         });
@@ -66,8 +59,6 @@ public class HeaderFragment extends Fragment {
         ImageView searchIcon = binding.editTextSearch.findViewById(androidx.appcompat.R.id.search_mag_icon);
         searchIcon.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         searchIcon.setVisibility(View.GONE);
-
-        binding.editTextSearch.requestFocus();
 
         binding.editTextSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

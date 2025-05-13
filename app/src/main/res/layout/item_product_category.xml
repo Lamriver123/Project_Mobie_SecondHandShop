@@ -133,6 +133,15 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tvPricePre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="iPhone 12 - 64 GB - Hết bảo hành"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+
+            <TextView
                 android:id="@+id/textPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

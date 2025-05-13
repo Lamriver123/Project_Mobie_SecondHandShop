@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.marketplacesecondhand.API.APIService;
@@ -31,11 +32,20 @@ public class FilterFragment extends Fragment {
     private FragmentFilterBinding binding;
     private OnFilterChangeListener filterChangeListener;
     private int currentCategoryId = -1;
+    private static final String TAG = "FilterFragment";
 
     public interface OnFilterChangeListener {
         void onCategoryChanged(Category category);
         void onPriceChanged(int categoryId, int minPrice, int maxPrice);
+
+        int getCurrentCategoryIdForSearch();
+
+        int getCurrentMinPriceForSearch();
+
+        int getCurrentMaxPriceForSearch();
     }
+
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -44,6 +54,15 @@ public class FilterFragment extends Fragment {
             filterChangeListener = (OnFilterChangeListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnFilterChangeListener");
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            currentCategoryId = getArguments().getInt("category_id", -1);
+            Log.d(TAG, "onCreate - Initial CategoryID: " + currentCategoryId );
         }
     }
 
@@ -105,6 +124,14 @@ public class FilterFragment extends Fragment {
             });
             bottomSheet.show(getParentFragmentManager(), "CategoryBottomSheet");
         });
+    }
+    public void resetPriceButton() {
+        if (binding != null) {
+            binding.btnPrice.setText("Giá");
+            binding.btnPrice.setBackgroundResource(R.drawable.bg_filter_button);
+            binding.btnPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_filter));
+            Log.d(TAG, "Price button reset.");
+        }
     }
 
     @Override

@@ -77,12 +77,6 @@ public interface APIService {
     @GET("category/{categoryId}/max-price")
     Call<ApiResponse<Integer>> getMaxPrice(@Path("categoryId") int categoryId);
 
-    @GET("filter")
-    Call<ApiResponse<List<ProductResponse>>> filterProductsByPrice(
-            @Query("categoryId") int categoryId,
-            @Query("minPrice") int minPrice,
-            @Query("maxPrice") int maxPrice
-    );
 
     @POST("favorites/toggle")
     Call<ApiResponse<String>> toggleFavorite(@Body FavoriteRequest request);
@@ -144,4 +138,14 @@ public interface APIService {
     @PUT("address/default")
     Call<ApiResponse<DeliveryAddressResponse>> updateDefaultAddress(@Body UpdateDefaultAddressRequest request);
 
+    @GET("products/search")
+    Call <ApiResponse<List<ProductResponse>>> searchProducts(@Query("keyword") String keyword);
+
+    @GET("products/filter")
+    Call<ApiResponse<List<ProductResponse>>> filterProducts(
+            @Query("categoryId") int categoryId,
+            @Query("minPrice") int minPrice,
+            @Query("maxPrice") int maxPrice,
+            @Query("keyword") String keyword
+    );
 }
