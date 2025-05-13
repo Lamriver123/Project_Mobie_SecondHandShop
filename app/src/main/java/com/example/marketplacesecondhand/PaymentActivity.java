@@ -16,6 +16,9 @@ import java.util.List;
 public class PaymentActivity extends AppCompatActivity {
     private ActivityPaymentBinding binding;
     private PaymentViewModel paymentViewModel;
+    public static final String EXTRA_SOURCE = "source";
+    public static final String SOURCE_CART = "cart";
+    public static final String SOURCE_PRODUCT_DETAIL = "product_detail";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +30,11 @@ public class PaymentActivity extends AppCompatActivity {
         paymentViewModel = new ViewModelProvider(this).get(PaymentViewModel.class);
         List<CartShop> selectedShops =
                 (List<CartShop>) getIntent().getSerializableExtra("SELECTED_CART_SHOPS");
+        String source = getIntent().getStringExtra(EXTRA_SOURCE);
 
         paymentViewModel.setCartShopsToCheckout(selectedShops);
+        paymentViewModel.setPaymentSource(source);
+
         // Load BodyPaymentFragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

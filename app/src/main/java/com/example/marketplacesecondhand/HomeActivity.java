@@ -122,7 +122,14 @@ public class HomeActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {}
         });
 
-
+        // Xử lý chuyển tab từ intent
+        int selectedTab = getIntent().getIntExtra("SELECTED_TAB", 0);
+        if (selectedTab >= 0 && selectedTab < 5) {
+            binding.contentFrame.setCurrentItem(selectedTab, false);
+            MenuItem item = bottomNav.getMenu().getItem(selectedTab);
+            item.getIcon().setTint(Color.parseColor("#fac63d"));
+            onNavigationItemSelectedCustom(item);
+        }
     }
 
     @Override

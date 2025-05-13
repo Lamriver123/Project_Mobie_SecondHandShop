@@ -64,6 +64,7 @@ public class BodyPaymentFragment extends Fragment {
         setupAddressObserver();
         setupPaymentObserver();
         setupLocationButton();
+        setupPaymentMethodSelection();
     }
 
     private void setupPaymentObserver() {
@@ -81,6 +82,24 @@ public class BodyPaymentFragment extends Fragment {
             if (error != null) {
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+
+    private void setupPaymentMethodSelection() {
+        // Mặc định chọn COD
+        paymentViewModel.setSelectedPaymentMethod("COD");
+        binding.radioCod.setChecked(true);
+
+        binding.radioZaloPay.setOnClickListener(v -> {
+            binding.radioZaloPay.setChecked(true);
+            binding.radioCod.setChecked(false);
+            paymentViewModel.setSelectedPaymentMethod("ZALOPAY");
+        });
+
+        binding.radioCod.setOnClickListener(v -> {
+            binding.radioCod.setChecked(true);
+            binding.radioZaloPay.setChecked(false);
+            paymentViewModel.setSelectedPaymentMethod("COD");
         });
     }
 
@@ -102,7 +121,6 @@ public class BodyPaymentFragment extends Fragment {
                     );
                     orderDetails.add(orderDetail);
                     
-                    // Calculate total amount
                     try {
                         String priceStr = cartProduct.getProductResponse().getCurrentPrice()
                             .replaceAll("[^\\d]", "");
@@ -115,14 +133,14 @@ public class BodyPaymentFragment extends Fragment {
 
             if (!orderDetails.isEmpty()) {
                 OrderResponse order = new OrderResponse(
-                    0, // temporary orderId
+                    0,
                     "", // buyerName will be set later
                     shop.getUser().getUsername(),
                     new Date(),
                     String.format("₫%,d", totalAmount),
                     "", // address will be set later
                     "Chờ xác nhận",
-                    "", // paymentMethod will be set later
+                    paymentViewModel.getSelectedPaymentMethod().getValue(), // Get selected payment method
                     orderDetails
                 );
                 orderList.add(order);
@@ -155,10 +173,14 @@ public class BodyPaymentFragment extends Fragment {
         // Update order summary
         int shippingFee = 30000; // Example shipping fee per order
         int totalShippingFee = shippingFee * orderList.size();
+        int finalTotal = totalAmount + totalShippingFee;
         
         binding.txtTotalProduct.setText("Tổng tiền sản phẩm: " + formatCurrency(totalAmount) + " ₫");
         binding.txtShipping.setText("Phí vận chuyển: " + formatCurrency(totalShippingFee) + " ₫");
-        binding.txtOrderTotal.setText("Tổng tiền đơn hàng: " + formatCurrency(totalAmount + totalShippingFee) + " ₫");
+        binding.txtOrderTotal.setText("Tổng tiền đơn hàng: " + formatCurrency(finalTotal) + " ₫");
+
+        // Save total amount to ViewModel
+        paymentViewModel.setTotalAmount(formatCurrency(finalTotal) + " ₫");
     }
 
     private void setupAddressObserver() {

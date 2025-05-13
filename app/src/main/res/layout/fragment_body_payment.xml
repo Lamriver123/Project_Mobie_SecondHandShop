@@ -148,25 +148,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/momo" />
-
-                    <RadioButton
-                        android:id="@+id/radioMomo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ví MoMo"
-                        android:layout_marginStart="8dp" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -181,12 +162,11 @@
                         android:src="@drawable/vnpay" />
 
                     <RadioButton
-                        android:id="@+id/radioBank"
+                        android:id="@+id/radioZaloPay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thanh toán vnpay"
-                        android:layout_marginStart="8dp"
-                        android:checked="true"/>
+                        android:text="Thanh toán ZaloPay"
+                        android:layout_marginStart="8dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -206,7 +186,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Thanh toán khi nhận hàng (COD)"
-                        android:layout_marginStart="8dp" />
+                        android:layout_marginStart="8dp"
+                        android:checked="true"/>
                 </LinearLayout>
             </RadioGroup>
         </LinearLayout>

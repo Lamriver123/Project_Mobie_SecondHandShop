@@ -19,6 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".CheckoutSuccessActivity"
+            android:exported="false" />
+        <activity
             android:name=".IntroActivity"
             android:exported="true">
             <intent-filter>
@@ -28,9 +31,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".OtpActivity" android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".OtpActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".HomeActivity" android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".HomeActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".ActivityCategory" />
@@ -39,8 +46,14 @@
         <activity android:name=".FavoritesActivity" />
         <activity android:name=".VerifyPasswordActivity" />
         <activity android:name=".ShopDetailActivity" />
-        <activity android:name=".PaymentActivity" android:windowSoftInputMode="stateHidden"/>
-
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <data android:scheme="demozpdk" android:host="payment" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

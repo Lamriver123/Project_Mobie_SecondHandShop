@@ -6,6 +6,7 @@ import com.example.marketplacesecondhand.dto.request.DeliveryAddressRequest;
 import com.example.marketplacesecondhand.dto.request.EmailRequest;
 import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
 import com.example.marketplacesecondhand.dto.request.LoginRequest;
+import com.example.marketplacesecondhand.dto.request.OrderRequest;
 import com.example.marketplacesecondhand.dto.request.RegisterRequest;
 import com.example.marketplacesecondhand.dto.request.ResetPasswordRequest;
 import com.example.marketplacesecondhand.dto.request.UpdateDefaultAddressRequest;
@@ -102,6 +103,9 @@ public interface APIService {
             @Path("orderId") int orderId,
             @Body UpdateOrderStatusRequest request
     );
+
+    @POST("orders/add")
+    Call<ApiResponse<Void>> createOrder(@Body OrderRequest request);
 
     @POST("orders/cancel")
     Call<ApiResponse<CancelledOrderResponse>> cancelOrder(@Body CancelOrderRequest request);
