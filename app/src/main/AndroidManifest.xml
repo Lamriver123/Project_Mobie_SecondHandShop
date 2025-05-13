@@ -48,7 +48,12 @@
         <activity android:name=".ShopDetailActivity" />
         <activity
             android:name=".PaymentActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <data android:scheme="demozpdk" android:host="payment" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

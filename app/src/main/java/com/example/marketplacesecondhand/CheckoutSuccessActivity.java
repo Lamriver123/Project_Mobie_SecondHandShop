@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -42,8 +43,7 @@ public class CheckoutSuccessActivity extends AppCompatActivity {
 
         initView();
 
-        // Setup Toolbar
-        setSupportActionBar(toolbar); // Nếu bạn muốn dùng nó như ActionBar chính
+        setSupportActionBar(toolbar);
         if (tvToolbarTitle != null) {
             tvToolbarTitle.setText("Đặt Hàng Thành Công");
         }
@@ -67,7 +67,8 @@ public class CheckoutSuccessActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CheckoutSuccessActivity.this, HomeActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("SELECTED_TAB", 3); // 3 là vị trí của tab Order
                 startActivity(intent);
                 finish();
             }
@@ -115,7 +116,6 @@ public class CheckoutSuccessActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        // Khi người dùng nhấn nút back, chuyển về trang chủ thay vì quay lại màn hình thanh toán
         Intent intent = new Intent(CheckoutSuccessActivity.this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
