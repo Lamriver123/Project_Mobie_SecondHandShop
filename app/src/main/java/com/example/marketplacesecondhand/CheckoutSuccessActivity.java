@@ -1,8 +1,12 @@
 package com.example.marketplacesecondhand;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,13 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckoutSuccessActivity extends AppCompatActivity {
-
     private Button btnGoToHome, btnViewOrders;
     private RecyclerView recyclerRecommendedProducts;
     // private RecommendedProductAdapter recommendedAdapter;
     // private List<RecommendedProduct> recommendedProductList;
     private Toolbar toolbar;
     private TextView tvToolbarTitle;
+    private ImageView ivSuccess, ivCartIconToolbar;
 
 
     @Override
@@ -36,21 +40,17 @@ public class CheckoutSuccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_success);
 
-        toolbar = findViewById(R.id.toolbarCheckoutSuccess);
-        tvToolbarTitle = findViewById(R.id.tvToolbarTitle);
-        btnGoToHome = findViewById(R.id.btnGoToHome);
-        btnViewOrders = findViewById(R.id.btnViewOrders);
-        recyclerRecommendedProducts = findViewById(R.id.recyclerRecommendedProducts);
+        initView();
 
         // Setup Toolbar
-        // setSupportActionBar(toolbar); // Nếu bạn muốn dùng nó như ActionBar chính
+        setSupportActionBar(toolbar); // Nếu bạn muốn dùng nó như ActionBar chính
         if (tvToolbarTitle != null) {
-            tvToolbarTitle.setText("Đặt Hàng Thành Công"); // Hoặc "Đang chờ thanh toán" tùy theo trạng thái
+            tvToolbarTitle.setText("Đặt Hàng Thành Công");
         }
         // Không hiển thị tiêu đề mặc định của Toolbar nếu đã có TextView tùy chỉnh
-        // if (getSupportActionBar() != null) {
-        //     getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // }
+         if (getSupportActionBar() != null) {
+             getSupportActionBar().setDisplayShowTitleEnabled(false);
+         }
 
 
         btnGoToHome.setOnClickListener(new View.OnClickListener() {
@@ -59,30 +59,24 @@ public class CheckoutSuccessActivity extends AppCompatActivity {
                 Intent intent = new Intent(CheckoutSuccessActivity.this, HomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                finish(); // Đóng Activity hiện tại
+                finish();
             }
         });
 
         btnViewOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Điều hướng đến màn hình xem danh sách đơn hàng (OrderActivity hoặc một tab trong HomeActivity)
-                // Ví dụ:
-                // Intent intent = new Intent(CheckoutSuccessActivity.this, OrderHistoryActivity.class);
-                // startActivity(intent);
-                // finish(); // Tùy chọn, có thể muốn giữ lại màn hình này hoặc không
-
-                // Hoặc nếu bạn muốn mở một tab cụ thể trong HomeActivity
                 Intent intent = new Intent(CheckoutSuccessActivity.this, HomeActivity.class);
-                intent.putExtra("NAVIGATE_TO_ORDERS", true); // Thêm cờ để HomeActivity biết cần chuyển tab
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
-
-                Toast.makeText(CheckoutSuccessActivity.this, "Chuyển đến xem đơn mua", Toast.LENGTH_SHORT).show();
             }
         });
 
+        ivCartIconToolbar.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CartActivity.class);
+            startActivity(intent);
+        });
         // Setup RecyclerView cho sản phẩm gợi ý (phần này bạn cần tự triển khai Adapter và Model)
         // setupRecommendedProductsRecyclerView();
     }
@@ -104,6 +98,21 @@ public class CheckoutSuccessActivity extends AppCompatActivity {
     }
     */
 
+    private void initView() {
+        toolbar = findViewById(R.id.toolbarCheckoutSuccess);
+        tvToolbarTitle = findViewById(R.id.tvToolbarTitle);
+        btnGoToHome = findViewById(R.id.btnGoToHome);
+        btnViewOrders = findViewById(R.id.btnViewOrders);
+        recyclerRecommendedProducts = findViewById(R.id.recyclerRecommendedProducts);
+        ivCartIconToolbar = findViewById(R.id.ivCartIconToolbar);
+        ivSuccess = findViewById(R.id.ivSuccessIcon);
+
+        Drawable drawable = ivSuccess.getDrawable();
+
+        if (drawable instanceof AnimatedVectorDrawable) {
+            ((AnimatedVectorDrawable) drawable).start();
+        }
+    }
     @Override
     public void onBackPressed() {
         // Khi người dùng nhấn nút back, chuyển về trang chủ thay vì quay lại màn hình thanh toán

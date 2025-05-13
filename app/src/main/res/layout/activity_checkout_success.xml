@@ -40,8 +40,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="16dp"
-                android:visibility="gone"
-                tools:visibility="visible"
                 android:contentDescription="Giỏ hàng"/>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -51,13 +49,11 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="48dp"
-        android:src="@drawable/ic_success_checkmark"
+        android:src="@drawable/success_tick_vector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarCheckoutSuccess"
-        app:tint="@color/green_success"
-        android:contentDescription="Thành công"
-        android:visibility="invisible"/>
+        android:contentDescription="Thành công" />
 
     <TextView
         android:id="@+id/tvSuccessMessage"

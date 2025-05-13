@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="success"
+            android:width="100dp"
+            android:height="100dp"
+            android:viewportWidth="100"
+            android:viewportHeight="100">
+
+            <!-- Vòng tròn -->
+            <path
+                android:name="circle"
+                android:strokeWidth="4"
+                android:strokeColor="#4CAF50"
+                android:fillColor="@android:color/transparent"
+                android:pathData="M50,5
+                                 A45,45 0 1,1 49.99,5"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:trimPathStart="0"
+            android:trimPathEnd="0" />
+
+            <!-- Tick V -->
+            <path
+                android:name="check"
+                android:strokeWidth="6"
+                android:strokeColor="#4CAF50"
+                android:fillColor="@android:color/transparent"
+                android:pathData="M30,52 L45,65 L70,35"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
+                android:trimPathStart="0"
+                android:trimPathEnd="0" />
+        </vector>
+    </aapt:attr>
+
+    <!-- Animation cho vòng tròn -->
+    <target android:name="circle" android:animation="@animator/anim_circle_draw" />
+
+    <!-- Animation cho tick -->
+    <target android:name="check" android:animation="@animator/anim_check_draw" />
+</animated-vector>
