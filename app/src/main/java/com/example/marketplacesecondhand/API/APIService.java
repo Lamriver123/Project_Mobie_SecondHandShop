@@ -5,6 +5,7 @@ import com.example.marketplacesecondhand.dto.request.CartRequest;
 import com.example.marketplacesecondhand.dto.request.DeliveryAddressRequest;
 import com.example.marketplacesecondhand.dto.request.EmailRequest;
 import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
+import com.example.marketplacesecondhand.dto.request.FollowRequest;
 import com.example.marketplacesecondhand.dto.request.LoginRequest;
 import com.example.marketplacesecondhand.dto.request.OrderRequest;
 import com.example.marketplacesecondhand.dto.request.RegisterRequest;
@@ -21,6 +22,7 @@ import com.example.marketplacesecondhand.dto.response.CartResponse;
 import com.example.marketplacesecondhand.dto.response.DeliveryAddressResponse;
 import com.example.marketplacesecondhand.dto.response.OrderResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
+import com.example.marketplacesecondhand.dto.response.ShopResponse;
 import com.example.marketplacesecondhand.dto.response.UserResponse;
 import com.example.marketplacesecondhand.models.CartShop;
 import com.example.marketplacesecondhand.models.Category;
@@ -152,4 +154,10 @@ public interface APIService {
             @Query("maxPrice") int maxPrice,
             @Query("keyword") String keyword
     );
+
+    @GET("shops")
+    Call<ApiResponse<List<ShopResponse>>> getAllShops();
+
+    @POST("shops/follow")
+    Call<ApiResponse<String>> toggleFollow(@Body FollowRequest request);
 }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.marketplacesecondhand.fragment.ProductShopFragment;
+import com.example.marketplacesecondhand.fragment.store.ProductShopFragment;
 
 public class ShopDetailActivity extends AppCompatActivity {
     @Override

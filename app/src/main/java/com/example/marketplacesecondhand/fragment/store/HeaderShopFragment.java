@@ -1,4 +1,4 @@
-package com.example.marketplacesecondhand.fragment;
+package com.example.marketplacesecondhand.fragment.store;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.marketplacesecondhand.databinding.FragmentHeaderFavoriteBinding;
 import com.example.marketplacesecondhand.databinding.FragmentHeaderShopBinding;
 
 public class HeaderShopFragment extends Fragment {

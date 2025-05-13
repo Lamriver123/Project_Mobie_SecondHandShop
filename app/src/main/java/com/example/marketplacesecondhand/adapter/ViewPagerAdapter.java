@@ -5,13 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.marketplacesecondhand.fragment.EditProfileFragment;
 import com.example.marketplacesecondhand.fragment.HomeFragment;
 import com.example.marketplacesecondhand.fragment.OrderFragment;
 import com.example.marketplacesecondhand.fragment.ProfileFragment;
 import com.example.marketplacesecondhand.fragment.SearchFragment;
-import com.example.marketplacesecondhand.fragment.StoreFragment;
-import com.example.marketplacesecondhand.fragment.TermsConditionsFragment;
+import com.example.marketplacesecondhand.fragment.store.StoreFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     public ViewPagerAdapter(@NonNull FragmentManager fm) {
