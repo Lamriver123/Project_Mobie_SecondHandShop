@@ -89,13 +89,12 @@ public class FooterCartFragment extends Fragment {
                 return;
             }
 
-          //  paymentViewModel.setCartShopsToCheckout(selectedShopsToCheckout);
+            paymentViewModel.setCartShopsToCheckout(selectedShopsToCheckout);
 
             // Chuyển sang PaymentActivity
             Intent intent = new Intent(getActivity(), PaymentActivity.class);
             intent.putExtra("SELECTED_CART_SHOPS", (Serializable) selectedShopsToCheckout);
-        //    intent.putExtra(PaymentActivity.SOURCE_KEY, PaymentActivity.SOURCE_CART_CHECKOUT);
-            // Không cần truyền "SELECTED_CART_SHOPS" qua Intent nữa
+            intent.putExtra(PaymentActivity.EXTRA_SOURCE, PaymentActivity.SOURCE_CART);
             startActivity(intent);
 
         });
