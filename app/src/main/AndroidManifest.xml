@@ -49,8 +49,15 @@
         <activity
             android:name=".PaymentActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:label="Merchant Demo"
+            android:launchMode="singleTask">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="demozpdk" android:host="payment" />
             </intent-filter>
         </activity>

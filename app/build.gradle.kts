@@ -45,6 +45,11 @@ dependencies {
     implementation ("io.github.chaosleung:pinview:1.4.4")
     implementation ("com.github.smarteist:Android-Image-Slider:1.4.0")
     implementation("com.github.bumptech.glide:glide:4.14.2")
+    implementation(fileTree(mapOf(
+        "dir" to "D:\\HK2_Nam_3\\Lap_Trinh_Di_Dong\\ZaloPay",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to listOf("")
+    )))
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
     implementation ("com.google.android.libraries.places:places:3.4.0")

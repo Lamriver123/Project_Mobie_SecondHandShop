@@ -1,7 +1,10 @@
 package com.example.marketplacesecondhand;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,6 +13,7 @@ import com.example.marketplacesecondhand.databinding.ActivityPaymentBinding;
 import com.example.marketplacesecondhand.fragment.payment.BodyPaymentFragment;
 import com.example.marketplacesecondhand.models.CartShop;
 import com.example.marketplacesecondhand.viewModel.PaymentViewModel;
+import vn.zalopay.sdk.ZaloPaySDK;
 
 import java.util.List;
 
@@ -23,6 +27,7 @@ public class PaymentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         binding = ActivityPaymentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -47,5 +52,19 @@ public class PaymentActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d("ZaloPay", "onNewIntent triggered");
+        Log.d("ZaloPay", "Intent Data: " + intent.getDataString());
+        // Kiểm tra dữ liệu có về hay không
+        if (intent != null && intent.getData() != null) {
+            Log.d("ZaloPay", "Deeplink data: " + intent.getData().toString());
+        } else {
+            Log.d("ZaloPay", "No Deeplink Data Received");
+        }
+        ZaloPaySDK.getInstance().onResult(intent);
     }
 }

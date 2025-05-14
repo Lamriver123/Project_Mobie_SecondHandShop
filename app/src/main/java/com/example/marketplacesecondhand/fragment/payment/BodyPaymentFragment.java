@@ -180,7 +180,7 @@ public class BodyPaymentFragment extends Fragment {
         binding.txtOrderTotal.setText("Tổng tiền đơn hàng: " + formatCurrency(finalTotal) + " ₫");
 
         // Save total amount to ViewModel
-        paymentViewModel.setTotalAmount(formatCurrency(finalTotal) + " ₫");
+        paymentViewModel.setTotalAmount(finalTotal);
     }
 
     private void setupAddressObserver() {
