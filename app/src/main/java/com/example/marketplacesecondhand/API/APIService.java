@@ -163,6 +163,9 @@ public interface APIService {
     @POST("shops/follow")
     Call<ApiResponse<String>> toggleFollow(@Body FollowRequest request);
 
+    @GET("shops/me")
+    Call<ApiResponse<ShopResponse>> getCurrentUserShop();
+
     @GET("feedbacks/{productId}")
     Call<ApiResponse<List<FeedbackResponse>>> getFeedbackByProductId(@Path("productId") int productId);
 

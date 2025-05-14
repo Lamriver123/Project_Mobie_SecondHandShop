@@ -30,4 +30,7 @@
     <color name="gray">#b9b9b9</color>
     <color name="text_filter">#666666</color>
     <color name="green_success">#5ce65c</color>
+
+    <color name="grey_dark">#757575</color>
+    <color name="grey_light">#E0E0E0</color>
 </resources>

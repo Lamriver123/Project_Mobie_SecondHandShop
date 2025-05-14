@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.Set;
 
 public class UserResponse implements Serializable {
+    @SerializedName("id")
+    private int id;
     @SerializedName("fullName")
     private String fullName;
     @SerializedName("phoneNumber")
@@ -33,7 +35,8 @@ public class UserResponse implements Serializable {
 
     public UserResponse() {}
 
-    public UserResponse(String fullName, String phoneNumber, String gender, Date dateOfBirth, String avt, String email, String username, Boolean isActive, String otp, String otpGenaratedTime, Set<String> roles) {
+    public UserResponse(int id, String fullName, String phoneNumber, String gender, Date dateOfBirth, String avt, String email, String username, Boolean isActive, String otp, String otpGenaratedTime, Set<String> roles) {
+        this.id = id;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
@@ -46,7 +49,13 @@ public class UserResponse implements Serializable {
         this.otpGenaratedTime = otpGenaratedTime;
         this.roles = roles;
     }
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getUsername() {
         return username;
     }
