@@ -26,6 +26,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
     private final OrderActionListener listener;
     private final Set<Integer> expandedOrderIds = new HashSet<>();
 
+
     public interface OrderActionListener {
         void onCancel(OrderResponse order);
         void onConfirmReceived(OrderResponse order);
@@ -80,7 +81,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             }
         }
 
-        ProductInOrderAdapter productAdapter = new ProductInOrderAdapter(context, productsToDisplay);
+        ProductInOrderAdapter productAdapter = new ProductInOrderAdapter(context, productsToDisplay,order.getStatus(), order.getOrderId());
         if (holder.binding.recyclerViewProductsOrder.getLayoutManager() == null) {
             holder.binding.recyclerViewProductsOrder.setLayoutManager(new LinearLayoutManager(context));
         }
@@ -105,7 +106,6 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
         // Show/hide other buttons based on order status
         holder.binding.btnCancel.setVisibility(View.GONE);
         holder.binding.btnConfirmReceived.setVisibility(View.GONE);
-        holder.binding.btnReview.setVisibility(View.GONE);
 
         switch (order.getStatus()) {
             case "Chờ xác nhận":
@@ -114,15 +114,18 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             case "Đang giao":
                 holder.binding.btnConfirmReceived.setVisibility(View.VISIBLE);
                 break;
-            case "Đã giao":
-                holder.binding.btnReview.setVisibility(View.VISIBLE);
-                break;
+//            case "Đã giao":
+//                holder.binding.btnReview.setVisibility(View.VISIBLE);
+//                break;
+//            case "Đã đánh giá":
+//                holder.binding.btnReview.setVisibility(View.GONE);
+//                break;
         }
 
         // Set listeners cho các nút action
         holder.binding.btnCancel.setOnClickListener(v -> listener.onCancel(order));
         holder.binding.btnConfirmReceived.setOnClickListener(v -> listener.onConfirmReceived(order));
-        holder.binding.btnReview.setOnClickListener(v -> listener.onReview(order));
+//        holder.binding.btnReview.setOnClickListener(v -> listener.onReview(order));
     }
 
     @Override

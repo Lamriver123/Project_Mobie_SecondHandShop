@@ -63,7 +63,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
 
         holder.tvTitle.setText(product.getProductName());
         holder.tvPrice.setText(formatCurrency(Integer.parseInt(product.getCurrentPrice())) + " VND");
-        holder.tvPricePre.setText(formatCurrency(Integer.parseInt(product.getCurrentPrice())) + " VND");
+        holder.tvPricePre.setText(formatCurrency(Integer.parseInt(product.getOriginalPrice())) + " VND");
         holder.tvPricePre.setPaintFlags(holder.tvPricePre.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tvTimeLocation.setText(product.getTimeAgoText() + " · Tp Hồ Chí Minh");
         holder.tvSold.setText(product.getSold() + " Đã bán");

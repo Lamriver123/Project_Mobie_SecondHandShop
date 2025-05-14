@@ -121,15 +121,6 @@
                 android:layout_marginStart="8dp"
                 android:visibility="gone" />
 
-            <Button
-                android:id="@+id/btnReview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đánh giá"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/yellow"
-                android:layout_marginStart="8dp"
-                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

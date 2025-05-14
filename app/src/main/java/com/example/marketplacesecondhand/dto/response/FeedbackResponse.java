@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class FeedbackResponse {
     int productId;
-    int FeedbackerId;
-    String FeedbackerName;
+    int feedbackerId;
+    String feedbackerName;
     String productName;
     String imageFeedbacker;
     int star;
@@ -13,17 +13,15 @@ public class FeedbackResponse {
     Date createdAt;
 
     public FeedbackResponse(int productId, int feedbackerId, String feedbackerName, String productName, String imageFeedbacker, int star, String feedback, Date createdAt) {
+
         this.productId = productId;
-        FeedbackerId = feedbackerId;
-        FeedbackerName = feedbackerName;
+        this.feedbackerId = feedbackerId;
+        this.feedbackerName = feedbackerName;
         this.productName = productName;
         this.imageFeedbacker = imageFeedbacker;
         this.star = star;
         this.feedback = feedback;
         this.createdAt = createdAt;
-    }
-
-    public FeedbackResponse() {
     }
 
     public int getProductId() {
@@ -35,19 +33,19 @@ public class FeedbackResponse {
     }
 
     public int getFeedbackerId() {
-        return FeedbackerId;
+        return feedbackerId;
     }
 
     public void setFeedbackerId(int feedbackerId) {
-        FeedbackerId = feedbackerId;
+        this.feedbackerId = feedbackerId;
     }
 
     public String getFeedbackerName() {
-        return FeedbackerName;
+        return feedbackerName;
     }
 
     public void setFeedbackerName(String feedbackerName) {
-        FeedbackerName = feedbackerName;
+        this.feedbackerName = feedbackerName;
     }
 
     public String getProductName() {
