@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.adapter.cart.CartShopAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentCartDetailBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;

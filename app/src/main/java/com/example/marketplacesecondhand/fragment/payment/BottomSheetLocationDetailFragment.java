@@ -1,7 +1,6 @@
 package com.example.marketplacesecondhand.fragment.payment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.marketplacesecondhand.API.APIService;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.databinding.BottomSheetLocationDetailBinding;
 import com.example.marketplacesecondhand.dto.request.DeliveryAddressRequest;
-import com.example.marketplacesecondhand.dto.request.UpdateDefaultAddressRequest;
 import com.example.marketplacesecondhand.dto.request.UpdateDeliveryAddressRequest;
-import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.DeliveryAddressResponse;
 import com.example.marketplacesecondhand.viewModel.LocationViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class BottomSheetLocationDetailFragment extends BottomSheetDialogFragment {
     private static final String TAG = "BottomSheetLocationDetail";

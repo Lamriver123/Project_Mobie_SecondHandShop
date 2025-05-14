@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.marketplacesecondhand.PaymentActivity;
+import com.example.marketplacesecondhand.activity.PaymentActivity;
 import com.example.marketplacesecondhand.databinding.FragmentFooterCartBinding;
 import com.example.marketplacesecondhand.models.CartProduct;
 import com.example.marketplacesecondhand.models.CartShop;

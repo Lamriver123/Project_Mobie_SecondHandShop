@@ -21,20 +21,20 @@
         android:paddingBottom="16dp">
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/banner_fragment"
-            android:name="com.example.marketplacesecondhand.fragment.AdsFragment"
+            android:name="com.example.marketplacesecondhand.fragment.home.AdsFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/category_fragment"
-            android:name="com.example.marketplacesecondhand.fragment.CategoryFragment"
+            android:name="com.example.marketplacesecondhand.fragment.home.CategoryFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"/>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/new_product_fragment"
-            android:name="com.example.marketplacesecondhand.fragment.NewProductFragment"
+            android:name="com.example.marketplacesecondhand.fragment.home.NewProductFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"/>

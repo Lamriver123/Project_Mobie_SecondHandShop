@@ -15,16 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.RetrofitClient;
-import com.example.marketplacesecondhand.adapter.ProductAdapter;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.adapter.favorite.FavoriteAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentFavoriteContainerBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
-import com.example.marketplacesecondhand.fragment.SimilarProductsFragment;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -37,14 +37,14 @@
                     android:maxLines="2"
                     android:ellipsize="end" />
 
-                <TextView
-                    android:id="@+id/txtProductVariation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Màu xanh, Size 41"
-                    android:textColor="#777777"
-                    android:textSize="12sp"
-                    android:layout_marginTop="4dp" />
+<!--                <TextView-->
+<!--                    android:id="@+id/txtProductVariation"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Màu xanh, Size 41"-->
+<!--                    android:textColor="#777777"-->
+<!--                    android:textSize="12sp"-->
+<!--                    android:layout_marginTop="4dp" />-->
 
                 <TextView
                     android:id="@+id/txtProductQuantity"

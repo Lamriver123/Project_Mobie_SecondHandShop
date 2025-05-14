@@ -14,9 +14,11 @@ import com.example.marketplacesecondhand.databinding.ItemOrderBinding;
 import com.example.marketplacesecondhand.dto.response.OrderDetailResponse;
 import com.example.marketplacesecondhand.dto.response.OrderResponse;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapter.OrderViewHolder> {
@@ -50,6 +52,9 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         OrderResponse order = orderList.get(position);
         holder.binding.txtShopName.setText(order.getOwnerName());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String formattedDate = sdf.format(order.getCreatedAt());
+        holder.binding.txtTime.setText(formattedDate);
         holder.binding.txtOrderStatus.setText(order.getStatus());
         holder.binding.txtTotalPrice.setText("Tổng cộng: ₫" + calculateTotal(order.getTotalAmount()));
 

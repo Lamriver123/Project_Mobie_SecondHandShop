@@ -19,13 +19,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.adapter.ImageSliderAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentProductDetailBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.dto.response.UserResponse;
-import com.example.marketplacesecondhand.fragment.SimilarProductsFragment;
 import com.example.marketplacesecondhand.viewModel.ProductDetailViewModel;
 import com.google.gson.Gson;
 
@@ -213,7 +212,7 @@ public class ProductDetailFragment extends Fragment {
 
         if (product.getCategoryName() != null && !product.getCategoryName().isEmpty()) {
             binding.similarProducts.setVisibility(View.VISIBLE);
-            SimilarProductsFragment fragment = SimilarProductsFragment.newInstance(product.getCategoryName());
+            SimilarProductsFragment fragment = SimilarProductsFragment.newInstance(product.getCategoryName(), product.getProductId());
             // Sử dụng getChildFragmentManager vì similar_products là con của ProductDetailFragment
             getChildFragmentManager()
                     .beginTransaction()

@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.databinding.ItemProductCartBinding;
 import com.example.marketplacesecondhand.dto.request.CartRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;

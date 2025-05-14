@@ -10,16 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
-import com.example.marketplacesecondhand.RetrofitClient;
-import com.example.marketplacesecondhand.adapter.ProductAdapter;
+import com.example.marketplacesecondhand.service.RetrofitClient;
+import com.example.marketplacesecondhand.adapter.product.ProductAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentRecommendedProductsBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
-import com.example.marketplacesecondhand.fragment.SimilarProductsFragment;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
 
 import java.util.ArrayList;

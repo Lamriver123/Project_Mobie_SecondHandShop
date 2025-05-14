@@ -3,7 +3,7 @@ package com.example.marketplacesecondhand.repository;
 import android.util.Log;
 
 import com.example.marketplacesecondhand.API.APIService;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.dto.request.OrderRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.google.gson.Gson;

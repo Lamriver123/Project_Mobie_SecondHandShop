@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.ShopDetailActivity;
+import com.example.marketplacesecondhand.activity.ShopDetailActivity;
 import com.example.marketplacesecondhand.databinding.ItemShopBinding;
 import com.example.marketplacesecondhand.dto.response.ShopResponse;
 

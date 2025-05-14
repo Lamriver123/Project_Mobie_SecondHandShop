@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.marketplacesecondhand.API.APIService;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.adapter.follow.FollowAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentFollowersListBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;

@@ -1,6 +1,5 @@
 package com.example.marketplacesecondhand.fragment.productDetail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +13,10 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
-import com.example.marketplacesecondhand.PaymentActivity;
 import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.databinding.BottomSheetAddToCartBinding;
 import com.example.marketplacesecondhand.dto.request.CartRequest;
-import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;

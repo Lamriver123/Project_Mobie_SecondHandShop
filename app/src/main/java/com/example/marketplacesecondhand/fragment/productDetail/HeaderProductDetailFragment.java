@@ -13,10 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
-import com.example.marketplacesecondhand.ActivityCategory;
-import com.example.marketplacesecondhand.CartActivity;
-import com.example.marketplacesecondhand.FavoritesActivity;
-import com.example.marketplacesecondhand.databinding.FragmentHeaderBinding;
+import com.example.marketplacesecondhand.activity.ActivityCategory;
+import com.example.marketplacesecondhand.activity.CartActivity;
+import com.example.marketplacesecondhand.activity.FavoritesActivity;
 import com.example.marketplacesecondhand.databinding.FragmentHeaderProductDetailBinding;
 
 public class HeaderProductDetailFragment extends Fragment {

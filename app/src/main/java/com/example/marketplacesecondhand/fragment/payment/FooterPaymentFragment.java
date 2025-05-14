@@ -1,6 +1,5 @@
 package com.example.marketplacesecondhand.fragment.payment;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,9 +18,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
-import com.example.marketplacesecondhand.RetrofitClient;
-import com.example.marketplacesecondhand.PaymentActivity;
-import com.example.marketplacesecondhand.CheckoutSuccessActivity;
+import com.example.marketplacesecondhand.service.RetrofitClient;
+import com.example.marketplacesecondhand.activity.PaymentActivity;
+import com.example.marketplacesecondhand.activity.CheckoutSuccessActivity;
 import com.example.marketplacesecondhand.ZaloPay.Api.CreateOrder;
 import com.example.marketplacesecondhand.databinding.FragmentFooterPaymentBinding;
 import com.example.marketplacesecondhand.dto.request.CartRequest;
@@ -34,7 +33,6 @@ import com.example.marketplacesecondhand.models.CartShop;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
 import com.example.marketplacesecondhand.viewModel.LocationViewModel;
 import com.example.marketplacesecondhand.viewModel.PaymentViewModel;
-import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -161,8 +159,24 @@ public class FooterPaymentFragment extends Fragment {
     }
 
     private void navigateToSuccessScreen() {
+        // Extract category IDs from cart items
+        List<Integer> categoryIds = new ArrayList<>();
+        List<CartShop> selectedShops = paymentViewModel.getCartShopsToCheckout().getValue();
+        
+        if (selectedShops != null) {
+            for (CartShop shop : selectedShops) {
+                for (CartProduct product : shop.getProducts()) {
+                    int categoryId = product.getProductResponse().getCategoryId();
+                    if (!categoryIds.contains(categoryId)) {
+                        categoryIds.add(categoryId);
+                    }
+                }
+            }
+        }
+
         Intent intent = new Intent(requireContext(), CheckoutSuccessActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putIntegerArrayListExtra("categoryIds", new ArrayList<>(categoryIds));
         startActivity(intent);
         requireActivity().finish();
     }
