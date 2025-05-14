@@ -5,6 +5,7 @@ import com.example.marketplacesecondhand.dto.request.CartRequest;
 import com.example.marketplacesecondhand.dto.request.DeliveryAddressRequest;
 import com.example.marketplacesecondhand.dto.request.EmailRequest;
 import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
+import com.example.marketplacesecondhand.dto.request.FeedbackRequest;
 import com.example.marketplacesecondhand.dto.request.FollowRequest;
 import com.example.marketplacesecondhand.dto.request.LoginRequest;
 import com.example.marketplacesecondhand.dto.request.OrderRequest;
@@ -164,4 +165,16 @@ public interface APIService {
 
     @GET("feedbacks/{productId}")
     Call<ApiResponse<List<FeedbackResponse>>> getFeedbackByProductId(@Path("productId") int productId);
+
+    @GET("feedbacks/checkFeedback")
+    Call<Boolean> checkFeedbackExists(
+            @Query("orderId") int orderId,
+            @Query("productId") int productId,
+            @Query("buyerId") int buyerId
+    );
+
+    @POST("feedbacks/saveFeedback")
+    Call<ApiResponse<String>> saveFeedback(@Body FeedbackRequest request);
+
+
 }

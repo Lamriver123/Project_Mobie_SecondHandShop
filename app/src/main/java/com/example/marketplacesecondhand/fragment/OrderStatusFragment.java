@@ -202,6 +202,7 @@ public class OrderStatusFragment extends Fragment {
         dialog.show();
     }
 
+
     private void loadOrders(String status) {
         if (!isAdded() || getContext() == null || apiService == null) {
             Log.w(TAG, "loadOrders: Cannot load. Fragment not ready or APIService is null. Status: " + status);
