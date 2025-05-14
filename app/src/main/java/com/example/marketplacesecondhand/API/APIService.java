@@ -20,6 +20,7 @@ import com.example.marketplacesecondhand.dto.response.AuthResponse;
 import com.example.marketplacesecondhand.dto.response.CancelledOrderResponse;
 import com.example.marketplacesecondhand.dto.response.CartResponse;
 import com.example.marketplacesecondhand.dto.response.DeliveryAddressResponse;
+import com.example.marketplacesecondhand.dto.response.FeedbackResponse;
 import com.example.marketplacesecondhand.dto.response.OrderResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.dto.response.ShopResponse;
@@ -160,4 +161,7 @@ public interface APIService {
 
     @POST("shops/follow")
     Call<ApiResponse<String>> toggleFollow(@Body FollowRequest request);
+
+    @GET("feedbacks/{productId}")
+    Call<ApiResponse<List<FeedbackResponse>>> getFeedbackByProductId(@Path("productId") int productId);
 }

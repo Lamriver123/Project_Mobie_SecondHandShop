@@ -223,6 +223,13 @@ public class ProductDetailFragment extends Fragment {
             Log.w(TAG, "Tên danh mục rỗng, không tải sản phẩm tương tự.");
             binding.similarProducts.setVisibility(View.GONE);
         }
+
+        FeedbackFragment fragmentFeedback = FeedbackFragment.newInstance(product.getProductId());
+        // Sử dụng getChildFragmentManager vì similar_products là con của ProductDetailFragment
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.feedback_container, fragmentFeedback)
+                .commitAllowingStateLoss();
     }
 
     private String formatCurrency(String number) {
