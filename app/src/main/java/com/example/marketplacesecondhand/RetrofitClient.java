@@ -15,7 +15,7 @@ public class RetrofitClient {
         if(retrofit == null){
             if (currentToken.isEmpty()) {
                 retrofit = new Retrofit.Builder()
-                        .baseUrl(BASE_URL_REAL_MACHINE)
+                        .baseUrl(BASE_URL_VIRTUAL_MACHINE)
                         .addConverterFactory(GsonConverterFactory.create())
                         //   .client(client)
                         .build();
@@ -29,7 +29,7 @@ public class RetrofitClient {
                         .build();
 
                 retrofit = new Retrofit.Builder()
-                        .baseUrl(BASE_URL_REAL_MACHINE)
+                        .baseUrl(BASE_URL_VIRTUAL_MACHINE)
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(client)
                         .build();
