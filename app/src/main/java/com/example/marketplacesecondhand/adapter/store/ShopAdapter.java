@@ -5,9 +5,9 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +24,15 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
 
     private List<ShopResponse> shops;
     private int currentUserId;
+    private OnFollowListener onFollowListener;
+
+    public interface OnFollowListener {
+        void onFollowClick(ShopResponse shop, boolean isFollowing);
+    }
+
+    public void setOnFollowListener(OnFollowListener listener) {
+        this.onFollowListener = listener;
+    }
 
     public ShopAdapter(List<ShopResponse> shops, int currentUserId) {
         this.shops = shops;
@@ -43,7 +52,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             this.binding = binding;
         }
 
-        public void bind(ShopResponse shop, int currentUserId) {
+        public void bind(ShopResponse shop, int currentUserId, OnFollowListener listener) {
             binding.txtShopName.setText(shop.getUsername());
             binding.ratingBar.setRating((float) shop.getAverageRating());
             binding.txtReviewCount.setText(shop.getTotalReviews() + " đánh giá");
@@ -95,30 +104,29 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             // Optional: Add click listeners
             binding.btnViewShop.setOnClickListener(v -> {
                 Intent intent = new Intent(binding.getRoot().getContext(), ShopDetailActivity.class);
-                intent.putExtra("shop_id", shop.getUsername().hashCode());
+                intent.putExtra("shop_id", shop.getId());
                 binding.getRoot().getContext().startActivity(intent);
-                Toast.makeText(binding.getRoot().getContext(), "Xem shop: " + shop.getUsername(), Toast.LENGTH_SHORT).show();
             });
 
             binding.btnFollow.setOnClickListener(v -> {
-                // Toggle follow state
-                boolean newFollowState = !isFollowing;
-                updateFollowButtonState(newFollowState);
-                Toast.makeText(binding.getRoot().getContext(), 
-                    newFollowState ? "Đã theo dõi shop: " + shop.getUsername() : "Đã bỏ theo dõi shop: " + shop.getUsername(), 
-                    Toast.LENGTH_SHORT).show();
+                if (listener != null) {
+                    listener.onFollowClick(shop, isFollowing);
+                }
             });
         }
 
         private void updateFollowButtonState(boolean isFollowing) {
             if (isFollowing) {
                 binding.btnFollow.setText("Đang theo dõi");
-            //    binding.btnFollow.setBackgroundResource(R.drawable.bg_button_following);
+              //  binding.btnFollow.setBackgroundResource(R.drawable.bg_button_following);
+                binding.btnFollow.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.grey_dark));
             } else {
                 binding.btnFollow.setText("Theo dõi");
-            //    binding.btnFollow.setBackgroundResource(R.drawable.bg_button_follow);
+               // binding.btnFollow.setBackgroundResource(R.drawable.bg_button_follow);
+                binding.btnFollow.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.white));
             }
         }
+
     }
 
     @NonNull
@@ -135,7 +143,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
     @Override
     public void onBindViewHolder(@NonNull ShopViewHolder holder, int position) {
         ShopResponse shop = shops.get(position);
-        holder.bind(shop, currentUserId);
+        holder.bind(shop, currentUserId, onFollowListener);
     }
 
     @Override

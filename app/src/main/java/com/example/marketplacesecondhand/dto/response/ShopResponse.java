@@ -4,20 +4,31 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ShopResponse implements Serializable {
+    private int id;
     private String avt;
     private String username;
     private int totalReviews;
     private double averageRating;
     private List<Integer> followerIds;
+    private List<Integer> followingIds;
     private List<ProductResponse> products;
 
-    public ShopResponse(String avt, String username, int totalReviews, double averageRating, List<Integer> followerIds, List<ProductResponse> products) {
+    public ShopResponse(int id, String avt, String username, int totalReviews, double averageRating, List<Integer> followerIds, List<Integer> followingIds, List<ProductResponse> products) {
+        this.id = id;
         this.avt = avt;
         this.username = username;
         this.totalReviews = totalReviews;
         this.averageRating = averageRating;
         this.followerIds = followerIds;
+        this.followingIds = followingIds;
         this.products = products;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAvt() {
@@ -58,6 +69,14 @@ public class ShopResponse implements Serializable {
 
     public void setFollowerIds(List<Integer> followerIds) {
         this.followerIds = followerIds;
+    }
+
+    public List<Integer> getFollowingIds() {
+        return followingIds;
+    }
+
+    public void setFollowingIds(List<Integer> followingIds) {
+        this.followingIds = followingIds;
     }
 
     public List<ProductResponse> getProducts() {

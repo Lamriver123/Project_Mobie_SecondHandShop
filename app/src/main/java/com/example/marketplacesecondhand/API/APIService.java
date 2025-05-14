@@ -160,4 +160,7 @@ public interface APIService {
 
     @POST("shops/follow")
     Call<ApiResponse<String>> toggleFollow(@Body FollowRequest request);
+
+    @GET("shops/me")
+    Call<ApiResponse<ShopResponse>> getCurrentUserShop();
 }

@@ -18,6 +18,7 @@ import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.RetrofitClient;
 import com.example.marketplacesecondhand.adapter.store.ShopAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentStoreBinding;
+import com.example.marketplacesecondhand.dto.response.ShopResponse;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
 import com.example.marketplacesecondhand.viewModel.ShopViewModel;
 
@@ -28,7 +29,7 @@ public class StoreFragment extends Fragment {
     private FragmentStoreBinding binding;
     private ShopViewModel shopViewModel;
     private ShopAdapter shopAdapter;
-
+    private APIService apiService;
     public StoreFragment() {
     }
 
@@ -46,7 +47,7 @@ public class StoreFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Initialize ViewModel
-        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
         shopViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
             @NonNull
             @Override
@@ -64,6 +65,11 @@ public class StoreFragment extends Fragment {
             shopAdapter = new ShopAdapter(new ArrayList<>(), userInfo.getUserId());
             recyclerViewShops.setAdapter(shopAdapter);
 
+            // Set up follow listener
+            shopAdapter.setOnFollowListener((shop, isFollowing) -> {
+                shopViewModel.toggleFollow(shop.getId());
+            });
+
             // Observe LiveData
             shopViewModel.getShops().observe(getViewLifecycleOwner(), shops -> {
                 shopAdapter.updateShops(shops);
@@ -75,10 +81,19 @@ public class StoreFragment extends Fragment {
                 }
             });
 
+            shopViewModel.getFollowStatus().observe(getViewLifecycleOwner(), isFollowing -> {
+                // Handle follow status change if needed
+            });
+
             // Load shops
             shopViewModel.loadShops();
         }
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        shopViewModel.loadShops();
     }
 
     @Override
