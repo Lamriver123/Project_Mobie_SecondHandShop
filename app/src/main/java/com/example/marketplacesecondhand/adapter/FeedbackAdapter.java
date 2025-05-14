@@ -62,11 +62,11 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             binding.txtDate.setText(sdf.format(feedback.getCreatedAt()));
 
-//            Glide.with(context)
-//                    .load(feedback.getImageFeedbacker())
-//                    .placeholder(R.drawable.img)
-//                    .error(R.drawable.img)
-//                    .into(binding.imgShop);
+            Glide.with(context)
+                    .load(feedback.getImageFeedbacker())
+                    .placeholder(R.drawable.img)
+                    .error(R.drawable.img)
+                    .into(binding.imgShop);
         }
     }
 }
