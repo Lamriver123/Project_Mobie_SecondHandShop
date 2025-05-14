@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/tools"
     card_view:cardCornerRadius="8dp"
-    android:layout_margin="8dp"
-    card_view:cardElevation="4dp"
+    android:layout_margin="4dp"
+    card_view:cardElevation="1dp"
     app:ignore="NamespaceTypo">
 
     <LinearLayout
@@ -103,12 +103,6 @@
             android:gravity="end"
             android:focusable="false"
             android:focusableInTouchMode="false" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginVertical="8dp"
-            android:background="#CCCCCC" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

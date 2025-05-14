@@ -225,7 +225,6 @@ public class ProductDetailFragment extends Fragment {
         }
 
         FeedbackFragment fragmentFeedback = FeedbackFragment.newInstance(product.getProductId());
-        // Sử dụng getChildFragmentManager vì similar_products là con của ProductDetailFragment
         getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.feedback_container, fragmentFeedback)
