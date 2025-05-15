@@ -29,7 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OtpActivity extends AppCompatActivity {
-    Button btnOtp;
+    TextView btnOtp;
     PinView pinView;
     TextView tvResendOtp;
 

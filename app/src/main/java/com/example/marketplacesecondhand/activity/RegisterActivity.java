@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -32,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText etFullName, etBirthday, etPhoneNumber, etEmail, etUsername, etPassword;
     private RadioButton rbMale, rbFemale;
-    private ImageButton btnSignUp;
+    private TextView btnSignUp;
     private ProgressBar progressBar;
 
     @Override

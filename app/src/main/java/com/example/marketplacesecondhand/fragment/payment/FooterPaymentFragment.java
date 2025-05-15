@@ -199,7 +199,7 @@ public class FooterPaymentFragment extends Fragment {
         paymentViewModel.getTotalAmount().observe(getViewLifecycleOwner(), totalAmount -> {
             if (totalAmount != null) {
                 try {
-                    JSONObject data = orderApi.createOrder("100000");
+                    JSONObject data = orderApi.createOrder(totalAmount.toString());
                     String code = data.getString("returncode");
 
                     if (code.equals("1")) {

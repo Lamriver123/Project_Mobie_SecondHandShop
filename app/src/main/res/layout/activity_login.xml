@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_shape">
+    android:background="@color/yellow">
 
 
     <ImageView
@@ -19,28 +19,29 @@
         app:srcCompat="@drawable/logointro" />
 
     <LinearLayout
-        android:layout_width="345dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="587dp"
         android:layout_centerInParent="true"
+        android:background="@drawable/card_background"
         android:elevation="8dp"
         android:orientation="vertical"
         android:padding="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.275">
+        app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
         <TextView
             android:id="@+id/tvLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="Login"
-            android:textStyle="bold"
             android:textSize="18sp"
-            android:layout_marginBottom="8dp"/>
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
@@ -51,8 +52,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
             android:layout_marginBottom="16dp"
+            android:hint="Username"
             app:startIconDrawable="@drawable/user">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -63,17 +64,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
-            app:startIconDrawable="@drawable/password"
-            app:endIconMode="password_toggle">
+            android:hint="Password"
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextTextPassword"
@@ -84,7 +84,7 @@
 
 
         <LinearLayout
-            android:layout_width="286dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -115,49 +115,49 @@
             android:layout_width="match_parent"
             android:layout_height="13dp" />
 
-        <Button
+        <TextView
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:gravity="center"
+            android:textSize="16sp"
             android:layout_marginTop="16dp"
             android:background="@drawable/button_background"
-            android:text="Login"
-            android:textColor="@android:color/white"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            android:text="Login"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/signUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="You don't have account? Sign Up"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:layout_marginTop="8dp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            android:gravity="center"
+            android:text="You don't have account? Sign Up"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvActivateAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
+            android:padding="8dp"
             android:text="Account not activated. Click here to verify."
             android:textColor="@color/red"
             android:textSize="14sp"
-            android:layout_marginTop="12dp"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
             android:visibility="gone"
-            tools:visibility="visible"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            tools:visibility="visible" />
 
     </LinearLayout>
+
     <ProgressBar
         android:id="@+id/progressBarLogin"
         style="?android:attr/progressBarStyle"
@@ -169,4 +169,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:visibility="visible"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

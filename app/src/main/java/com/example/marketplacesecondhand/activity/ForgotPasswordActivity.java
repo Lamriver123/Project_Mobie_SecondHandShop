@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,8 +25,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
-    Button btnResetPassword;
+    TextView btnResetPassword;
     EditText editTextEmailAddress;
+    ProgressBar progressBarLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +35,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_forgotpassword);
 
+        progressBarLogin = findViewById(R.id.progressBarForgotPassword);
         btnResetPassword = findViewById(R.id.btnResetPassword);
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBarLogin.setVisibility(View.VISIBLE);
+                btnResetPassword.setEnabled(false);
                 editTextEmailAddress = findViewById(R.id.editTextEmailAddress);
                 String email = editTextEmailAddress.getText().toString().trim();
 
@@ -47,11 +53,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
     }
     private void sendOtp(EmailRequest emailRequest) {
+
         APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
         Call<ApiResponse<Void>> call = apiService.forgotPassword(emailRequest);
         call.enqueue(new Callback<ApiResponse<Void>>() {
             @Override
             public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
+                progressBarLogin.setVisibility(View.GONE);
+                btnResetPassword.setEnabled(true);
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(ForgotPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     openOtpRegisterActivity(emailRequest.getEmail());
@@ -73,6 +82,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
+                progressBarLogin.setVisibility(View.GONE);
+                btnResetPassword.setEnabled(true);
                 Log.e("Register", "Error: " + t.getMessage());
                 Toast.makeText(ForgotPasswordActivity.this, "Lỗi hệ thống!", Toast.LENGTH_SHORT).show();
             }

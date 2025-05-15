@@ -41,7 +41,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int ERROR_CODE_ACCOUNT_NOT_ACTIVATED = 1009; // Mã lỗi từ backend
-    Button btnLogin;
+    TextView btnLogin;
     TextInputEditText etUsername;
     TextInputEditText etPassword;
     CheckBox cbRememberMe;
