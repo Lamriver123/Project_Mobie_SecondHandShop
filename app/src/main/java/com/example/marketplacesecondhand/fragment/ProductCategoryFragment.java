@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,9 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
-import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.RetrofitClient;
-import com.example.marketplacesecondhand.adapter.ProductCategoryAdapter;
+import com.example.marketplacesecondhand.service.RetrofitClient;
+import com.example.marketplacesecondhand.adapter.category.ProductCategoryAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentProductCategoryBinding;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
@@ -212,7 +210,7 @@ public class ProductCategoryFragment extends Fragment {
     }
 
     private void updateAdapterData(List<ProductResponse> newProductsToShow, List<Integer> currentFavoriteIds) {
-        if (binding == null || adapter == null || !isAdded()) { // Thêm kiểm tra isAdded()
+        if (binding == null || adapter == null || !isAdded()) {
             Log.w(TAG, "updateAdapterData: Binding, Adapter is null or Fragment not added. Cannot update UI.");
             return;
         }
@@ -225,12 +223,14 @@ public class ProductCategoryFragment extends Fragment {
         favoriteProductIds.clear();
         if (currentFavoriteIds != null) {
             favoriteProductIds.addAll(currentFavoriteIds);
+            // Update adapter's favorites
+            adapter.updateFavorites(favoriteProductIds);
         }
+        
         adapter.notifyDataSetChanged();
         Log.d(TAG, "Adapter data updated. Product count: " + productList.size() + ", Favorite count: " + favoriteProductIds.size());
 
         if (productList.isEmpty()) {
-
             binding.rvProductCategory.setVisibility(View.GONE);
             Log.d(TAG, "No products to display. tvNoProducts is visible.");
         } else {

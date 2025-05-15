@@ -1,7 +1,5 @@
 package com.example.marketplacesecondhand.adapter.order;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -9,7 +7,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,14 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
-import com.example.marketplacesecondhand.ProductDetailActivity;
+import com.example.marketplacesecondhand.activity.ProductDetailActivity;
 import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.databinding.ItemProductOrderBinding;
 import com.example.marketplacesecondhand.dto.response.OrderDetailResponse;
-import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
-import com.google.android.gms.common.api.internal.zabe;
 
 import java.util.List;
 
@@ -76,7 +71,7 @@ public class ProductInOrderAdapter extends RecyclerView.Adapter<ProductInOrderAd
 
 
         // Placeholder data
-        holder.binding.txtProductVariation.setText("Màu ngẫu nhiên, Size tự chọn");
+       // holder.binding.txtProductVariation.setText("Màu ngẫu nhiên, Size tự chọn");
 
 
         holder.binding.btnReview.setVisibility(View.GONE);

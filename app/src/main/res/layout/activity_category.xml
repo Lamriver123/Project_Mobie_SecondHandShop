@@ -14,7 +14,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/filter_container"
-        android:name="com.example.marketplacesecondhand.fragment.FilterFragment"
+        android:name="com.example.marketplacesecondhand.fragment.search.FilterFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/header_with_back" />

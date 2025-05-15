@@ -15,21 +15,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
-import com.example.marketplacesecondhand.LoginActivity;
-import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.RetrofitClient;
-import com.example.marketplacesecondhand.adapter.ProductAdapter;
+import com.example.marketplacesecondhand.activity.LoginActivity;
 import com.example.marketplacesecondhand.databinding.FragmentFooterProductDetailBinding;
 import com.example.marketplacesecondhand.dto.request.FavoriteRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.viewModel.ProductDetailViewModel;
+import com.example.marketplacesecondhand.R;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.HashSet;
-import java.util.Locale;
+import java.util.List;
 import java.util.Set;
 
 import retrofit2.Call;
@@ -40,21 +37,19 @@ public class FooterProductDetailFragment extends Fragment {
     private static final String TAG = "FooterProductDetail";
     private FragmentFooterProductDetailBinding binding;
     private ProductDetailViewModel productDetailViewModel;
-  //  private final Set<Integer> favoriteProductIds;
+    private Set<Integer> favoriteProductIds = new HashSet<>();
+    private APIService apiService;
 
     public FooterProductDetailFragment() {}
-//    public FooterProductDetailFragment(Set<Integer> favoriteProductIds) {
-//        this.favoriteProductIds = favoriteProductIds;
-//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
 
         if (getActivity() != null) {
             productDetailViewModel = new ViewModelProvider(requireActivity()).get(ProductDetailViewModel.class);
-        }
-        else {
+        } else {
             Log.e(TAG, "Không thể lấy ProductDetailViewModel vì getActivity() là null.");
         }
     }
@@ -79,31 +74,38 @@ public class FooterProductDetailFragment extends Fragment {
             return;
         }
 
+        // Load favorite status when product is available
         productDetailViewModel.getProductDetail().observe(getViewLifecycleOwner(), product -> {
-            if (binding == null)
-                return;
+            if (binding == null) return;
 
             if (product != null && product.getQuantity() > 0) {
                 binding.buttonBuyNow.setEnabled(true);
                 binding.buttonAddToCart.setEnabled(true);
-            }
-            else {
+            } else {
                 binding.buttonBuyNow.setEnabled(false);
                 binding.buttonAddToCart.setEnabled(false);
                 if (product != null && product.getQuantity() <= 0) {
                     if (getContext() != null) {
                         Toast.makeText(getContext(), "Sản phẩm đã hết hàng", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else if (product != null) {
+                } else if (product != null) {
                     if (getContext() != null) Toast.makeText(getContext(), "Thông tin số lượng sản phẩm không có sẵn", Toast.LENGTH_SHORT).show();
                 }
             }
 
-        //    setFavoriteIcon(product);
+            // Check favorite status when product is loaded
+            if (product != null) {
+                checkFavoriteStatus(product.getProductId());
+            }
         });
 
-
+        // Setup favorite button click listener
+        binding.ivFavorite.setOnClickListener(v -> {
+            ProductResponse product = productDetailViewModel.getProductDetail().getValue();
+            if (product != null) {
+                toggleFavorite(product.getProductId());
+            }
+        });
 
         binding.buttonBuyNow.setOnClickListener(v -> {
             DatabaseHandler db = new DatabaseHandler(getContext());
@@ -208,59 +210,78 @@ public class FooterProductDetailFragment extends Fragment {
         });
     }
 
-//    private void setFavoriteIcon(ProductResponse product) {
-//        // Set iconFavorite ban đầu theo danh sách favoriteProductIds
-//        if (favoriteProductIds.contains(product.getProductId())) {
-//            binding.ivFavorite.setImageResource(R.drawable.ic_heart_selected);
-//        } else {
-//            binding.ivFavorite.setImageResource(R.drawable.ic_heart_border_red);
-//        }
-//
-//        // Xử lý sự kiện nhấn vào iconFavorite
-//        binding.ivFavorite.setOnClickListener(v -> {
-//            toggleFavorite(product.getProductId());
-//        });
-//    }
-//
-//    private void toggleFavorite(int productId) {
-//        DatabaseHandler db = new DatabaseHandler(getContext());
-//        UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
-//
-//        if (userLoginInfo == null || userLoginInfo.getUserId() == 0) {
-//            Toast.makeText(getContext(), "Bạn cần đăng nhập để sử dụng tính năng yêu thích!", Toast.LENGTH_SHORT).show();
-//            return; // Không thực hiện gọi API nữa
-//        }
-//
-//        APIService apiService = RetrofitClient.getRetrofit().create(APIService.class);
-//
-//        FavoriteRequest request = new FavoriteRequest(userLoginInfo.getUserId(), productId);
-//
-//        Call<ApiResponse<String>> call = apiService.toggleFavorite(request);
-//        call.enqueue(new Callback<ApiResponse<String>>() {
-//            @Override
-//            public void onResponse(Call<ApiResponse<String>> call, Response<ApiResponse<String>> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                    // Toggle favorite ID trong danh sách
-//                    if (favoriteProductIds.contains(productId)) {
-//                        favoriteProductIds.remove(productId);
-//                        binding.ivFavorite.setImageResource(R.drawable.ic_heart_border_red);
-//                    } else {
-//                        favoriteProductIds.add(productId);
-//                        binding.ivFavorite.setImageResource(R.drawable.ic_heart_selected);
-//                    }
-//                } else {
-//                    Toast.makeText(getContext(), "Có lỗi xảy ra, thử lại sau!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ApiResponse<String>> call, Throwable t) {
-//                Toast.makeText(getContext(), "Không thể kết nối server!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+    private void checkFavoriteStatus(int productId) {
+        DatabaseHandler db = new DatabaseHandler(getContext());
+        UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+
+        if (userLoginInfo != null && userLoginInfo.getUserId() != 0) {
+            Call<ApiResponse<List<Integer>>> call = apiService.getFavoriteProductIds(userLoginInfo.getUserId());
+            call.enqueue(new Callback<ApiResponse<List<Integer>>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<List<Integer>>> call, Response<ApiResponse<List<Integer>>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        List<Integer> favoriteIds = response.body().getData();
+                        favoriteProductIds.clear();
+                        favoriteProductIds.addAll(favoriteIds);
+                        updateFavoriteIcon(productId);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<List<Integer>>> call, Throwable t) {
+                    Log.e(TAG, "Failed to fetch favorite status", t);
+                }
+            });
+        } else {
+            // If user is not logged in, show unfilled heart
+            binding.ivFavorite.setImageResource(R.drawable.ic_heart_border_red);
+        }
+    }
+
+    private void updateFavoriteIcon(int productId) {
+        if (favoriteProductIds.contains(productId)) {
+            binding.ivFavorite.setImageResource(R.drawable.ic_heart_selected);
+        } else {
+            binding.ivFavorite.setImageResource(R.drawable.ic_heart_border_red);
+        }
+    }
+
+    private void toggleFavorite(int productId) {
+        DatabaseHandler db = new DatabaseHandler(getContext());
+        UserLoginInfo userLoginInfo = db.getLoginInfoSQLite();
+
+        if (userLoginInfo == null || userLoginInfo.getUserId() == 0) {
+            Toast.makeText(getContext(), "Bạn cần đăng nhập để sử dụng tính năng yêu thích!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        FavoriteRequest request = new FavoriteRequest(userLoginInfo.getUserId(), productId);
+        Call<ApiResponse<String>> call = apiService.toggleFavorite(request);
+        call.enqueue(new Callback<ApiResponse<String>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<String>> call, Response<ApiResponse<String>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    
+                    // Toggle favorite status
+                    if (favoriteProductIds.contains(productId)) {
+                        favoriteProductIds.remove(productId);
+                    } else {
+                        favoriteProductIds.add(productId);
+                    }
+                    updateFavoriteIcon(productId);
+                } else {
+                    Toast.makeText(getContext(), "Có lỗi xảy ra, thử lại sau!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<String>> call, Throwable t) {
+                Toast.makeText(getContext(), "Không thể kết nối server!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

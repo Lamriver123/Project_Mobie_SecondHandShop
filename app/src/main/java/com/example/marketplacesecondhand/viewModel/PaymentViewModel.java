@@ -16,7 +16,7 @@ public class PaymentViewModel extends ViewModel {
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> orderSuccessLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> selectedPaymentMethodLiveData = new MutableLiveData<>();
-    private final MutableLiveData<String> totalAmountLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> totalAmountLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> paymentSourceLiveData = new MutableLiveData<>();
     private final OrderRepository orderRepository;
 
@@ -66,11 +66,11 @@ public class PaymentViewModel extends ViewModel {
     }
 
     // LiveData cho tổng tiền
-    public LiveData<String> getTotalAmount() {
+    public LiveData<Integer> getTotalAmount() {
         return totalAmountLiveData;
     }
 
-    public void setTotalAmount(String totalAmount) {
+    public void setTotalAmount(Integer totalAmount) {
         totalAmountLiveData.setValue(totalAmount);
     }
 

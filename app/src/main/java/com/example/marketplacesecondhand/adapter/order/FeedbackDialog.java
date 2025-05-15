@@ -3,7 +3,6 @@ package com.example.marketplacesecondhand.adapter.order;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.Toast;
@@ -12,12 +11,10 @@ import androidx.annotation.NonNull;
 
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.dto.request.FeedbackRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;

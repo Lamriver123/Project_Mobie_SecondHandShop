@@ -2,7 +2,6 @@ package com.example.marketplacesecondhand.fragment.productDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
-import com.example.marketplacesecondhand.PaymentActivity;
+import com.example.marketplacesecondhand.activity.PaymentActivity;
 import com.example.marketplacesecondhand.R; // Đảm bảo import R đúng
 import com.example.marketplacesecondhand.databinding.BottomSheetBuyNowBinding;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.CartProduct;
 import com.example.marketplacesecondhand.models.CartShop;
-import com.example.marketplacesecondhand.models.Product;
 import com.example.marketplacesecondhand.models.User;
-import com.example.marketplacesecondhand.viewModel.PaymentViewModel;
 import com.example.marketplacesecondhand.viewModel.ProductDetailViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 

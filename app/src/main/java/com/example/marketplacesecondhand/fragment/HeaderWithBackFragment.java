@@ -3,13 +3,10 @@ package com.example.marketplacesecondhand.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -18,9 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
-import com.example.marketplacesecondhand.CartActivity;
-import com.example.marketplacesecondhand.FavoritesActivity;
-import com.example.marketplacesecondhand.R;
+import com.example.marketplacesecondhand.activity.CartActivity;
+import com.example.marketplacesecondhand.activity.FavoritesActivity;
 import com.example.marketplacesecondhand.databinding.FragmentHeaderWithBackBinding;
 
 public class HeaderWithBackFragment extends Fragment {

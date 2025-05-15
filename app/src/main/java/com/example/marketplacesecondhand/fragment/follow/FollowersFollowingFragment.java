@@ -15,7 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.R;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.adapter.follow.FollowersFollowingPagerAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentFollowersFollowingBinding;
 import com.example.marketplacesecondhand.dto.response.ShopResponse;

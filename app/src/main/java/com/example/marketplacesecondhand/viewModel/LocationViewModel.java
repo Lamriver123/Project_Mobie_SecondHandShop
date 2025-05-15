@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.marketplacesecondhand.API.APIService;
-import com.example.marketplacesecondhand.RetrofitClient;
+import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.dto.request.UpdateDefaultAddressRequest;
 import com.example.marketplacesecondhand.dto.request.DeliveryAddressRequest;
 import com.example.marketplacesecondhand.dto.request.UpdateDeliveryAddressRequest;
@@ -16,7 +16,6 @@ import com.example.marketplacesecondhand.dto.response.DeliveryAddressResponse;
 import com.google.gson.Gson;
 
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
