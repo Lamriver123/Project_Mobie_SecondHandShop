@@ -139,6 +139,18 @@ public class ProfileFragment extends Fragment {
                 transaction.addToBackStack(null);
                 transaction.commit();
             });
+
+            reviewFromMe.setOnClickListener(v -> {
+                requireActivity().findViewById(R.id.content_frame).setVisibility(View.GONE);
+                requireActivity().findViewById(R.id.header_fragment).setVisibility(View.GONE);
+                requireActivity().findViewById(R.id.fragment_container).setVisibility(View.VISIBLE);
+
+                com.example.marketplacesecondhand.fragment.review.ReviewDetailFragment reviewDetailFragment = new com.example.marketplacesecondhand.fragment.review.ReviewDetailFragment();
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, reviewDetailFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            });
         }
 
         termsConditions.setOnClickListener(v -> {

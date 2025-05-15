@@ -10,7 +10,7 @@
     <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="90dp"
         android:background="@color/yellow"
         android:gravity="center_vertical">
 
@@ -42,9 +42,9 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/imgAvatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:id="@+id/imgShop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/user"
             android:background="@drawable/user"
             android:scaleType="centerCrop"/>
@@ -89,7 +89,11 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:scaleX="0.8"
-                    android:scaleY="0.8"/>
+                    android:scaleY="0.8"
+                    android:progressTint="@color/yellow"
+                    android:tint="@color/yellow"
+                    android:secondaryProgressTint="@color/gray"
+                    android:progressBackgroundTint="@color/gray"/>
 
 
             </LinearLayout>

@@ -17,17 +17,17 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         CartDetailFragment fragment1 = new CartDetailFragment();
-        //HeaderCartFragment fragment2 = new HeaderCartFragment();
+        HeaderCartFragment fragment2 = new HeaderCartFragment();
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.cart_detail, fragment1)
                 .commit();
 
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.header_cart, fragment2)
-//                .commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.header_cart, fragment2)
+                .commit();
     }
 
     @Override

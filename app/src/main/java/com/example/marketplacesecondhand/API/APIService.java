@@ -183,4 +183,13 @@ public interface APIService {
     @GET("vouchers/shop/{shopId}")
     Call<ApiResponse<List<VoucherResponse>>> getShopActiveVouchers(@Path("shopId") int shopId);
 
+    @GET("feedbacks/given")
+    Call<ApiResponse<List<FeedbackResponse>>> getFeedbackGivenByCurrentUser();
+
+    @GET("feedbacks/received")
+    Call<ApiResponse<List<FeedbackResponse>>> getFeedbackReceivedByCurrentUser();
+
+    @GET("feedbacks/all")
+    Call<ApiResponse<List<FeedbackResponse>>> getAllUserRelatedFeedback();
+
 }
