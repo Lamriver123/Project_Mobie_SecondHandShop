@@ -32,7 +32,7 @@
             android:id="@+id/textViewCartTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Giỏ Hàng (0)"
+            android:text="Giỏ Hàng"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#212121"/>

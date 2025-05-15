@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/header_cart"
-        android:name="com.example.marketplacesecondhand.fragment.cart.HeaderCartFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />

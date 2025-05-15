@@ -130,6 +130,7 @@ public class CartDetailFragment extends Fragment {
                         textViewEmptyCart.setText(response.body().getMessage() != null ? response.body().getMessage() : "Giỏ hàng của bạn trống.");
                         cartShopList.clear();
                         cartShopAdapter.notifyDataSetChanged();
+
                         calculateTotalPrice(); // Đảm bảo tổng tiền là 0
                     } else {
                         // Chuyển đổi dữ liệu giỏ hàng và bắt đầu fetch thông tin shop
@@ -138,6 +139,11 @@ public class CartDetailFragment extends Fragment {
                         // Lưu tạm danh sách giỏ hàng đã nhóm
                         cartShopList.clear();
                         cartShopList.addAll(transformedList);
+
+                        requireActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.header_cart, new HeaderCartFragment())
+                                .commit();
 
                         // Lấy danh sách sellerId duy nhất
                         uniqueSellerIds = new HashSet<>();

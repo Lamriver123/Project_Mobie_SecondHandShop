@@ -127,6 +127,18 @@ public class ProfileFragment extends Fragment {
                 transaction.addToBackStack(null);
                 transaction.commit();
             });
+
+            address.setOnClickListener(v -> {
+                requireActivity().findViewById(R.id.content_frame).setVisibility(View.GONE);
+                requireActivity().findViewById(R.id.header_fragment).setVisibility(View.GONE);
+                requireActivity().findViewById(R.id.fragment_container).setVisibility(View.VISIBLE);
+
+                AddressFragment addressFragment = new AddressFragment();
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, addressFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            });
         }
 
         termsConditions.setOnClickListener(v -> {

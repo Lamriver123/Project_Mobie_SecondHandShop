@@ -57,36 +57,43 @@ public class StoreFragment extends Fragment {
 
         DatabaseHandler dbHandler = new DatabaseHandler(getContext());
         UserLoginInfo userInfo = dbHandler.getLoginInfoSQLite();
-        if (userInfo != null) {
-            // Setup RecyclerView
-            RecyclerView recyclerViewShops = binding.recyclerViewShops;
-            recyclerViewShops.setLayoutManager(new LinearLayoutManager(getContext()));
-            shopAdapter = new ShopAdapter(new ArrayList<>(), userInfo.getUserId());
-            recyclerViewShops.setAdapter(shopAdapter);
 
-            // Set up follow listener
-            shopAdapter.setOnFollowListener((shop, isFollowing) -> {
-                shopViewModel.toggleFollow(shop.getId());
-            });
+        // Setup RecyclerView
+        RecyclerView recyclerViewShops = binding.recyclerViewShops;
+        recyclerViewShops.setLayoutManager(new LinearLayoutManager(getContext()));
 
-            // Observe LiveData
-            shopViewModel.getShops().observe(getViewLifecycleOwner(), shops -> {
-                shopAdapter.updateShops(shops);
-            });
-
-            shopViewModel.getError().observe(getViewLifecycleOwner(), error -> {
-                if (error != null) {
-                    Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            shopViewModel.getFollowStatus().observe(getViewLifecycleOwner(), isFollowing -> {
-                // Handle follow status change if needed
-            });
-
-            // Load shops
-            shopViewModel.loadShops();
+        if (userInfo == null) {
+            shopAdapter = new ShopAdapter(new ArrayList<>(), 0);
         }
+        else {
+            shopAdapter = new ShopAdapter(new ArrayList<>(), userInfo.getUserId());
+        }
+
+        recyclerViewShops.setAdapter(shopAdapter);
+
+        // Set up follow listener
+        shopAdapter.setOnFollowListener((shop, isFollowing) -> {
+            shopViewModel.toggleFollow(shop.getId());
+        });
+
+        // Observe LiveData
+        shopViewModel.getShops().observe(getViewLifecycleOwner(), shops -> {
+            shopAdapter.updateShops(shops);
+        });
+
+        shopViewModel.getError().observe(getViewLifecycleOwner(), error -> {
+            if (error != null) {
+                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        shopViewModel.getFollowStatus().observe(getViewLifecycleOwner(), isFollowing -> {
+            // Handle follow status change if needed
+        });
+
+        // Load shops
+        shopViewModel.loadShops();
+
     }
 
     @Override

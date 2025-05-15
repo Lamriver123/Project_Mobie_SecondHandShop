@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.R;
+import com.example.marketplacesecondhand.activity.LoginActivity;
 import com.example.marketplacesecondhand.activity.ShopDetailActivity;
 import com.example.marketplacesecondhand.databinding.ItemShopBinding;
 import com.example.marketplacesecondhand.dto.response.ShopResponse;
@@ -98,10 +99,16 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             }
 
             // Update follow button state
-            boolean isFollowing = shop.getFollowerIds() != null && shop.getFollowerIds().contains(currentUserId);
+           // boolean isFollowing = shop.getFollowerIds() != null && shop.getFollowerIds().contains(currentUserId);
+          //  updateFollowButtonState(isFollowing);
+            boolean isFollowing;
+            if (currentUserId > 0 && shop.getFollowerIds() != null) {
+                isFollowing = shop.getFollowerIds().contains(currentUserId);
+            } else {
+                isFollowing = false;
+            }
             updateFollowButtonState(isFollowing);
-
-            // Optional: Add click listeners
+            
             binding.btnViewShop.setOnClickListener(v -> {
                 Intent intent = new Intent(binding.getRoot().getContext(), ShopDetailActivity.class);
                 intent.putExtra("shop_id", shop.getId());
@@ -109,8 +116,14 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             });
 
             binding.btnFollow.setOnClickListener(v -> {
-                if (listener != null) {
-                    listener.onFollowClick(shop, isFollowing);
+                if (currentUserId > 0 && shop.getFollowerIds() != null) {
+                    if (listener != null) {
+                        listener.onFollowClick(shop, isFollowing);
+                    }
+                }
+                else {
+                    Intent intent = new Intent(binding.getRoot().getContext(), LoginActivity.class);
+                    binding.getRoot().getContext().startActivity(intent);
                 }
             });
         }
