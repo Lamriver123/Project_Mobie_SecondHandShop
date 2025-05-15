@@ -162,7 +162,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/btnViewShop"
+                        android:id="@+id/tvViewShop"
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
                         android:background="@drawable/button_outline_background"

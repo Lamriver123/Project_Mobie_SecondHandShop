@@ -148,7 +148,8 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
     }
 
     private String calculateTotal(String total) {
-        int intTotal = Integer.parseInt(total);
+        double doubleValue = Double.parseDouble(total);
+        long intTotal = (long) doubleValue;
         return String.format("%,d", intTotal).replace(',', '.');
     }
 }

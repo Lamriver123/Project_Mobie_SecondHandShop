@@ -19,6 +19,7 @@ import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.models.CartProduct;
 import com.example.marketplacesecondhand.models.CartShop;
 import com.example.marketplacesecondhand.models.User;
+import com.example.marketplacesecondhand.viewModel.PaymentViewModel;
 import com.example.marketplacesecondhand.viewModel.ProductDetailViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -33,6 +34,7 @@ public class BottomSheetBuyNowFragment extends BottomSheetDialogFragment {
     private BottomSheetBuyNowBinding binding;
     private ProductDetailViewModel productDetailViewModel;
     private ProductResponse productResponse;
+    private PaymentViewModel paymentViewModel;
     private int quantity = 1;
 
     public static BottomSheetBuyNowFragment newInstance() {
@@ -44,6 +46,7 @@ public class BottomSheetBuyNowFragment extends BottomSheetDialogFragment {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
             productDetailViewModel = new ViewModelProvider(requireActivity()).get(ProductDetailViewModel.class);
+            paymentViewModel = new ViewModelProvider(requireActivity()).get(PaymentViewModel.class);
         }
     }
 
@@ -141,16 +144,24 @@ public class BottomSheetBuyNowFragment extends BottomSheetDialogFragment {
                     CartProduct productCart = new CartProduct(product, quantity, true);
                     List<CartProduct> products = new ArrayList<>();
                     products.add(productCart);
+                    
+                    // Tạo user với đầy đủ thông tin
                     User user = new User();
                     user.setUsername(ProductDetailFragment.SHOP_NAME);
+                    user.setId(product.getOwnerId()); // Set shop ID từ product
+                    
                     CartShop cartShop = new CartShop(user, true, products);
                     selectedShopsToCheckout.add(cartShop);
+                    
+                    // Set cart shops và chuyển sang màn hình thanh toán
+                    paymentViewModel.setCartShopsToCheckout(selectedShopsToCheckout);
+
+                    Intent intent = new Intent(requireContext(), PaymentActivity.class);
+                    intent.putExtra("SELECTED_CART_SHOPS", (Serializable) selectedShopsToCheckout);
+                    startActivity(intent);
+                    dismiss();
                 }
             });
-            Intent intent = new Intent(requireContext(), PaymentActivity.class);
-            intent.putExtra("SELECTED_CART_SHOPS", (Serializable) selectedShopsToCheckout);
-            startActivity(intent);
-            dismiss();
         });
     }
 

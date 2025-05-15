@@ -5,16 +5,23 @@ import java.util.List;
 public class OrderRequest {
     int buyerId;
     String address;
+    String voucherCode;
     String paymentMethod;
     List<OrderDetailRequest> orderDetails;
 
+    public OrderRequest(int buyerId, String address, String voucherCode, String paymentMethod, List<OrderDetailRequest> orderDetails) {
+        this.buyerId = buyerId;
+        this.address = address;
+        this.voucherCode = voucherCode;
+        this.paymentMethod = paymentMethod;
+        this.orderDetails = orderDetails;
+    }
     public OrderRequest(int buyerId, String address, String paymentMethod, List<OrderDetailRequest> orderDetails) {
         this.buyerId = buyerId;
         this.address = address;
         this.paymentMethod = paymentMethod;
         this.orderDetails = orderDetails;
     }
-
     public int getBuyerId() {
         return buyerId;
     }
@@ -31,6 +38,13 @@ public class OrderRequest {
         this.address = address;
     }
 
+    public String getVoucherCode() {
+        return voucherCode;
+    }
+
+    public void setVoucherCode(String voucherCode) {
+        this.voucherCode = voucherCode;
+    }
     public String getPaymentMethod() {
         return paymentMethod;
     }

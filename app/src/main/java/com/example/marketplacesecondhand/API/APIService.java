@@ -26,6 +26,7 @@ import com.example.marketplacesecondhand.dto.response.OrderResponse;
 import com.example.marketplacesecondhand.dto.response.ProductResponse;
 import com.example.marketplacesecondhand.dto.response.ShopResponse;
 import com.example.marketplacesecondhand.dto.response.UserResponse;
+import com.example.marketplacesecondhand.dto.response.VoucherResponse;
 import com.example.marketplacesecondhand.models.CartShop;
 import com.example.marketplacesecondhand.models.Category;
 import com.example.marketplacesecondhand.models.Product;
@@ -179,5 +180,7 @@ public interface APIService {
     @POST("feedbacks/saveFeedback")
     Call<ApiResponse<String>> saveFeedback(@Body FeedbackRequest request);
 
+    @GET("vouchers/shop/{shopId}")
+    Call<ApiResponse<List<VoucherResponse>>> getShopActiveVouchers(@Path("shopId") int shopId);
 
 }

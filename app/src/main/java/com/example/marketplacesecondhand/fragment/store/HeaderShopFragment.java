@@ -1,5 +1,6 @@
 package com.example.marketplacesecondhand.fragment.store;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.API.DatabaseHandler;
 import com.example.marketplacesecondhand.R;
+import com.example.marketplacesecondhand.activity.LoginActivity;
 import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.databinding.FragmentHeaderShopBinding;
 import com.example.marketplacesecondhand.dto.response.ShopResponse;
@@ -75,13 +77,20 @@ public class HeaderShopFragment extends Fragment {
                     boolean isFollowing = shop.getFollowerIds() != null && 
                                         shop.getFollowerIds().contains(userLoginInfo.getUserId());
                     updateFollowButtonState(isFollowing);
-                }
 
+
+                }
                 binding.btnFollow.setOnClickListener(v -> {
-                    if (currentShop != null) {
+                    if (currentShop != null && userLoginInfo != null) {
                         shopViewModel.toggleFollow(currentShop.getId());
                     }
+                    else {
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        startActivity(intent);
+
+                    }
                 });
+
             }
         });
 

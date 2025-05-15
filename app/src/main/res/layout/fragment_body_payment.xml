@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true">
 
     <LinearLayout
@@ -89,6 +89,32 @@
                 android:focusableInTouchMode="true" />
         </LinearLayout>
 
+        <!-- Voucher Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:padding="12dp"
+            android:background="@drawable/card_background">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vouchers"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerVoucher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:overScrollMode="never"/>
+        </LinearLayout>
+
         <!-- Tóm tắt đơn hàng -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,16 +141,29 @@
                 android:id="@+id/txtShipping"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Phí vận chuyển: 30.000 VND"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="8dp"
+                android:text="Phí vận chuyển: 30,000 ₫"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtDiscount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txtOrderTotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tổng tiền đơn hàng: 430.000 VND"
-                android:textStyle="bold"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="8dp"
+                android:text="Tổng tiền đơn hàng: 0 ₫"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <!-- Phương thức thanh toán -->
@@ -192,4 +231,4 @@
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

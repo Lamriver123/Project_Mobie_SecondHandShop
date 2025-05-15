@@ -28,6 +28,7 @@ import com.example.marketplacesecondhand.dto.request.OrderDetailRequest;
 import com.example.marketplacesecondhand.dto.request.OrderRequest;
 import com.example.marketplacesecondhand.dto.response.ApiResponse;
 import com.example.marketplacesecondhand.dto.response.DeliveryAddressResponse;
+import com.example.marketplacesecondhand.dto.response.VoucherResponse;
 import com.example.marketplacesecondhand.models.CartProduct;
 import com.example.marketplacesecondhand.models.CartShop;
 import com.example.marketplacesecondhand.models.UserLoginInfo;
@@ -268,6 +269,8 @@ public class FooterPaymentFragment extends Fragment {
 
         List<OrderDetailRequest> orderDetails;
         OrderRequest orderRequest;
+        VoucherResponse selectedVoucher = paymentViewModel.getSelectedVoucher().getValue();
+
         for (CartShop shop : selectedShops) {
             orderDetails = new ArrayList<>();
             for (CartProduct product : shop.getProducts()) {
@@ -281,8 +284,10 @@ public class FooterPaymentFragment extends Fragment {
             orderRequest = new OrderRequest(
                     userInfo.getUserId(),
                     address.getAddressName(),
+                    selectedVoucher != null ? selectedVoucher.getCode() : null,
                     paymentMethod,
                     orderDetails
+
             );
             paymentViewModel.createOrder(orderRequest);
         }

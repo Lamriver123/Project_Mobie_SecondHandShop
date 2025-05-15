@@ -17,10 +17,12 @@ import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.R;
 import com.example.marketplacesecondhand.adapter.payment.OrderPaymentAdapter;
 import com.example.marketplacesecondhand.adapter.payment.ProductPaymentAdapter;
+import com.example.marketplacesecondhand.adapter.VoucherAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentBodyPaymentBinding;
 import com.example.marketplacesecondhand.dto.response.DeliveryAddressResponse;
 import com.example.marketplacesecondhand.dto.response.OrderDetailResponse;
 import com.example.marketplacesecondhand.dto.response.OrderResponse;
+import com.example.marketplacesecondhand.dto.response.VoucherResponse;
 import com.example.marketplacesecondhand.models.CartProduct;
 import com.example.marketplacesecondhand.models.CartShop;
 import com.example.marketplacesecondhand.viewModel.LocationViewModel;
@@ -31,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.HashMap;
 
 public class BodyPaymentFragment extends Fragment {
     private static final String TAG = "BodyPaymentFragment";
@@ -39,6 +43,8 @@ public class BodyPaymentFragment extends Fragment {
     private PaymentViewModel paymentViewModel;
     private OrderPaymentAdapter orderAdapter;
     private List<OrderResponse> orderList;
+    private VoucherAdapter voucherAdapter;
+    private List<VoucherResponse> voucherList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +71,7 @@ public class BodyPaymentFragment extends Fragment {
         setupPaymentObserver();
         setupLocationButton();
         setupPaymentMethodSelection();
+        setupVoucherObserver();
     }
 
     private void setupPaymentObserver() {
@@ -103,10 +110,68 @@ public class BodyPaymentFragment extends Fragment {
         });
     }
 
+    private void setupVoucherObserver() {
+        // Observe loading state
+        paymentViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading) {
+                binding.recyclerVoucher.setVisibility(View.GONE);
+            }
+        });
+
+        // Observe vouchers from all shops
+        paymentViewModel.getShopVouchersMap().observe(getViewLifecycleOwner(), shopVouchersMap -> {
+            if (shopVouchersMap != null && !shopVouchersMap.isEmpty()) {
+                // Combine all vouchers from different shops
+                List<VoucherResponse> allVouchers = new ArrayList<>();
+                for (List<VoucherResponse> vouchers : shopVouchersMap.values()) {
+                    if (vouchers != null) {
+                        allVouchers.addAll(vouchers);
+                    }
+                }
+                
+                if (!allVouchers.isEmpty()) {
+                    voucherList = allVouchers;
+                    setupVoucherList();
+                    binding.recyclerVoucher.setVisibility(View.VISIBLE);
+                } else {
+                    binding.recyclerVoucher.setVisibility(View.GONE);
+                }
+            } else {
+                binding.recyclerVoucher.setVisibility(View.GONE);
+            }
+        });
+
+        // Observe selected voucher
+        paymentViewModel.getSelectedVoucher().observe(getViewLifecycleOwner(), selectedVoucher -> {
+            if (selectedVoucher != null) {
+                updateOrderSummary(selectedVoucher);
+            }
+        });
+
+        // Observe errors
+        paymentViewModel.getError().observe(getViewLifecycleOwner(), error -> {
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void processSelectedShops(List<CartShop> selectedShops) {
         orderList = new ArrayList<>();
         
+        // Clear previous vouchers
+//        Map<Integer, List<VoucherResponse>> currentMap = paymentViewModel.getShopVouchersMap().getValue();
+//        Map<Integer, List<VoucherResponse>> map = paymentViewModel.getShopVouchersMap().getValue();
+//        if (map != null) {
+//            map.clear();
+//            shopVouchersMap.setValue(map); // notify observers
+//        }
         for (CartShop shop : selectedShops) {
+            // Load vouchers for each shop
+            if (shop.getUser() != null && shop.getUser().getId() > 0) {
+                paymentViewModel.loadAvailableVouchers(shop.getUser().getId());
+            }
+
             List<OrderDetailResponse> orderDetails = new ArrayList<>();
             int totalAmount = 0;
 
@@ -215,6 +280,80 @@ public class BodyPaymentFragment extends Fragment {
             BottomSheetAddLocationFragment bottomSheet = new BottomSheetAddLocationFragment();
             bottomSheet.show(getParentFragmentManager(), bottomSheet.getTag());
         });
+    }
+
+    private void setupVoucherList() {
+        if (voucherList == null || voucherList.isEmpty()) {
+            binding.recyclerVoucher.setVisibility(View.GONE);
+            return;
+        }
+
+        if (voucherAdapter == null) {
+            voucherAdapter = new VoucherAdapter(voucherList, voucher -> {
+                // Khi voucher được chọn, cập nhật ViewModel và tổng tiền
+                paymentViewModel.setSelectedVoucher(voucher);
+                updateOrderSummary(voucher);
+            });
+            LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            layoutManager.setAutoMeasureEnabled(true);
+            binding.recyclerVoucher.setLayoutManager(layoutManager);
+            binding.recyclerVoucher.setAdapter(voucherAdapter);
+        } else {
+            voucherAdapter.updateVouchers(voucherList);
+        }
+    }
+
+    private void updateOrderSummary(VoucherResponse voucher) {
+        if (orderList == null || orderList.isEmpty()) {
+            return;
+        }
+
+        // Calculate total amount
+        int totalAmount = 0;
+        for (OrderResponse order : orderList) {
+            try {
+                String priceStr = order.getTotalAmount().replaceAll("[^\\d]", "");
+                totalAmount += Integer.parseInt(priceStr);
+            } catch (NumberFormatException e) {
+                Log.e(TAG, "Error parsing total amount", e);
+            }
+        }
+
+        // Update order summary
+        int shippingFee = 30000;
+        int totalShippingFee = shippingFee * orderList.size();
+        
+        // Calculate discount amount
+        double discountAmount = 0;
+        if (voucher != null) {
+            if ("percentage".equalsIgnoreCase(voucher.getDiscountType())) {
+                discountAmount = totalAmount * (voucher.getDiscountValue() / 100.0);
+                if (voucher.getMaximumDiscountAmount() != null) {
+                    discountAmount = Math.min(discountAmount, voucher.getMaximumDiscountAmount());
+                }
+            } else {
+                discountAmount = voucher.getDiscountValue();
+            }
+        }
+        
+        int finalTotal = (int) (totalAmount + totalShippingFee - discountAmount);
+        
+        // Update UI
+        binding.txtTotalProduct.setText("Tổng tiền sản phẩm: " + formatCurrency(totalAmount) + " ₫");
+        binding.txtShipping.setText("Phí vận chuyển: " + formatCurrency(totalShippingFee) + " ₫");
+        
+        if (discountAmount > 0) {
+            binding.txtDiscount.setText("Giảm giá: -" + formatCurrency((int)discountAmount) + " ₫");
+            binding.txtDiscount.setVisibility(View.VISIBLE);
+        } else {
+            binding.txtDiscount.setVisibility(View.GONE);
+        }
+        
+        binding.txtOrderTotal.setText("Tổng tiền đơn hàng: " + formatCurrency(finalTotal) + " ₫");
+
+        // Update total amount in ViewModel for footer
+        paymentViewModel.setTotalAmount(finalTotal);
     }
 
     private String formatCurrency(int number) {

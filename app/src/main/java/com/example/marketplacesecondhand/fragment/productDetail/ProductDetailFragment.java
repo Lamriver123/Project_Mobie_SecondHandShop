@@ -1,5 +1,6 @@
 package com.example.marketplacesecondhand.fragment.productDetail;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.marketplacesecondhand.API.APIService;
 import com.example.marketplacesecondhand.R;
+import com.example.marketplacesecondhand.activity.ShopDetailActivity;
 import com.example.marketplacesecondhand.service.RetrofitClient;
 import com.example.marketplacesecondhand.adapter.ImageSliderAdapter;
 import com.example.marketplacesecondhand.databinding.FragmentProductDetailBinding;
@@ -78,7 +80,6 @@ public class ProductDetailFragment extends Fragment {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
 
         setupObservers();
-
         if (currentProductId != -1) {
             fetchProductDetail(currentProductId);
         }
@@ -185,6 +186,12 @@ public class ProductDetailFragment extends Fragment {
             binding.viewPagerImages.setVisibility(View.GONE);
             binding.dotsIndicator.setVisibility(View.GONE);
         }
+
+        binding.tvViewShop.setOnClickListener(v -> {
+            Intent intent = new Intent(binding.getRoot().getContext(), ShopDetailActivity.class);
+            intent.putExtra("shop_id", product.getOwnerId());
+            binding.getRoot().getContext().startActivity(intent);
+        });
 
         binding.radioCurrent.setOnClickListener(v -> {
             if (product.getCurrentImages() != null && !product.getCurrentImages().isEmpty()) {
