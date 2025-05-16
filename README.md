@@ -13,9 +13,11 @@ Xây dựng thành công một ứng dụng di động android hoạt động nh
 -	Đảm bảo giao diện người dùng thân thiện, trực quan và dễ sử dụng trên nền tảng di động.
 -	Áp dụng các công nghệ phù hợp để đảm bảo hiệu năng, bảo mật dữ liệu và khả năng mở rộng của hệ thống
 
+Backend: Spring boot 3 với jdk 22
+
 Hướng dẫn cài đặt:
 
-![Sửa đường dẫn tới thư mục ZaloPay](image.png)
+![Sửa đường dẫn tới thư mục ZaloPay](\Image_README\image.png)
 Trong project dự án có sử dụng phương thức thanh toán qua ZaloPay và sử dụng ZaloPay Sandbox để làm môi trường demo.
 Để có thể áp dụng được thì phải sửa đường dẫn đường dẫn trong file build.gradle.kts(:app)
 implementation(fileTree(mapOf(
@@ -24,17 +26,17 @@ implementation(fileTree(mapOf(
         "exclude" to listOf("")
     )))
 
-![Hình minh họa](image-1.png)
+![Hình minh họa](\Image_README\image-1.png)
 
 Hướng tạo dữ liệu cho mysql:
 
 Đầu tiên tạo database tên là "marketplace" trong mysql
 Tiếp theo đổi username và password trong file application.properies thành username và password của mysql trên máy mình.
-![Hình minh họa](image-2.png)
+![Hình minh họa](\Image_README\image-2.png)
 
 Tiếp theo chạy api để jpa tạo các table trong database marketplace.
 Chạy app android và đăng ký 6 tài khoản để khớp với script.sql.
 Tiếp theo mở file sql.txt copy và dán vào mysql để tạo data cho dự án.
 file sql.txt được lưu tại "Project_Mobie_SecondHandShop\script_sql" của project.
-![Hình minh họa](image-3.png)
+![Hình minh họa](\Image_README\image-3.png)
 
